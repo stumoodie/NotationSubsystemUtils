@@ -10,7 +10,6 @@ import org.pathwayeditor.businessobjectsAPI.IRootMapObject;
 import org.pathwayeditor.businessobjectsAPI.IShape;
 import org.pathwayeditor.businessobjectsAPI.Location;
 import org.pathwayeditor.businessobjectsAPI.Size;
-import org.pathwayeditor.contextadapter.toolkit.validation.IRuleValidationReportBuilder;
 
 public abstract class AbstractNDOMParser {
 
@@ -20,7 +19,6 @@ public abstract class AbstractNDOMParser {
 	private boolean valid = false;
 	private List<String> report = new ArrayList<String>();
 	private int counter = 0;
-	private IRuleValidationReportBuilder reportBuilder;
 	
 
 	/**
@@ -36,17 +34,6 @@ public abstract class AbstractNDOMParser {
 		return id.toString();
 	}
 	
-    /**
-     * 
-     * @param reportBuilder, not null
-     */
-	public void setReportBuilder(IRuleValidationReportBuilder reportBuilder) {
-		if(reportBuilder == null) {
-			throw new IllegalArgumentException("Report builder can't be null");
-		}
-		this.reportBuilder=reportBuilder;
-		
-	}
 
 	/**
 	 * Generate valid ASCII string from object name.
@@ -210,7 +197,7 @@ public abstract class AbstractNDOMParser {
 			al=new Location(-1*bps.getWidth(),-1*bps.getHeight());
 		}
 		 
-		double le=Math.sqrt(al.getX()*al.getX()+al.getY()*al.getY());
+//		double le=Math.sqrt(al.getX()*al.getX()+al.getY()*al.getY());
 		return al;
 	}
 
@@ -336,6 +323,9 @@ public abstract class AbstractNDOMParser {
 
 /*
  * $Log$
+ * Revision 1.2  2008/07/12 15:50:49  smoodie
+ * Removed dependency on IRuleValidationReportBuilder
+ *
  * Revision 1.1  2008/07/10 12:06:38  nhanlon
  * extraction of Toolkit project
  *
