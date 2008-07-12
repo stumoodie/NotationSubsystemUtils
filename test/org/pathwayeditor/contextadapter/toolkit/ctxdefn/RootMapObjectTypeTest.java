@@ -23,7 +23,7 @@ public class RootMapObjectTypeTest {
 	@Before
 	public void setUp() throws Exception {
 		this.testContext = context.mock(IContext.class);
-		this.testInstance = new RootMapObjectType(this.testContext, TestTypes.TEST_ROOT);
+		this.testInstance = new RootMapObjectType(this.testContext, TestTypes.TEST_ROOT.name(), TestTypes.TEST_ROOT.ordinal());
 	}
 
 	@After
@@ -32,12 +32,12 @@ public class RootMapObjectTypeTest {
 
 	@Test(expected=IllegalArgumentException.class)
 	public final void testRootMapObjectTypeNullType() {
-		new RootMapObjectType(this.testContext, null);
+		new RootMapObjectType(this.testContext, null, TestTypes.TEST_ROOT.ordinal());
 	}
 
 	@Test(expected=IllegalArgumentException.class)
 	public final void testRootMapObjectTypeNullCtx() {
-		new RootMapObjectType(null, TestTypes.TEST_ROOT);
+		new RootMapObjectType(null, TestTypes.TEST_ROOT.name(), TestTypes.TEST_ROOT.ordinal());
 	}
 
 	@Test

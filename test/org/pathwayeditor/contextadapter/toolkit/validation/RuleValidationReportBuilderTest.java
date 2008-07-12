@@ -208,7 +208,7 @@ public class RuleValidationReportBuilderTest {
 
 	@Test
 	public void testSetRulePassed() {
-		final Set<IValidationRuleConfig> configs = new HashSet<IValidationRuleConfig> (Arrays.asList(new IValidationRuleConfig[]{CONFIG1}));
+//		final Set<IValidationRuleConfig> configs = new HashSet<IValidationRuleConfig> (Arrays.asList(new IValidationRuleConfig[]{CONFIG1}));
 		reportBuilderAPI.setRulePassed(DEF1);
 		reportBuilderAPI.createValidationReport();
 		IValidationReport report = reportBuilderAPI.getValidationReport();

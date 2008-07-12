@@ -29,10 +29,10 @@ public class ShapeObjectTypeTest {
 	public void setUp() throws Exception {
 		this.testContext1 = new GeneralContext("123454", "Test1", "Test1", 1, 0, 0);
 		this.testContext2 = new GeneralContext("123453636", "Test2", "Test2", 1, 0, 0);
-		this.testInstance = new ShapeObjectType(this.testContext1, TestType.TEST1);
-		this.testOtherInstance1 = new ShapeObjectType(this.testContext1, TestType.TEST2);
-		this.testOtherInstance2 = new ShapeObjectType(this.testContext1, TestType.TEST1);
-		this.testOtherInstance3 = new ShapeObjectType(this.testContext2, TestType.TEST1);
+		this.testInstance = new ShapeObjectType(this.testContext1, TestType.TEST1.name(), TestType.TEST1.ordinal());
+		this.testOtherInstance1 = new ShapeObjectType(this.testContext1, TestType.TEST2.name(), TestType.TEST2.ordinal());
+		this.testOtherInstance2 = new ShapeObjectType(this.testContext1, TestType.TEST1.name(), TestType.TEST1.ordinal());
+		this.testOtherInstance3 = new ShapeObjectType(this.testContext2, TestType.TEST1.name(), TestType.TEST1.ordinal());
 	}
 
 	@After
@@ -50,12 +50,12 @@ public class ShapeObjectTypeTest {
 
 	@Test(expected=IllegalArgumentException.class)
 	public final void testShapeObjectTypeNullCtx() {
-		new ShapeObjectType(null, TestType.TEST1);
+		new ShapeObjectType(null, TestType.TEST1.name(), TestType.TEST1.ordinal());
 	}
 
 	@Test(expected=IllegalArgumentException.class)
 	public final void testShapeObjectTypeNullType() {
-		new ShapeObjectType(this.testContext1, null);
+		new ShapeObjectType(this.testContext1, null, TestType.TEST1.ordinal());
 	}
 
 	@Test(expected=IllegalArgumentException.class)

@@ -31,7 +31,7 @@ public class ModelObjectTest {
 
 	private String badId = "!goodId";
 
-	private ModelObject mObject = mockery.mock(ModelObject.class);
+//	private ModelObject mObject = mockery.mock(ModelObject.class);
 
 	// private
 	@Before
@@ -52,26 +52,26 @@ public class ModelObjectTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testModelObjectStringStringStringBadId() {
-		ModelObject stObject = new ModelObject(badId, NAME, ASCII_NAME) {
+		new ModelObject(badId, NAME, ASCII_NAME) {
 		};
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testModelObjectStringNullString() {
-		ModelObject stObject = new ModelObject(goodId, null, ASCII_NAME) {
-		};
+			new ModelObject(goodId, null, ASCII_NAME) {
+			};	
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testModelObjectStringStringNull() {
-		ModelObject stObject = new ModelObject(goodId, NAME, null) {
+		new ModelObject(goodId, NAME, null) {
 		};
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testModelObjectWithEmptyStringNotAllowed() {
 		String EMPTY_STRING_ID="";
-		ModelObject stObject = new ModelObject(EMPTY_STRING_ID, NAME, null) {
+		new ModelObject(EMPTY_STRING_ID, NAME, null) {
 		};
 	}
 
@@ -157,6 +157,9 @@ public class ModelObjectTest {
 
 /*
  * $Log$
+ * Revision 1.2  2008/07/12 15:50:18  smoodie
+ * eliminated warnings and resurrected a couple of Ignored tests.
+ *
  * Revision 1.1  2008/07/10 12:06:37  nhanlon
  * extraction of Toolkit project
  *
