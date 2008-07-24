@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>uk.ac.ed.inf.csb</groupId>
+	<artifactId>Toolkit</artifactId>
+	<name>Context Adapter Developer's Toolkit</name>
+	<version>0.0.1-SNAPSHOT</version>
+	<description>Contains standard implementations of the context adapter API</description>
+	<parent>
+		<groupId>uk.ac.ed.inf.csb</groupId>
+		<artifactId>EPE_mavenBuild</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<properties>
+		<!-- the file name of the packaged jar file, minus the '.jar' extension.-->
+		<finalName>Toolkit</finalName>
+	</properties>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<finalName>${finalName}</finalName>
+				</configuration>
+			</plugin>
+			<plugin>
+			        <artifactId>maven-antrun-plugin</artifactId>
+			        <executions>
+			          <execution>
+			            <phase>package</phase>
+			            <configuration>
+			              <tasks>
+			              	<copy file="${project.build.directory}/${finalName}.jar" todir="${Metabolic.project.dir}"/>
+			              	<copy file="${project.build.directory}/${finalName}.jar" todir="${BasicContext.project.dir}"/>
+			              	<copy file="${project.build.directory}/${finalName}.jar" todir="${SBGN.project.dir}"/>
+			              	<copy file="${project.build.directory}/${finalName}.jar" todir="${Cytoscape.project.dir}"/>
+			              </tasks>
+			            </configuration>
+			            <goals>
+			              <goal>run</goal>
+			            </goals>
+			          </execution>
+			        </executions>
+			      </plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>uk.ac.ed.inf.csb</groupId>
+			<artifactId>EPE2_new</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+</project>
