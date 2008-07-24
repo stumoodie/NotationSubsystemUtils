@@ -31,10 +31,10 @@
 			            <phase>package</phase>
 			            <configuration>
 			              <tasks>
-			              	<copy file="${project.build.directory}/${finalName}.jar" todir="${Metabolic.project.dir}"/>
-			              	<copy file="${project.build.directory}/${finalName}.jar" todir="${BasicContext.project.dir}"/>
-			              	<copy file="${project.build.directory}/${finalName}.jar" todir="${SBGN.project.dir}"/>
-			              	<copy file="${project.build.directory}/${finalName}.jar" todir="${Cytoscape.project.dir}"/>
+			              	<copy file="${project.build.directory}/${finalName}.jar" todir="${Metabolic.project.dir}/lib"/>
+			              	<copy file="${project.build.directory}/${finalName}.jar" todir="${BasicContext.project.dir}/lib"/>
+			              	<copy file="${project.build.directory}/${finalName}.jar" todir="${SBGN.project.dir}/lib"/>
+			              	<copy file="${project.build.directory}/${finalName}.jar" todir="${Cytoscape.project.dir}/lib"/>
 			              </tasks>
 			            </configuration>
 			            <goals>
