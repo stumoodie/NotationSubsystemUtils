@@ -31,7 +31,7 @@ public class ValidationRuleConfig implements IValidationRuleConfig {
 	}
 
 	public boolean isErrorRule() {
-		return ruleIsMandatory() || ((ruleIsOptional() || ruleisGuideline()) && isError ==true);
+		return ruleIsMandatory() || ruleIsOptional() || (ruleisGuideline() && isError ==true);
 	}
 
 	private boolean ruleisGuideline() {
