@@ -33,6 +33,6 @@
     </target>
 	
 	<target name="toolkit-jar" depends="build-project">
-		<jar destfile="toolkit.jar" basedir="bin" />
+		<jar destfile="Toolkit.jar" basedir="bin" />
 	</target>
 </project>
