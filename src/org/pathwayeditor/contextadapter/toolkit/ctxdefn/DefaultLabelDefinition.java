@@ -86,7 +86,7 @@ public class DefaultLabelDefinition implements ILabelDefinition {
 
 
 /*
- * $Log$
+ * $Log: DefaultLabelDefinition.java,v $
  * Revision 1.1  2008/07/10 12:06:36  nhanlon
  * extraction of Toolkit project
  *

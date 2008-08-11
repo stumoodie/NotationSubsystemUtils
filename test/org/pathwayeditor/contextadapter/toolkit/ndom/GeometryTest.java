@@ -34,7 +34,7 @@ public class GeometryTest {
 	}
 	
 	/**
-	 * Test method for {@link org.pathwayeditor.contextadapter.toolkit.ndom.AbstractNDOMParser#getSrcLocation(org.pathwayeditor.businessobjectsAPI.ILink, org.pathwayeditor.businessobjectsAPI.IShape)}.
+	 * Test method for {@link org.pathwayeditor.contextadapter.toolkit.ndom.GeometryUtils#getSrcLocation(org.pathwayeditor.businessobjectsAPI.ILink, org.pathwayeditor.businessobjectsAPI.IShape)}.
 	 */
 	@Test
 	public void testGetSrcLocationNoBends180() {
@@ -51,13 +51,13 @@ public class GeometryTest {
 			atLeast(1).of(t).getCentre();
 			will(returnValue(new Location(5,25)));
 		}});
-		Location a=ndom.getSrcLocation(l, s);
+		Location a=GeometryUtils.getSrcLocation(l, s);
 		assertEquals(new Location(-20,0), a);
 		this.mockery.assertIsSatisfied();
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.contextadapter.toolkit.ndom.AbstractNDOMParser#getSrcLocation(org.pathwayeditor.businessobjectsAPI.ILink, org.pathwayeditor.businessobjectsAPI.IShape)}.
+	 * Test method for {@link org.pathwayeditor.contextadapter.toolkit.ndom.GeometryUtils#getSrcLocation(org.pathwayeditor.businessobjectsAPI.ILink, org.pathwayeditor.businessobjectsAPI.IShape)}.
 	 */
 	@Test
 	public void testGetSrcLocationBends180() {
@@ -74,13 +74,13 @@ public class GeometryTest {
 			atLeast(1).of(bp).getFirstRelativeDimension();
 			will(returnValue(new Size(5,25)));
 		}});
-		Location a=ndom.getSrcLocation(l, s);
+		Location a=GeometryUtils.getSrcLocation(l, s);
 		assertEquals(new Location(5,25), a);
 		this.mockery.assertIsSatisfied();
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.contextadapter.toolkit.ndom.AbstractNDOMParser#getAngle(org.pathwayeditor.businessobjectsAPI.Location, org.pathwayeditor.businessobjectsAPI.Location)}.
+	 * Test method for {@link org.pathwayeditor.contextadapter.toolkit.ndom.GeometryUtils#getAngle(org.pathwayeditor.businessobjectsAPI.Location, org.pathwayeditor.businessobjectsAPI.Location)}.
 	 */
 	@Ignore
 	@Test
@@ -94,7 +94,7 @@ public class GeometryTest {
 
 
 /*
- * $Log$
+ * $Log: GeometryTest.java,v $
  * Revision 1.1  2008/07/10 12:06:37  nhanlon
  * extraction of Toolkit project
  *

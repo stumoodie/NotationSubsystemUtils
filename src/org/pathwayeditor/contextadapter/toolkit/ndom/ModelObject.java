@@ -115,7 +115,7 @@ public abstract class ModelObject implements INdomModel {
 }
 
 /*
- * $Log$
+ * $Log: ModelObject.java,v $
  * Revision 1.1  2008/07/10 12:06:38  nhanlon
  * extraction of Toolkit project
  *
