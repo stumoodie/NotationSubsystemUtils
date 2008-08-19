@@ -4,15 +4,12 @@
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/junit-4.4.jar"/>
-	<classpathentry kind="lib" path="lib/jmock-2.3.0/cglib-2.1_3-src.jar"/>
 	<classpathentry kind="lib" path="lib/jmock-2.3.0/cglib-nodep-2.1_3.jar"/>
 	<classpathentry kind="lib" path="lib/jmock-2.3.0/hamcrest-core-1.1.jar"/>
 	<classpathentry kind="lib" path="lib/jmock-2.3.0/hamcrest-library-1.1.jar"/>
 	<classpathentry kind="lib" path="lib/jmock-2.3.0/jmock-2.3.0.jar"/>
-	<classpathentry kind="lib" path="lib/jmock-2.3.0/jmock-junit3-2.3.0.jar"/>
 	<classpathentry kind="lib" path="lib/jmock-2.3.0/jmock-junit4-2.3.0.jar"/>
-	<classpathentry kind="lib" path="lib/jmock-2.3.0/jmock-legacy-2.3.0.jar"/>
 	<classpathentry kind="lib" path="lib/jmock-2.3.0/objenesis-1.0.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/EPE2_new"/>
+	<classpathentry kind="lib" path="/EPE2_new/EPE2_new.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
