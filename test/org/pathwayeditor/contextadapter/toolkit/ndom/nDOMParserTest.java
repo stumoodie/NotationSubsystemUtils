@@ -27,7 +27,7 @@ import org.pathwayeditor.businessobjects.typedefn.IObjectType;
  * @date 28 May 2008
  * 
  */
-public class TestNDOMParser {
+public class nDOMParserTest {
 
 	static class ParserStub extends AbstractNDOMParser{
 

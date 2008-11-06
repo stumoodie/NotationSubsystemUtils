@@ -52,8 +52,8 @@ public abstract class ModelObject implements INdomModel {
 	 */
 	public ModelObject(String id, IDrawingNode mapObject)
 			throws IllegalArgumentException {
-		this(id, mapObject.getAttribute().get, AbstractNDOMParser
-				.getASCIIName(mapObject));
+		this(id, mapObject //FIXME, 
+				AbstractNDOMParser.getASCIIName(mapObject));
 		setDescription(mapObject.getAttribute().);
 		setDetailedDescription(mapObject.getObjectType().getDetailedDescription());
 	}
