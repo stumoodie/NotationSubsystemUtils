@@ -2,7 +2,7 @@ package org.pathwayeditor.contextadapter.toolkit.validation;
 
 import java.util.Set;
 
-import org.pathwayeditor.contextadapter.publicapi.IValidationRuleConfig;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleConfig;
 
 /**
  * Context adapters should implement this interface to populate a

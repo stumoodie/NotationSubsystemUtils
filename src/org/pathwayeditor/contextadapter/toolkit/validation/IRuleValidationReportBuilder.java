@@ -1,8 +1,8 @@
 package org.pathwayeditor.contextadapter.toolkit.validation;
 
-import org.pathwayeditor.businessobjectsAPI.IMapObject;
-import org.pathwayeditor.contextadapter.publicapi.IValidationReport;
-import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition;
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReport;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
 
 
 /**
@@ -38,7 +38,7 @@ public interface IRuleValidationReportBuilder {
 	 * @throws IllegalStateException if the builder is not in a state where isReadyToValidate() or isValidating() == true.
 	 * @throws IllegalArgumentException if the <code>ruleDefinition</code>parameter is not in the IValidationRuleStore().
 	 */
-	void setRuleFailed(IMapObject mapObject,IValidationRuleDefinition ruleDefinition, String message);
+	void setRuleFailed(IDrawingNode inValidObject,IValidationRuleDefinition ruleDefinition, String message);
 	
 	// do we need this? A rule may be tested several times; if it passes once it can still fail later.
 	// This is not used to generate the validation report.

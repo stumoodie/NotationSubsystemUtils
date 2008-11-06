@@ -1,7 +1,7 @@
 package org.pathwayeditor.contextadapter.toolkit.ndom;
 
-import org.pathwayeditor.businessobjectsAPI.IMap;
-import org.pathwayeditor.contextadapter.publicapi.IValidationReport;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReport;
+import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.contextadapter.toolkit.validation.IValidationRuleStore;
 
 

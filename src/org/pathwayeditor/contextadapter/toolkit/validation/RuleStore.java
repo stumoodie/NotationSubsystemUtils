@@ -6,9 +6,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.pathwayeditor.contextadapter.publicapi.IValidationRuleConfig;
-import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition;
-import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition.RuleLevel;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleConfig;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition.RuleLevel;
 
 
 /**
@@ -116,12 +116,12 @@ public class RuleStore implements IValidationRuleStore {
 		Set<IValidationRuleConfig> copies = new HashSet<IValidationRuleConfig>();
 		for (IValidationRuleConfig originalConfig: defaults){
 			IValidationRuleDefinition originalDefn = originalConfig.getValidationRuleDefinition();
-			ValidationRuleDefinition defnCopy= new ValidationRuleDefinition(originalDefn.getContext(), originalDefn.getName(),
+			ValidationRuleDefinition defnCopy= new ValidationRuleDefinition(originalDefn.getValidationService(), originalDefn.getName(),
 					                                            originalDefn.getRuleCategory(), originalDefn.getRuleNumber(), 
-					                                               originalDefn.getRuleLevel());
+					                                               originalDefn.getRuleLevel(), originalDefn.getDefaultEnforcementLevel());
 			defnCopy.setDesc(originalDefn.getDescription());
 			defnCopy.setDetailedDesc(originalDefn.getDetailedDescription());
-			ValidationRuleConfig configCopy= new ValidationRuleConfig(defnCopy,originalConfig.mustBeRun(), originalConfig.isErrorRule());
+			ValidationRuleConfig configCopy= new ValidationRuleConfig(defnCopy);
 		   copies.add(configCopy);
 		}
 		return copies;

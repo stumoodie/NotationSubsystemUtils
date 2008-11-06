@@ -1,6 +1,6 @@
 package org.pathwayeditor.contextadapter.toolkit.ctxdefn;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.jmock.Expectations;
 import org.jmock.Mockery;
@@ -10,7 +10,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pathwayeditor.contextadapter.publicapi.IShapeObjectType;
+import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
 
 @RunWith(JMock.class)

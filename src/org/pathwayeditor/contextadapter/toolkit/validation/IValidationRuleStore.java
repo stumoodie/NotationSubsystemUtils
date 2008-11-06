@@ -3,8 +3,8 @@ package org.pathwayeditor.contextadapter.toolkit.validation;
 import java.util.List;
 import java.util.Set;
 
-import org.pathwayeditor.contextadapter.publicapi.IValidationRuleConfig;
-import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleConfig;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
 
 
 /**

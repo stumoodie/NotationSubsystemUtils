@@ -1,6 +1,8 @@
 package org.pathwayeditor.contextadapter.toolkit.validation;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -10,49 +12,49 @@ import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pathwayeditor.businessobjectsAPI.IMap;
-import org.pathwayeditor.contextadapter.publicapi.IValidationReport;
-import org.pathwayeditor.contextadapter.publicapi.IValidationReportItem;
-import org.pathwayeditor.contextadapter.publicapi.IValidationRuleConfig;
-import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition;
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReport;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReportItem;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleConfig;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition.RuleEnforcement;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition.RuleLevel;
 
 @RunWith(JMock.class)
 public class RuleValidationReportBuilderTest {
     IRuleValidationReportBuilder reportBuilderAPI;
     RuleValidationReportBuilderExt reportBuilderImpl;
     
-    // allows modulation of state
+    Mockery mockery = new JUnit4Mockery();
+	final ICanvas map = mockery.mock(ICanvas.class);
+	final IValidationRuleStore store = mockery.mock(IValidationRuleStore.class);
+	final IValidationRuleConfig	 CONFIG1 = mockery.mock(IValidationRuleConfig.class);
+	final IValidationRuleDefinition mandatoryRuleDefinition = mockery.mock(IValidationRuleDefinition.class) ;
+	final IValidationRuleDefinition optionalRuleDefinition = mockery.mock(IValidationRuleDefinition.class) ;
+	// allows modulation of state
     class RuleValidationReportBuilderExt extends RuleValidationReportBuilder {
-    	public RuleValidationReportBuilderExt(IValidationRuleStore store, IMap map) {
+    	public RuleValidationReportBuilderExt(IValidationRuleStore store, ICanvas map) {
 			super(store, map);
 		}
     	void setState(int state) {
     		this.state=state;
     	}
-    
     }
-    
-    Mockery mockery = new JUnit4Mockery();
-	final IMap map = mockery.mock(IMap.class);
-	final IValidationRuleStore store = mockery.mock(IValidationRuleStore.class);
-	final IValidationRuleDefinition DEF1 = mockery.mock(IValidationRuleDefinition.class);
-	final IValidationRuleConfig	 CONFIG1 = mockery.mock(IValidationRuleConfig.class);
-	
-	
-	
 	@Before
 	public void setUp() throws Exception {
 		reportBuilderImpl = new RuleValidationReportBuilderExt(store, map);
 		reportBuilderAPI= reportBuilderImpl;
+		mockery.checking(new Expectations() {
+			{
+				allowing(mandatoryRuleDefinition).getRuleLevel();will(returnValue(RuleLevel.MANDATORY));
+				allowing(optionalRuleDefinition).getRuleLevel();will(returnValue(RuleLevel.OPTIONAL));
+			}
+		});
 	}
 
-	@After
-	public void tearDown() throws Exception {
-	}
 
 	@Test
 	public void testRuleValidationReportBuilderIsReadyToValidateAfterConstruction() {
@@ -106,7 +108,7 @@ public class RuleValidationReportBuilderTest {
 	public void testGetValidationReportOnlyAllowedAfterCompletion() {
 		reportBuilderImpl.setState(RuleValidationReportBuilder.COMPLETED);
         IValidationReport report = reportBuilderAPI.getValidationReport();
-        assertEquals(map, report.getMap());
+        assertEquals(map, report.getCanvas());
 	}
 
 	@Test
@@ -168,26 +170,19 @@ public class RuleValidationReportBuilderTest {
 		final Set<IValidationRuleConfig> configs = new HashSet<IValidationRuleConfig> (Arrays.asList(new IValidationRuleConfig[]{CONFIG1}));
 		final int RULE_ID=1;
 		setUpRuleAssertions(configs, RULE_ID);
-		mockery.checking(new Expectations() {
-			{atLeast(1).of(CONFIG1).mustBeRun(); will(returnValue(true));}	;
-	});
-		reportBuilderAPI.setRuleFailed(null, DEF1, "Failed");
+		reportBuilderAPI.setRuleFailed(null, mandatoryRuleDefinition, "Failed");
 		reportBuilderAPI.createValidationReport();
 		IValidationReport report = reportBuilderAPI.getValidationReport();
 		assertEquals(1, report.getValidationReportItems().size());
 		assertEquals(IValidationReportItem.Severity.ERROR, report.getValidationReportItems().get(0).getSeverity());
 	}
 	
-	
 	@Test
-	public void testRuleFsilureOnlyAddedToReportIfMustBeRunIsTrue (){
+	public void testRuleFailureOnlyAddedToReportIfMustBeRunIsTrue (){
 		final Set<IValidationRuleConfig> configs = new HashSet<IValidationRuleConfig> (Arrays.asList(new IValidationRuleConfig[]{CONFIG1}));
 		final int RULE_ID=1;
-		setUpRuleAssertions(configs, RULE_ID);
-		mockery.checking(new Expectations() {
-			{atLeast(1).of(CONFIG1).mustBeRun(); will(returnValue(false));}	;
-	    });
-		reportBuilderAPI.setRuleFailed(null, DEF1, "Failed");
+		setUpOptionalRuleAssertions(configs, RULE_ID);
+		reportBuilderAPI.setRuleFailed(null, optionalRuleDefinition, "Failed");
 		reportBuilderAPI.createValidationReport();
 		IValidationReport report = reportBuilderAPI.getValidationReport();
 		assertEquals(0, report.getValidationReportItems().size());
@@ -195,26 +190,33 @@ public class RuleValidationReportBuilderTest {
 
 	private void setUpRuleAssertions(final Set<IValidationRuleConfig> configs, final int RULE_ID) {
 		mockery.checking(new Expectations() {
-			{atLeast(1).of(DEF1).getRuleNumber(); will(returnValue(RULE_ID));}
-			{allowing(CONFIG1).getValidationRuleDefinition(); will(returnValue(DEF1));}
-			{allowing(CONFIG1).isErrorRule(); will(returnValue(true));}
+			{atLeast(1).of(mandatoryRuleDefinition).getRuleNumber(); will(returnValue(RULE_ID));}
+			{allowing(CONFIG1).getValidationRuleDefinition(); will(returnValue(mandatoryRuleDefinition));}
+			{allowing(CONFIG1).getCurrentRuleEnforcement(); will(returnValue(RuleEnforcement.ERROR));}
 		//	{atLeast(1).of(store).getConfigurableRules();will(returnValue(configs));}
 			{atLeast(1).of(store).containsRule(RULE_ID);will(returnValue(true));}
 			{atLeast(1).of(store).getRuleConfigByID(RULE_ID);will(returnValue(CONFIG1));}
 		});
 	}
-	
-	
+	private void setUpOptionalRuleAssertions(final Set<IValidationRuleConfig> configs, final int RULE_ID) {
+		mockery.checking(new Expectations() {
+			{atLeast(1).of(optionalRuleDefinition).getRuleNumber(); will(returnValue(RULE_ID));}
+			{allowing(CONFIG1).getValidationRuleDefinition(); will(returnValue(optionalRuleDefinition));}
+			{allowing(CONFIG1).getCurrentRuleEnforcement(); will(returnValue(RuleEnforcement.ERROR));}
+		//	{atLeast(1).of(store).getConfigurableRules();will(returnValue(configs));}
+			{atLeast(1).of(store).containsRule(RULE_ID);will(returnValue(true));}
+			{atLeast(1).of(store).getRuleConfigByID(RULE_ID);will(returnValue(CONFIG1));}
+		});
+	}
 
 	@Test
 	public void testSetRulePassed() {
 //		final Set<IValidationRuleConfig> configs = new HashSet<IValidationRuleConfig> (Arrays.asList(new IValidationRuleConfig[]{CONFIG1}));
-		reportBuilderAPI.setRulePassed(DEF1);
+		reportBuilderAPI.setRulePassed(mandatoryRuleDefinition);
 		reportBuilderAPI.createValidationReport();
 		IValidationReport report = reportBuilderAPI.getValidationReport();
 		assertEquals(0, report.getValidationReportItems().size());
 	}
-	
 	
 	@Test(expected=IllegalArgumentException.class)
 	public void testSetRuleFailedDoesNotAcceptRulesFromOutsideRuleStore () {

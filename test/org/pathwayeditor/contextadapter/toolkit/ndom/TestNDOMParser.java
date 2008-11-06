@@ -15,9 +15,10 @@ import org.jmock.lib.legacy.ClassImposteriser;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.pathwayeditor.businessobjectsAPI.IRootMapObject;
-import org.pathwayeditor.businessobjectsAPI.IShape;
-import org.pathwayeditor.contextadapter.publicapi.IObjectType;
+import org.pathwayeditor.businessobjects.drawingprimitives.IRootNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
+import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
+import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 
 
 /**
@@ -64,7 +65,7 @@ public class TestNDOMParser {
 	@Before
 	public void setUp() throws Exception {
 		parser=new ParserStub();
-		IRootMapObject rmo=mockery.mock(IRootMapObject.class);
+		IRootNode rmo=mockery.mock(IRootNode.class);
 		parser.setRmo(rmo);
 	}
 
@@ -81,12 +82,12 @@ public class TestNDOMParser {
 	@Test
 	public void testGetIdString() {
 		final String name = "ObjecType";
-		final IShape s=mockery.mock(IShape.class);
-		final IObjectType otString=mockery.mock(IObjectType.class);
+		final IShapeNode s=mockery.mock(IShapeNode.class);
+		final INodeObjectType otString=mockery.mock(INodeObjectType.class);
 		mockery.checking(new Expectations(){{
 			atLeast(1).of(s).getObjectType();
 			will(returnValue(otString));
-			atLeast(1).of(otString).getTypeName();
+			atLeast(1).of(otString).getName();
 			will(returnValue(name));
 		}});
 		String id=parser.getId(s);
@@ -103,12 +104,12 @@ public class TestNDOMParser {
 	public void testGetIdWrong() {
 		final String name = "Objec Type";
 		String nameOk = "ObjecType0";
-		final IShape s=mockery.mock(IShape.class);
-		final IObjectType otString=mockery.mock(IObjectType.class);
+		final IShapeNode s=mockery.mock(IShapeNode.class);
+		final INodeObjectType otString=mockery.mock(INodeObjectType.class);
 		mockery.checking(new Expectations(){{
 			one(s).getObjectType();
 			will(returnValue(otString));
-			one(otString).getTypeName();
+			one(otString).getName();
 			will(returnValue(name));
 		}});
 		String id=parser.getId(s);
@@ -123,12 +124,12 @@ public class TestNDOMParser {
 	public void testGetIdWeird() {
 		final String name = "£Objec%$ <Type>=*&";
 		String nameOk = "ObjecType0";
-		final IShape s=mockery.mock(IShape.class);
-		final IObjectType otString=mockery.mock(IObjectType.class);
+		final IShapeNode s=mockery.mock(IShapeNode.class);
+		final INodeObjectType otString=mockery.mock(INodeObjectType.class);
 		mockery.checking(new Expectations(){{
 			one(s).getObjectType();
 			will(returnValue(otString));
-			one(otString).getTypeName();
+			one(otString).getName();
 			will(returnValue(name));
 		}});
 		String id=parser.getId(s);
@@ -177,13 +178,13 @@ public class TestNDOMParser {
 	@Test
 	public void testParse() throws NdomException {
 		final String name = "ObjecType";
-		final IShape s=mockery.mock(IShape.class);
+		final IShapeNode s=mockery.mock(IShapeNode.class);
 		
-		final IObjectType otString=mockery.mock(IObjectType.class);
+		final INodeObjectType otString=mockery.mock(INodeObjectType.class);
 		mockery.checking(new Expectations(){{
 			atLeast(1).of(s).getObjectType();
 			will(returnValue(otString));
-			atLeast(1).of(otString).getTypeName();
+			atLeast(1).of(otString).getName();
 			will(returnValue(name));
 		}});
 		String id=parser.getId(s);

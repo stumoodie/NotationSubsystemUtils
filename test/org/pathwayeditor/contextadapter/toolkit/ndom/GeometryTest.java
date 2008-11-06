@@ -1,6 +1,7 @@
 package org.pathwayeditor.contextadapter.toolkit.ndom;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 
@@ -12,11 +13,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.pathwayeditor.businessobjectsAPI.IBendpoint;
-import org.pathwayeditor.businessobjectsAPI.ILink;
-import org.pathwayeditor.businessobjectsAPI.IShape;
-import org.pathwayeditor.businessobjectsAPI.Location;
-import org.pathwayeditor.businessobjectsAPI.Size;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
+import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 
 public class GeometryTest {
 
@@ -34,17 +34,17 @@ public class GeometryTest {
 	}
 	
 	/**
-	 * Test method for {@link org.pathwayeditor.contextadapter.toolkit.ndom.GeometryUtils#getSrcLocation(org.pathwayeditor.businessobjectsAPI.ILink, org.pathwayeditor.businessobjectsAPI.IShape)}.
+	 * Test method for {@link org.pathwayeditor.contextadapter.toolkit.ndom.GeometryUtils#getSrcLocation(org.pathwayeditor.businessobjectsAPI.ILinkEdge, org.pathwayeditor.businessobjectsAPI.IShapeNode)}.
 	 */
 	@Test
 	public void testGetSrcLocationNoBends180() {
-		final ILink l=mockery.mock(ILink.class);
-		final IShape s=mockery.mock(IShape.class);
-		final IShape t=mockery.mock(IShape.class);
+		final ILinkEdge l=mockery.mock(ILinkEdge.class);
+		final IShapeNode s=mockery.mock(IShapeNode.class);
+		final IShapeNode t=mockery.mock(IShapeNode.class);
 		this.mockery.checking(new Expectations() {{
-			atLeast(1).of(s).getCentre();
+			atLeast(1).of(s).getAttribute().getLocation();
 			will(returnValue(new Location(25,25)));
-			atLeast(1).of(l).getBendpoints();
+			atLeast(1).of(l).getBendpointsI();
 			will(returnValue(new ArrayList<IBendpoint>()));
 			one(l).getTarget();
 			will(returnValue(t));
@@ -57,12 +57,12 @@ public class GeometryTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.contextadapter.toolkit.ndom.GeometryUtils#getSrcLocation(org.pathwayeditor.businessobjectsAPI.ILink, org.pathwayeditor.businessobjectsAPI.IShape)}.
+	 * Test method for {@link org.pathwayeditor.contextadapter.toolkit.ndom.GeometryUtils#getSrcLocation(org.pathwayeditor.businessobjectsAPI.ILinkEdge, org.pathwayeditor.businessobjectsAPI.IShapeNode)}.
 	 */
 	@Test
 	public void testGetSrcLocationBends180() {
-		final ILink l=mockery.mock(ILink.class);
-		final IShape s=mockery.mock(IShape.class);
+		final ILinkEdge l=mockery.mock(ILinkEdge.class);
+		final IShapeNode s=mockery.mock(IShapeNode.class);
 		final ArrayList<IBendpoint> bpl = new ArrayList<IBendpoint>();
 		final IBendpoint bp = this.mockery.mock(IBendpoint.class);
 		bpl.add(bp);

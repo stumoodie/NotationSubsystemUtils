@@ -1,65 +1,27 @@
 package org.pathwayeditor.contextadapter.toolkit.ctxdefn;
 
-import org.pathwayeditor.contextadapter.publicapi.ILabelDefinition;
-import org.pathwayeditor.contextadapter.publicapi.IPropertyDefinition;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IHtmlAnnotationProperty;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IHtmlPropertyDefinition;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 
+public final class FormattedTextPropertyDefinition extends TextPropertyDefinition implements IHtmlPropertyDefinition {
 
-public final class FormattedTextPropertyDefinition implements IPropertyDefinition {
-	private final String name;
-	private final PropDefnType type;
-	private final String value;
-	private final boolean visualisable;
-	private final boolean editable;
-	
-	public FormattedTextPropertyDefinition(String name, String value, boolean isVisualisable, boolean isEditable){
-		this.name = name;
-		this.type = PropDefnType.FORMATTED_TEXT;
-		this.value = value;
-		this.visualisable = isVisualisable;
-		this.editable = isEditable;
-		if(isVisualisable()){
-			setAppearance(new DefaultLabelDefinition());
-		}
-
-	}
-	
-	public String getName() {
-		return this.name;
-	}
-
-	public PropDefnType getType() {
-		return this.type;
-	}
-
-	public String getValue() {
-		return this.value;
-	}
-
-	public String getValueObject() {
-		return this.value;
-	}
-
-	public boolean isEditable() {
-		return this.editable;
-	}
-
-	public boolean isVisualisable() {
-		return this.visualisable;
+	public FormattedTextPropertyDefinition(String name, String value, boolean isVisualisable, boolean isEditable) {
+		super(name,value,isVisualisable,isEditable);
 	}
 
 	public int compareTo(IPropertyDefinition o) {
-		return this.name.compareTo(o.getName());
+		return getName().compareTo(o.getName());
+	}
+	
+	public IAnnotationProperty copyProperty(IPropertyBuilder propertyBuilder, IAnnotationProperty prop) {
+		return propertyBuilder.copyHtmlProperty((IHtmlAnnotationProperty) prop);
 	}
 
-	private ILabelDefinition appearance;
-
-	public ILabelDefinition getAppearance() {
-		return appearance;
+	public IAnnotationProperty createProperty(IPropertyBuilder propertyBuilder) {
+		return propertyBuilder.createHtmlProperty(this);
 	}
-
-	public void setAppearance(ILabelDefinition appearance) {
-		this.appearance = appearance;
-	}
-
 
 }

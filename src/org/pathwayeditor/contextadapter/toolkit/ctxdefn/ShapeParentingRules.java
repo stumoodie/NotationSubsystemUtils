@@ -3,9 +3,9 @@ package org.pathwayeditor.contextadapter.toolkit.ctxdefn;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.pathwayeditor.contextadapter.publicapi.IObjectType;
-import org.pathwayeditor.contextadapter.publicapi.IShapeObjectType;
-import org.pathwayeditor.contextadapter.publicapi.IShapeParentingRules;
+import org.pathwayeditor.businessobjects.typedefn.IObjectType;
+import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
+import org.pathwayeditor.businessobjects.typedefn.IShapeParentingRules;
 
 public class ShapeParentingRules implements IShapeParentingRules {
 	private final Set<IObjectType> childSet;
@@ -30,7 +30,6 @@ public class ShapeParentingRules implements IShapeParentingRules {
 		this.childSet.clear();
 	}
 	
-	
 	public boolean isValidChildByCode(IObjectType possibleChild) {
 		if(possibleChild == null) throw new IllegalArgumentException("possibleChild cannot be null");
 		return this.childSet.contains(possibleChild);
@@ -38,6 +37,10 @@ public class ShapeParentingRules implements IShapeParentingRules {
 
 	public IShapeObjectType getObjectType() {
 		return this.owningShape;
+	}
+
+	public boolean isValidChild(IObjectType possibleChild) {
+		return isValidChildByCode(possibleChild);
 	}
 
 }

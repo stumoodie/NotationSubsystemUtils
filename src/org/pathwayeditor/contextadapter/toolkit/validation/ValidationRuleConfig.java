@@ -1,8 +1,9 @@
 package org.pathwayeditor.contextadapter.toolkit.validation;
 
-import org.pathwayeditor.contextadapter.publicapi.IValidationRuleConfig;
-import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition;
-import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition.RuleLevel;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleConfig;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition.RuleEnforcement;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition.RuleLevel;
 
 
 
@@ -10,8 +11,9 @@ public class ValidationRuleConfig implements IValidationRuleConfig {
 
 	private IValidationRuleDefinition definition;
 	private boolean mustBeRun;
-	private boolean isError;
-	public ValidationRuleConfig(IValidationRuleDefinition definition, boolean mustBeRun, boolean isError) {
+	private Object isError;
+	
+	public ValidationRuleConfig(IValidationRuleDefinition definition) {
 		super();
 		if(definition == null){
 			throw new IllegalArgumentException("Rule definition cannot be null");
@@ -20,58 +22,22 @@ public class ValidationRuleConfig implements IValidationRuleConfig {
 		if(definition.getRuleLevel().equals(RuleLevel.MANDATORY)){
 			this.mustBeRun = true;
 		}else {
-			this.mustBeRun = mustBeRun;
+			this.mustBeRun = false;
 		}
-		
-		this.isError = isError;
+		this.isError = definition.getDefaultEnforcementLevel().equals(RuleEnforcement.ERROR);
 	}
 
 	public IValidationRuleDefinition getValidationRuleDefinition() {
 		return definition;
 	}
-
-	public boolean isErrorRule() {
-		return ruleIsMandatory() || ruleIsOptional() || (ruleisGuideline() && isError ==true);
-	}
-
-	private boolean ruleisGuideline() {
-		return definition.getRuleLevel().equals(RuleLevel.GUIDELINE);
-	}
-
-	private boolean ruleIsOptional() {
-		return definition.getRuleLevel().equals(RuleLevel.OPTIONAL);
-	}
-
-	private boolean ruleIsMandatory() {
-		return definition.getRuleLevel().equals(RuleLevel.MANDATORY);
-	}
-
-	public boolean isWarningRule() {
-		return !isErrorRule();
-	}
-
-	public boolean mustBeRun() {
-		return mustBeRun;
-	}
-
-	public void promoteToError(boolean isError) {
-	   if(isError == false && (ruleIsMandatory() ||ruleIsOptional())){
-		   return;
-	   } else {
-		   this.isError = isError;
-	   }
-	}
-    
+	
 	/**
-	 * If
+	 * Sorts by ascending rule number
 	 */
-	public void setMustBeRun(boolean mustBeRun) {
-		if(ruleIsMandatory()){
-			return;
-		}
-		this.mustBeRun=mustBeRun;
+	public int compareTo(IValidationRuleConfig other) {
+		return definition.compareTo(other.getValidationRuleDefinition());
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -108,11 +74,16 @@ public class ValidationRuleConfig implements IValidationRuleConfig {
 		return sb.toString();
 	}
 
-	/**
-	 * Compares by rule definition rule number
-	 */
-	public int compareTo(IValidationRuleConfig other) {
-		return definition.compareTo(other.getValidationRuleDefinition());
+
+	public RuleEnforcement getCurrentRuleEnforcement() {
+		return definition.getDefaultEnforcementLevel();
+	}
+
+	public void setRuleEnforcement(RuleEnforcement ruleEnforcement) {
+		if(definition.isValidEnforcement(ruleEnforcement))
+			((ValidationRuleDefinition)definition).setRuleEnforcement(ruleEnforcement);
+		else
+			throw new IllegalArgumentException("This rule enforcement is not valid for the rule level");
 	}
 
 }

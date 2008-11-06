@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project basedir="." default="build" name="Toolkit">
     <property environment="env"/>
-    <property name="junit.output.dir" value="junit"/>
     <property name="debuglevel" value="source,lines,vars"/>
+	<property name="build.dir" value="bin"/>
+	<property name="test.dir" value="test"/>
     <property name="target" value="1.5"/>
     <property name="source" value="1.5"/>
     <path id="Toolkit.classpath">
         <pathelement location="bin"/>
-        <pathelement location="../EPE2_new/EPE2_new.jar"/>
+        <pathelement location="lib/BusinessObjects.jar"/>
     </path>
     <target name="init">
         <mkdir dir="bin"/>
@@ -24,6 +25,7 @@
     <target depends="clean" name="cleanall"/>
     <target depends="build-subprojects,build-project,toolkit-jar" name="build"/>
     <target name="build-subprojects"/>
+	
     <target depends="init" name="build-project">
         <echo message="${ant.project.name}: ${ant.file}"/>
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
@@ -31,6 +33,46 @@
             <classpath refid="Toolkit.classpath"/>
         </javac>
     </target>
+	
+	<target name="buildTest" description="test build task" depends="build-project">
+			<javac classpathref="Toolkit.classpath" srcdir="${test.dir}" debug="true" debuglevel="lines,vars,source" destdir="bin"/>
+			<copy todir="bin">
+				<fileset dir="${test.dir}">
+					<exclude name="**/*.java" />
+				</fileset>
+			</copy>
+		</target>
+
+	<target name="tests">
+		<delete dir="${build.dir}/test/logs" />
+		<mkdir dir="${build.dir}/test/logs" />
+		<!-- <echo>running with classpath ${toString:test.classpath}</echo>-->
+		<!--
+			run test cases. All test class names should end in 'Test' to avoid
+			inclusion of inner classes.
+		-->
+		<junit printsummary="yes" haltonfailure="no" fork="true">
+			<classpath>
+				<path refid="Toolkit.classpath" />
+			</classpath>
+			<batchtest todir="${build.dir}/test/logs">
+				<formatter type="xml" />
+				<fileset dir="${build.dir}">
+					<include name="**/*Test.class" />
+				</fileset>
+			</batchtest>
+		</junit>
+
+		<!-- clean report directory -->
+		<delete dir="${build.dir}/test/junitReports" />
+		<mkdir dir="${build.dir}/test/junitReports" />
+
+		<!-- generate report -->
+		<junitreport todir="${build.dir}/test/junitReports">
+			<fileset dir="${build.dir}/test/logs" includes="**/*.xml" />
+			<report todir="${build.dir}/test/junitReports" />
+		</junitreport>
+	</target>
 	
 	<target name="toolkit-jar" depends="build-project">
 		<jar destfile="Toolkit.jar" basedir="bin" />

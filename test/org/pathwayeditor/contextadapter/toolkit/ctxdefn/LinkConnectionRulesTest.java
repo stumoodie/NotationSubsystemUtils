@@ -7,12 +7,11 @@ import static org.junit.Assert.assertTrue;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pathwayeditor.contextadapter.publicapi.ILinkObjectType;
-import org.pathwayeditor.contextadapter.publicapi.IShapeObjectType;
+import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
+import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
 
 /**
@@ -46,13 +45,6 @@ public class LinkConnectionRulesTest {
 //		});
 		final ILinkObjectType link = mockery.mock(ILinkObjectType.class);
 		this.testInstance = new LinkConnectionRules(link);
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@After
-	public void tearDown() throws Exception {
 	}
 
 	/**

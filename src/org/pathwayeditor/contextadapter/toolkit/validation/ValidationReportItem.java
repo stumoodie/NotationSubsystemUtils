@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.pathwayeditor.businessobjectsAPI.IMapObject;
-import org.pathwayeditor.contextadapter.publicapi.IValidationReportItem;
-import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition;
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReportItem;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
 
 /**
  * Default implementation of a report item
@@ -16,22 +16,20 @@ import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition;
  */
 public class ValidationReportItem implements IValidationReportItem {
 
-	private IMapObject invalidMapObject;
+	private IDrawingNode invalidDrawingNode;
 	private IValidationRuleDefinition ruleDefinition;
 	private List<IValidationReportItem> childReports = new ArrayList<IValidationReportItem>();
 	private Severity severity;
 	private String message;
 	
-	
-	
-	public ValidationReportItem(IMapObject invalidMapObject,
+	public ValidationReportItem(IDrawingNode invalidDrawingNode,
 			                    IValidationRuleDefinition ruleDefinition, 
 			                     Severity severity,
 			                     String message) {
 		if(ruleDefinition == null || severity ==null || message ==null){
 			throw new IllegalArgumentException("Rule definition must not be null");
 		}
-		this.invalidMapObject = invalidMapObject;
+		this.invalidDrawingNode = invalidDrawingNode;
 		this.ruleDefinition = ruleDefinition;
 		this.severity=severity;
 		this.message = message;
@@ -41,10 +39,6 @@ public class ValidationReportItem implements IValidationReportItem {
 		return ruleDefinition;
 	}
 
-	public List<IValidationReportItem> getChildReports() {
-		return Collections.unmodifiableList(childReports);
-	}
-	
 	/**
 	 * @param childReportItem An {@link IValidationReportItem}
 	 * @return <code>true</code> if the child report item is added to this report item.
@@ -53,16 +47,19 @@ public class ValidationReportItem implements IValidationReportItem {
 		return childReports.add(childReportItem);
 	}
 	
-
-	public IMapObject getMapObject() {
-		return invalidMapObject;
+	public List<IValidationReportItem> getChildReports() {
+		return Collections.unmodifiableList(childReports);
+	}
+	
+	public IDrawingNode getInvalidObject() {
+		return invalidDrawingNode;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((invalidMapObject == null) ? 0 : invalidMapObject.hashCode());
+		result = prime * result + ((invalidDrawingNode == null) ? 0 : invalidDrawingNode.hashCode());
 		result = prime * result + ((message == null) ? 0 : message.hashCode());
 		result = prime * result + ((ruleDefinition == null) ? 0 : ruleDefinition.hashCode());
 		return result;
@@ -77,10 +74,10 @@ public class ValidationReportItem implements IValidationReportItem {
 		if (getClass() != obj.getClass())
 			return false;
 		final ValidationReportItem other = (ValidationReportItem) obj;
-		if (invalidMapObject == null) {
-			if (other.invalidMapObject != null)
+		if (invalidDrawingNode == null) {
+			if (other.invalidDrawingNode != null)
 				return false;
-		} else if (!invalidMapObject.equals(other.invalidMapObject))
+		} else if (!invalidDrawingNode.equals(other.invalidDrawingNode))
 			return false;
 		if (message == null) {
 			if (other.message != null)
@@ -108,8 +105,8 @@ public class ValidationReportItem implements IValidationReportItem {
 		sb.append("Rule id: ").append(ruleDefinition.getRuleNumber()).append("\n")
 		  .append("Message: ").append(message)
 		  .append("Severity:").append(severity);
-		if(invalidMapObject !=null){
-			sb.append("invalidMapObject: ").append(invalidMapObject.getId());
+		if(invalidDrawingNode !=null){
+			sb.append("invalidDrawingNode: ").append(invalidDrawingNode.getAttribute().getCreationSerial());
 		}
 		return sb.toString();
 	}

@@ -1,116 +1,156 @@
 package org.pathwayeditor.contextadapter.toolkit.ctxdefn;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
-import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pathwayeditor.contextadapter.publicapi.IContext;
-import org.pathwayeditor.contextadapter.publicapi.IPropertyDefinition;
-
+import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
+import org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults;
+import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
+import org.pathwayeditor.businessobjects.typedefn.IShapeParentingRules;
 
 @RunWith(JMock.class)
 public class ShapeObjectTypeTest {
-	private Mockery context = new JUnit4Mockery();
-	private ShapeObjectType testInstance;
-	private ShapeObjectType testOtherInstance1;
-	private ShapeObjectType testOtherInstance2;
-	private ShapeObjectType testOtherInstance3;
-	private IContext testContext1;
-	private IContext testContext2;
-	private static enum TestType { TEST1, TEST2 };
+	private Mockery mockery= new JUnit4Mockery();
+	private ShapeObjectType shapeObjectType;
+	private IShapeAttributeDefaults shapeAttributeDefaults =mockery.mock(IShapeAttributeDefaults.class);
+	private int positiveId=1;
+	private int negativeId=-1;
+	private String description="a";
+	private String emptyDescription="";
+	private String name="name";
+	private String emptyName="";
+	private INotationSyntaxService iNotationSyntaxService = mockery.mock(INotationSyntaxService.class);
 	
-	@Before
-	public void setUp() throws Exception {
-		this.testContext1 = new GeneralContext("123454", "Test1", "Test1", 1, 0, 0);
-		this.testContext2 = new GeneralContext("123453636", "Test2", "Test2", 1, 0, 0);
-		this.testInstance = new ShapeObjectType(this.testContext1, TestType.TEST1.name(), TestType.TEST1.ordinal());
-		this.testOtherInstance1 = new ShapeObjectType(this.testContext1, TestType.TEST2.name(), TestType.TEST2.ordinal());
-		this.testOtherInstance2 = new ShapeObjectType(this.testContext1, TestType.TEST1.name(), TestType.TEST1.ordinal());
-		this.testOtherInstance3 = new ShapeObjectType(this.testContext2, TestType.TEST1.name(), TestType.TEST1.ordinal());
+	
+	
+	@Test (expected =IllegalArgumentException.class )
+	public void testShapeAttributeDefaultsNullThrowsException(){
+		shapeObjectType=new ShapeObjectType(null, positiveId, description, name, iNotationSyntaxService);
 	}
-
-	@After
-	public void tearDown() throws Exception {
-	}
-
 	@Test
-	public final void testHashCode() {
-		assertEquals("hashCode equals", this.testInstance.hashCode(), this.testOtherInstance2.hashCode());
-		boolean typeCodeTest = this.testInstance.hashCode() == this.testOtherInstance1.hashCode();
-		boolean ctxTest = this.testInstance.hashCode() == this.testOtherInstance3.hashCode();
-		assertFalse("type code not equal", typeCodeTest);
-		assertFalse("context not equal", ctxTest);
+	public void testShapeAttributeDefaultsNotNullValid(){
+		shapeObjectType=new ShapeObjectType(shapeAttributeDefaults, positiveId, description, name, iNotationSyntaxService);
+		assertEquals(shapeAttributeDefaults,shapeObjectType.getDefaultAttributes());
 	}
-
+	
+	@Test (expected =IllegalArgumentException.class )
+	public void testShapeAttributeDefaultsSetToNullThrowsException(){
+		shapeObjectType=new ShapeObjectType(shapeAttributeDefaults, positiveId, description, name, iNotationSyntaxService);
+		shapeObjectType.setShapeAttributeDefaults(null);
+	}
+	
+	@Test
+	public void testParentingRulesAreNotNull(){
+		shapeObjectType=new ShapeObjectType(shapeAttributeDefaults, positiveId, description, name, iNotationSyntaxService);
+		IShapeParentingRules notNull=shapeObjectType.getParentingRules();
+		assertNotNull(notNull);
+	}
+	
+	@Test (expected=IllegalArgumentException.class)
+	public void testUniqueIdNotPositiveThrowsException(){
+		shapeObjectType=new ShapeObjectType(shapeAttributeDefaults,negativeId, description, name, iNotationSyntaxService);
+	}
+	
+	@Test
+	public void testUniqueIdPositive(){
+		shapeObjectType=new ShapeObjectType(shapeAttributeDefaults,positiveId, description, name, iNotationSyntaxService);
+		assertEquals(positiveId,shapeObjectType.getUniqueId());
+	}
+	
+	@Test
+	public void testDescriptionEmptyStringValid(){
+		shapeObjectType=new ShapeObjectType(shapeAttributeDefaults,positiveId, emptyDescription, name, iNotationSyntaxService);
+		assertEquals(emptyDescription,shapeObjectType.getDescription());
+	}
+	
 	@Test(expected=IllegalArgumentException.class)
-	public final void testShapeObjectTypeNullCtx() {
-		new ShapeObjectType(null, TestType.TEST1.name(), TestType.TEST1.ordinal());
+	public void testSetNullDescriptionThrowsException(){
+		shapeObjectType=new ShapeObjectType(shapeAttributeDefaults,positiveId, emptyDescription, name, iNotationSyntaxService);
+		shapeObjectType.setDescription(null);
 	}
-
+	
+	@Test
+	public void testSetDescriptionValid(){
+		shapeObjectType=new ShapeObjectType(shapeAttributeDefaults,positiveId, emptyDescription, name, iNotationSyntaxService);
+		shapeObjectType.setDescription("not empty");
+		assertEquals("not empty",shapeObjectType.getDescription());
+	}
+	
 	@Test(expected=IllegalArgumentException.class)
-	public final void testShapeObjectTypeNullType() {
-		new ShapeObjectType(this.testContext1, null, TestType.TEST1.ordinal());
+	public void testNullDescriptionThrowsException(){
+		shapeObjectType=new ShapeObjectType(shapeAttributeDefaults,positiveId, null, name, iNotationSyntaxService);
 	}
 
-	@Test(expected=IllegalArgumentException.class)
-	public final void testAddPropertyNullParam() {
-		this.testInstance.addProperty(null);
+	@Test (expected = IllegalArgumentException.class)
+	public void testNameNullThrowsException(){
+		shapeObjectType=new ShapeObjectType(shapeAttributeDefaults,positiveId, emptyDescription,null, iNotationSyntaxService);
 	}
-
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void testNameEmptyThrowsException(){
+		shapeObjectType=new ShapeObjectType(shapeAttributeDefaults,positiveId, emptyDescription,emptyName, iNotationSyntaxService);
+	}
+	
 	@Test
-	public final void testAddProperty() {
-		final IPropertyDefinition testProp = this.context.mock(IPropertyDefinition.class);
-		this.context.checking(new Expectations(){
-		});
-		this.testInstance.addProperty(testProp);
-		int actualPropCount = this.testInstance.getPropertiesFilter().getAllProperties().size();
-		int expectedPropCount = 1;
-		this.context.assertIsSatisfied();
-		assertEquals("property added", expectedPropCount, actualPropCount);
+	public void testNameValid(){
+		shapeObjectType=new ShapeObjectType(shapeAttributeDefaults,positiveId, emptyDescription,name, iNotationSyntaxService);
+		assertEquals(name,shapeObjectType.getName());
 	}
-
+	
+	@Test (expected=IllegalArgumentException.class)
+	public void testNullNotationSyntaxServiceThrowsException(){
+		shapeObjectType=new ShapeObjectType(shapeAttributeDefaults,positiveId, emptyDescription,name, null);
+	}
+	
 	@Test
-	public final void testGetTypeCode() {
-		assertEquals("correct type code", TestType.TEST1.ordinal(), this.testInstance.getTypeCode());
+	public void testNotationSyntaxServiceValid(){
+		shapeObjectType=new ShapeObjectType(shapeAttributeDefaults,positiveId, emptyDescription,name, iNotationSyntaxService);
+		assertEquals(iNotationSyntaxService,shapeObjectType.getSyntaxService());
 	}
-
+	
 	@Test
-	public final void testGetTypeName() {
-		assertEquals("correct type name", TestType.TEST1.name(), this.testInstance.getTypeName());
+	public void testHashCodeUsesSyntaxService() {
+		shapeObjectType=new ShapeObjectType(shapeAttributeDefaults,positiveId, emptyDescription,name, iNotationSyntaxService);
+		IShapeObjectType sameSyntaxService = new ShapeObjectType(shapeAttributeDefaults,positiveId, emptyDescription,name, iNotationSyntaxService);
+		INotationSyntaxService differentService = mockery.mock(INotationSyntaxService.class);
+		IShapeObjectType differentSyntaxService = new ShapeObjectType(shapeAttributeDefaults,positiveId, emptyDescription,name, differentService);
+		assertTrue(shapeObjectType.hashCode()==sameSyntaxService.hashCode());
+		assertFalse(shapeObjectType.hashCode()==differentSyntaxService.hashCode());
 	}
-
+	
 	@Test
-	public final void testGetContext() {
-		assertEquals("correct context", this.testContext1, this.testInstance.getContext());
+	public void testHashCodeUsesUniqueId() {
+		shapeObjectType=new ShapeObjectType(shapeAttributeDefaults,positiveId, emptyDescription,name, iNotationSyntaxService);
+		IShapeObjectType sameId = new ShapeObjectType(shapeAttributeDefaults,positiveId, emptyDescription,name, iNotationSyntaxService);
+		IShapeObjectType differentId = new ShapeObjectType(shapeAttributeDefaults,positiveId+1, emptyDescription,name, iNotationSyntaxService);
+		assertTrue(shapeObjectType.hashCode()==sameId.hashCode());
+		assertFalse(shapeObjectType.hashCode()==differentId.hashCode());
 	}
-
+	
 	@Test
-	public final void testGetPropertiesFilter() {
-		assertNotNull("filter initialised", this.testInstance.getPropertiesFilter());
+	public void testEqualsOnId(){
+		shapeObjectType=new ShapeObjectType(shapeAttributeDefaults,positiveId, emptyDescription,name, iNotationSyntaxService);
+		IShapeObjectType sameId = new ShapeObjectType(shapeAttributeDefaults,positiveId, emptyDescription,name, iNotationSyntaxService);
+		IShapeObjectType differentId = new ShapeObjectType(shapeAttributeDefaults,positiveId+1, emptyDescription,name, iNotationSyntaxService);
+		assertTrue(shapeObjectType.equals(sameId));
+		assertFalse(shapeObjectType.equals(differentId));
 	}
-
+	
 	@Test
-	public final void testEqualsObject() {
-		assertTrue("equals", this.testInstance.equals(this.testOtherInstance2));
-		assertTrue("equals", this.testInstance.equals(this.testInstance));
-		assertTrue("equals", this.testOtherInstance2.equals(this.testInstance));
-		boolean typeCodeTest = this.testInstance.equals(this.testOtherInstance1);
-		boolean ctxTest = this.testInstance.equals(this.testOtherInstance3);
-		assertFalse("type code not equal", typeCodeTest);
-		assertFalse("context not equal", ctxTest);
-		assertFalse("not equal to null", this.testInstance.equals(null));
-		assertFalse("not equal to another class", this.testInstance.equals(this));
+	public void testEqualsOnSyntaxService(){
+		shapeObjectType=new ShapeObjectType(shapeAttributeDefaults,positiveId, emptyDescription,name, iNotationSyntaxService);
+		IShapeObjectType sameSyntaxService = new ShapeObjectType(shapeAttributeDefaults,positiveId, emptyDescription,name, iNotationSyntaxService);
+		INotationSyntaxService differentService = mockery.mock(INotationSyntaxService.class);
+		assertTrue(shapeObjectType.equals(sameSyntaxService));
+		assertFalse(shapeObjectType.equals(differentService));
 	}
-
-	@Test
-	public final void testGetParentingRules() {
-		assertNotNull("parenting rules initialised", this.testInstance.getParentingRules());
-	}
+	
 
 }

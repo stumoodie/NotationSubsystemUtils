@@ -3,12 +3,12 @@ package org.pathwayeditor.contextadapter.toolkit.ndom;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.pathwayeditor.businessobjectsAPI.IMapObject;
-import org.pathwayeditor.businessobjectsAPI.IRootMapObject;
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.IRootNode;
 
 public abstract class AbstractNDOMParser {
 
-	private IRootMapObject rmo;
+	private IRootNode rmo;
 	private boolean parsed = false;
 	private boolean hasWarnings = false;
 	private boolean valid = false;
@@ -21,9 +21,9 @@ public abstract class AbstractNDOMParser {
 	 * @param o non-null map object. Object type should be non-null value
 	 * @return
 	 */
-	protected String getId(IMapObject o) {
+	protected String getId(IDrawingNode o) {
 		StringBuffer id = new StringBuffer();
-		id.append(o.getObjectType().getTypeName().replaceAll("[^_a-zA-Z0-9]",
+		id.append(o.getObjectType().getName().replaceAll("[^_a-zA-Z0-9]",
 				""));
 		id.append(counter++);
 		return id.toString();
@@ -35,9 +35,8 @@ public abstract class AbstractNDOMParser {
 	 * @param o
 	 * @return
 	 */
-	public static String getASCIIName(IMapObject o) {
-		String name = o.getName().getString();
-//TODO add simplification to the String to conform rules
+	public static String getASCIIName(IDrawingNode o) {
+		String name = o.getObjectType().getName();
 		return name;
 	}
 
@@ -45,7 +44,7 @@ public abstract class AbstractNDOMParser {
 
 	}
 
-	public AbstractNDOMParser(IRootMapObject rmo) {
+	public AbstractNDOMParser(IRootNode rmo) {
 		this.rmo = rmo;
 	}
 
@@ -171,13 +170,13 @@ public abstract class AbstractNDOMParser {
 	 * @param rmo
 	 *            RootMapObject to be parsed
 	 */
-	public void setRmo(IRootMapObject rmo) {
+	public void setRmo(IRootNode rmo) {
 		this.rmo = rmo;
 		parsed = false;
 		report = new ArrayList<String>();
 	}
 
-	public IRootMapObject getRmo() {
+	public IRootNode getRmo() {
 		return rmo;
 	}
 

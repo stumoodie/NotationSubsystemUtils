@@ -5,12 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.pathwayeditor.businessobjectsAPI.IMap;
-import org.pathwayeditor.businessobjectsAPI.IMapObject;
-import org.pathwayeditor.contextadapter.publicapi.IValidationReport;
-import org.pathwayeditor.contextadapter.publicapi.IValidationReportItem;
-import org.pathwayeditor.contextadapter.publicapi.IValidationRuleConfig;
-import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition;
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReport;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReportItem;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleConfig;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition.RuleEnforcement;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition.RuleLevel;
+import org.pathwayeditor.businessobjects.repository.IMap;
 /**
  * Builds a report.
  * Can be in 3 states:
@@ -33,11 +36,11 @@ import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition;
     
     List<IValidationReportItem> reportItems = new ArrayList<IValidationReportItem>();
     private IValidationRuleStore validationRuleStore;
-    private IMap mapToValidate;
+    private ICanvas mapToValidate;
     private Map<Integer, Boolean> checkedRules= new HashMap<Integer, Boolean>();
 
     
-    public RuleValidationReportBuilder(IValidationRuleStore store, IMap map) {
+    public RuleValidationReportBuilder(IValidationRuleStore store, ICanvas map) {
     	if(map == null || store == null){
     		throw new IllegalArgumentException("Arguments must not be null");
     	}
@@ -53,8 +56,6 @@ import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition;
 		state=COMPLETED;
 	}
 	
-
-
 	public IValidationRuleStore getRuleStore() {
 		return validationRuleStore;
 	}
@@ -87,19 +88,15 @@ import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition;
 		state=READY_TO_VALIDATE;
 	}
 
-	public void setRuleFailed(IMapObject mapObject, IValidationRuleDefinition ruleDefinition, String message) {
-		
+	public void setRuleFailed(IDrawingNode inValidObject, IValidationRuleDefinition ruleDefinition, String message) {
 		checkRuleDefinition(ruleDefinition);
 		state=VALIDATING;
-	
 		IValidationRuleConfig config = validationRuleStore.getRuleConfigByID(ruleDefinition.getRuleNumber());
-		if(!config.mustBeRun()){
+		if(!ruleDefinition.getRuleLevel().equals(RuleLevel.MANDATORY)){
 			return;
 		}
-		
-		IValidationReportItem.Severity severity = config.isErrorRule()?IValidationReportItem.Severity.ERROR:IValidationReportItem.Severity.WARNING;
-		reportItems.add(new ValidationReportItem(mapObject, ruleDefinition, severity, message));
-
+		IValidationReportItem.Severity severity = config.getCurrentRuleEnforcement().equals(RuleEnforcement.ERROR)?IValidationReportItem.Severity.ERROR:IValidationReportItem.Severity.WARNING;
+		reportItems.add(new ValidationReportItem(inValidObject, ruleDefinition, severity, message));
 	}
 
 

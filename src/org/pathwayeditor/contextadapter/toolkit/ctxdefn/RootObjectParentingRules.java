@@ -3,12 +3,13 @@ package org.pathwayeditor.contextadapter.toolkit.ctxdefn;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.pathwayeditor.contextadapter.publicapi.IObjectType;
-import org.pathwayeditor.contextadapter.publicapi.IObjectTypeParentingRules;
-import org.pathwayeditor.contextadapter.publicapi.IShapeObjectType;
+import org.pathwayeditor.businessobjects.typedefn.IObjectType;
+import org.pathwayeditor.businessobjects.typedefn.IRootObjectParentingRules;
+import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
+import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
-public class RootMapParentingRules implements IObjectTypeParentingRules {
-	private final IObjectType owningType;
+public class RootObjectParentingRules implements IRootObjectParentingRules {
+	private final IRootObjectType owningType;
 	private final Set<IObjectType> childSet;
 	
 	/**
@@ -16,16 +17,16 @@ public class RootMapParentingRules implements IObjectTypeParentingRules {
 	 * @param owningType owning type form these rules
 	 * @throws IllegalArgumentException if owningType is null. 
 	 */
-	RootMapParentingRules(IObjectType owningType){
+	RootObjectParentingRules(IRootObjectType owningType){
 		if(owningType == null) throw new IllegalArgumentException("owningType cannot be null");
 		this.childSet = new HashSet<IObjectType>();
 		this.owningType = owningType;
 	}
 	
-	public IObjectType getObjectType() {
+	public IRootObjectType getObjectType() {
 		return this.owningType;
 	}
-
+ 
 	/**
 	 * add permitted child 
 	 * @param childShape child shape 
@@ -36,7 +37,7 @@ public class RootMapParentingRules implements IObjectTypeParentingRules {
 		this.childSet.add(childShape);
 	}
 	
-	public boolean isValidChildByCode(IObjectType possibleChild) {
+	public boolean isValidChild(IObjectType possibleChild) {
 		if(possibleChild == null) throw new IllegalArgumentException("possibleChild cannot be null");
 		return this.childSet.contains(possibleChild);
 	}

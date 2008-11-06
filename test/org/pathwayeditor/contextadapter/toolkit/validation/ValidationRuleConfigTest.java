@@ -1,183 +1,129 @@
 package org.pathwayeditor.contextadapter.toolkit.validation;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pathwayeditor.contextadapter.publicapi.IContext;
-import org.pathwayeditor.contextadapter.publicapi.IValidationRuleConfig;
-import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition;
-import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition.RuleLevel;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotationValidationService;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleConfig;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition.RuleEnforcement;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition.RuleLevel;
 
 @RunWith(JMock.class)
 public class ValidationRuleConfigTest {
-    IValidationRuleConfig configAPI;
-    IValidationRuleConfig configImpl = configAPI;
-	IValidationRuleDefinition MANDATORY, OPTIONAL, GUIDELINE;
+	IValidationRuleConfig configAPI;
+	IValidationRuleConfig configImpl = configAPI;
+	IValidationRuleDefinition MANDATORY, OPTIONAL;
 	Mockery mockery = new JUnit4Mockery();
-	
-	final IContext mockContext = mockery.mock(IContext.class);
+
+	final INotationValidationService notationValidationService = mockery.mock(INotationValidationService.class);
+
 	@Before
 	public void setUp() throws Exception {
-		MANDATORY= createMandatoryRuleDefinition();
+		mockery.checking(new Expectations() {
+			{
+				allowing(notationValidationService).getNotationSubsystem();
+			}
+		});
+		MANDATORY = createMandatoryRuleDefinition();
 		OPTIONAL = createOptionalRuleDefinition();
-		GUIDELINE = createGuidelineRuleDefinition();
-		
 	}
 
 	private IValidationRuleDefinition createMandatoryRuleDefinition() {
-		return new ValidationRuleDefinition(mockContext,"MANDATORY","LAYOUT",1, RuleLevel.MANDATORY);
-	}
-	
-	private IValidationRuleDefinition createOptionalRuleDefinition() {
-		return new ValidationRuleDefinition(mockContext,"OPTIONAL","LAYOUT",2, RuleLevel.OPTIONAL);
-	}
-	
-	private IValidationRuleDefinition createGuidelineRuleDefinition() {
-		return new ValidationRuleDefinition(mockContext,"GUIDELINE","LAYOUT",3, RuleLevel.GUIDELINE);
+		return new ValidationRuleDefinition(notationValidationService, "MANDATORY", "LAYOUT", 1, RuleLevel.MANDATORY, RuleEnforcement.ERROR);
 	}
 
-	@After
-	public void tearDown() throws Exception {
+	private IValidationRuleDefinition createOptionalRuleDefinition() {
+		return new ValidationRuleDefinition(notationValidationService, "OPTIONAL", "LAYOUT", 2, RuleLevel.OPTIONAL, RuleEnforcement.ERROR);
 	}
 
 	@Test
 	public void testValidationRuleConfig() {
-		configAPI = new ValidationRuleConfig(MANDATORY, true, true);
+		configAPI = new ValidationRuleConfig(MANDATORY);
 	}
-	
-	@Test(expected=IllegalArgumentException.class)
+
+	@Test(expected = IllegalArgumentException.class)
 	public void testValidationRuleConfigFailsIfRuleIsNull() {
-		configAPI = new ValidationRuleConfig(null, true, true);
+		configAPI = new ValidationRuleConfig(null);
 	}
 
 	@Test
 	public void testGetValidationRuleDefinition() {
-		configAPI = new ValidationRuleConfig(MANDATORY, true, true);
+		configAPI = new ValidationRuleConfig(MANDATORY);
 		assertEquals(MANDATORY, configAPI.getValidationRuleDefinition());
 	}
-
-	@Test
-	public void testIsErrorRuleIsConfiguredFromConstructor() {
-		configAPI = new ValidationRuleConfig(MANDATORY, true, true);
-		assertTrue(configAPI.isErrorRule());
-		
-		configAPI = new ValidationRuleConfig(GUIDELINE, true, false);
-		assertFalse(configAPI.isErrorRule());
-	}
 	
 	@Test
-	public void testErrorRuleFLagIgnoredForMandatoryRules() {
-		configAPI = new ValidationRuleConfig(MANDATORY, true, false);
-		assertTrue(configAPI.isErrorRule());
+	public void testSetEnforcementToIgnoreValidOptionalRule() {
+		configAPI = new ValidationRuleConfig(OPTIONAL);
+		configAPI.setRuleEnforcement(RuleEnforcement.IGNORE);
 	}
-	
 	@Test
-	public void testErrorRuleFLagIgnoredForOptionalRules() {
-		configAPI = new ValidationRuleConfig(OPTIONAL, true, false);
-		assertTrue(configAPI.isErrorRule());
+	public void testSetEnforcementToWarningValidOptionalRule() {
+		configAPI = new ValidationRuleConfig(OPTIONAL);
+		configAPI.setRuleEnforcement(RuleEnforcement.WARNING);
 	}
-	
 	@Test
-	public void testIsWarningRuleOnlyAppliesToGuidelines() {
-		configAPI = new ValidationRuleConfig(GUIDELINE, true, false);
-		assertTrue(configAPI.isWarningRule());
-	}
-	
-	@Test
-	public void testIsWarningAlwaysFalseForMAndatoryRule() {
-		configAPI = new ValidationRuleConfig(MANDATORY, true, false);
-		assertFalse(configAPI.isWarningRule());
-	}
-	
-	@Test
-	public void testIsWarningAlwaysFalseForOptionalRule() {
-		configAPI = new ValidationRuleConfig(OPTIONAL, true, false);
-		assertFalse(configAPI.isWarningRule());
+	public void testSetEnforcementToErrorValidOptionalRule() {
+		configAPI = new ValidationRuleConfig(OPTIONAL);
+		configAPI.setRuleEnforcement(RuleEnforcement.ERROR);
 	}
 
-	@Test
-	public void testMustBeRunAlwaysTrueForMandatoryRule() {
-		configAPI = new ValidationRuleConfig(MANDATORY, false, false);
-		assertTrue(configAPI.mustBeRun());
-		configAPI.setMustBeRun(false);
-		assertTrue(configAPI.mustBeRun());
+	@Test (expected=IllegalArgumentException.class)
+	public void testSetEnforcementToIgnoreThrowsExceptionForMandatoryRule() {
+		configAPI = new ValidationRuleConfig(MANDATORY);
+		assertTrue(configAPI.getValidationRuleDefinition().getRuleLevel().equals(RuleLevel.MANDATORY));
+		configAPI.setRuleEnforcement(RuleEnforcement.IGNORE);
 	}
 	
-	@Test
-	public void testMustBeRunConfigurableForOptionalRules() {
-		configAPI = new ValidationRuleConfig(OPTIONAL, false, false);
-		assertFalse(configAPI.mustBeRun());
-		configAPI.setMustBeRun(true);
-		assertTrue(configAPI.mustBeRun());
+	@Test (expected=IllegalArgumentException.class)
+	public void testSetEnforcementToWarningThrowsExceptionForMandatoryRule() {
+		configAPI = new ValidationRuleConfig(MANDATORY);
+		assertTrue(configAPI.getValidationRuleDefinition().getRuleLevel().equals(RuleLevel.MANDATORY));
+		configAPI.setRuleEnforcement(RuleEnforcement.WARNING);
 	}
 	
-	@Test
-	public void testMustBeRunConfigurableForGuidelineRules() {
-		configAPI = new ValidationRuleConfig(GUIDELINE, false, false);
-		assertFalse(configAPI.mustBeRun());
-		configAPI.setMustBeRun(true);
-		assertTrue(configAPI.mustBeRun());
-	}
+	final int UNIQUE_OTHER_ID = 5000;
 
-	@Test
-	public void testPromoteToErrorIgnoredByMandatoryRules() {
-		configAPI = new ValidationRuleConfig(MANDATORY, false, false);
-		configAPI.promoteToError(false);
-		assertTrue(configAPI.isErrorRule());
-	}
-
-	@Test
-	public void testPromoteToErrorConfigurableForGuidelineRule() {
-		configAPI = new ValidationRuleConfig(GUIDELINE, false, false);
-		assertFalse(configAPI.isErrorRule());
-		configAPI.promoteToError(true);
-		assertTrue(configAPI.isErrorRule());
-		assertFalse(configAPI.isWarningRule());
-		configAPI.promoteToError(false);
-		assertFalse(configAPI.isErrorRule());
-		assertTrue(configAPI.isWarningRule());
-	}
-	
-    final int UNIQUE_OTHER_ID=5000;
 	@Test
 	public void testHashCode() {
-		IValidationRuleDefinition other = new ValidationRuleDefinition(mockContext,"MANDATORY","LAYOUT",UNIQUE_OTHER_ID, RuleLevel.MANDATORY);
+		IValidationRuleDefinition other = new ValidationRuleDefinition(notationValidationService, "MANDATORY", "LAYOUT", UNIQUE_OTHER_ID, RuleLevel.MANDATORY, RuleEnforcement.ERROR);
 		boolean ANY_BOOLEAN = false;
-		configAPI = new ValidationRuleConfig(GUIDELINE, ANY_BOOLEAN, ANY_BOOLEAN);
+		configAPI = new ValidationRuleConfig(OPTIONAL);
 		configImpl = configAPI;
-		ValidationRuleConfig config2 = new ValidationRuleConfig(other, ANY_BOOLEAN, ANY_BOOLEAN);
-		assertFalse(config2.hashCode()==configImpl.hashCode());
-		
+		ValidationRuleConfig config2 = new ValidationRuleConfig(other);
+		assertFalse(config2.hashCode() == configImpl.hashCode());
+
 	}
 
 	@Test
 	public void testEquals() {
-		IValidationRuleDefinition other = new ValidationRuleDefinition(mockContext,"MANDATORY","LAYOUT",UNIQUE_OTHER_ID, RuleLevel.MANDATORY);
+		IValidationRuleDefinition other = new ValidationRuleDefinition(notationValidationService, "MANDATORY", "LAYOUT", UNIQUE_OTHER_ID, RuleLevel.MANDATORY, RuleEnforcement.ERROR);
 		boolean ANY_BOOLEAN = false;
-		configAPI = new ValidationRuleConfig(GUIDELINE, ANY_BOOLEAN, ANY_BOOLEAN);
-		IValidationRuleConfig config2 = new ValidationRuleConfig(other, ANY_BOOLEAN, ANY_BOOLEAN);
+		configAPI = new ValidationRuleConfig(OPTIONAL);
+		IValidationRuleConfig config2 = new ValidationRuleConfig(other);
 		assertFalse(config2.equals(configAPI));
 	}
 	
 	@Test
 	public void testSortInAscendingRuleNeumberOrder() {
-		ValidationRuleConfig conf1 = new ValidationRuleConfig(MANDATORY, false, false);
-		ValidationRuleConfig conf2 = new ValidationRuleConfig(OPTIONAL, false, false);
-		ValidationRuleConfig conf3 = new ValidationRuleConfig(GUIDELINE, false, false);
-		List<IValidationRuleConfig> list = Arrays.asList(new IValidationRuleConfig[]{conf2, conf3, conf1});
-		Collections.sort(list);
-		assertTrue(list.get(0).getValidationRuleDefinition().getRuleNumber() < list.get(1).getValidationRuleDefinition().getRuleNumber());
-		assertTrue(list.get(1).getValidationRuleDefinition().getRuleNumber() < list.get(2).getValidationRuleDefinition().getRuleNumber());
+		ValidationRuleConfig conf1 = new ValidationRuleConfig(MANDATORY);
+		ValidationRuleConfig conf2 = new ValidationRuleConfig(OPTIONAL);
+		List<IValidationRuleConfig> rulesList = Arrays.asList(new IValidationRuleConfig[]{conf2, conf1});
+		Collections.sort(rulesList);
+		assertTrue(rulesList.get(0).getValidationRuleDefinition().getRuleNumber() < rulesList.get(1).getValidationRuleDefinition().getRuleNumber());
 	}
 
 }

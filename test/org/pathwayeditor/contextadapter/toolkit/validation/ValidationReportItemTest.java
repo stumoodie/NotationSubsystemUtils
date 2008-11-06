@@ -9,27 +9,18 @@ import java.util.List;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pathwayeditor.businessobjectsAPI.IMapObject;
-import org.pathwayeditor.contextadapter.publicapi.IValidationReportItem;
-import org.pathwayeditor.contextadapter.publicapi.IValidationRuleDefinition;
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReportItem;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
 
 @RunWith(JMock.class)
 public class ValidationReportItemTest {
 	Mockery mockery = new JUnit4Mockery();
-	final IMapObject mockIMO = mockery.mock(IMapObject.class);
+	final IDrawingNode mockDrawingNode = mockery.mock(IDrawingNode.class);
 	final IValidationRuleDefinition mockRule = mockery.mock(IValidationRuleDefinition.class);
     private ValidationReportItem reportItem;
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	@After
-	public void tearDown() throws Exception {
-	}
 
 	@Test
 	public void testValidationReportItem() {
@@ -38,7 +29,7 @@ public class ValidationReportItemTest {
 	
 	@Test(expected=IllegalArgumentException.class)
 	public void testValidationReportItemDoesNotAllowNullRule() {
-		reportItem = new ValidationReportItem(mockIMO, null, null,null);
+		reportItem = new ValidationReportItem(mockDrawingNode, null, null,null);
 	}
 
 	@Test
@@ -77,13 +68,13 @@ public class ValidationReportItemTest {
 	}
 
 	private ValidationReportItem createAValidationReportItem() {
-		return  new ValidationReportItem(mockIMO, mockRule, IValidationReportItem.Severity.WARNING, "");
+		return  new ValidationReportItem(mockDrawingNode, mockRule, IValidationReportItem.Severity.WARNING, "");
 	}
 
 	@Test
 	public void testGetMapObject() {
 		reportItem = createAValidationReportItem();
-		assertEquals(mockIMO, reportItem.getMapObject());
+		assertEquals(mockDrawingNode, reportItem.getInvalidObject());
 	}
 	
 	@Test

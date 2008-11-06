@@ -1,6 +1,7 @@
 package org.pathwayeditor.contextadapter.toolkit.ndom;
 
-import org.pathwayeditor.businessobjectsAPI.IMapObject;
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
+
 
 
 /**
@@ -49,12 +50,12 @@ public abstract class ModelObject implements INdomModel {
 	 * @param mapObject non-null business object
 	 * @throws IllegalArgumentException  if preconditions are not hold
 	 */
-	public ModelObject(String id, IMapObject mapObject)
+	public ModelObject(String id, IDrawingNode mapObject)
 			throws IllegalArgumentException {
-		this(id, mapObject.getName().getHTML(), AbstractNDOMParser
+		this(id, mapObject.getAttribute().get, AbstractNDOMParser
 				.getASCIIName(mapObject));
-		setDescription(mapObject.getDescription().getHTML());
-		setDetailedDescription(mapObject.getDetailedDescription().getHTML());
+		setDescription(mapObject.getAttribute().);
+		setDetailedDescription(mapObject.getObjectType().getDetailedDescription());
 	}
 
 	public String getDescription() {

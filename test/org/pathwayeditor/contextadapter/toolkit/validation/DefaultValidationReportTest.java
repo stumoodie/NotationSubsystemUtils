@@ -1,6 +1,8 @@
 package org.pathwayeditor.contextadapter.toolkit.validation;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -15,16 +17,16 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pathwayeditor.businessobjectsAPI.IMap;
-import org.pathwayeditor.contextadapter.publicapi.IValidationReport;
-import org.pathwayeditor.contextadapter.publicapi.IValidationReportItem;
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReport;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReportItem;
 
 @RunWith(JMock.class)
 public class DefaultValidationReportTest {
     private IValidationReport report;
     Mockery mockery = new JUnit4Mockery();
 	
-    final IMap map = mockery.mock(IMap.class);
+    final ICanvas map = mockery.mock(ICanvas.class);
     final IValidationReportItem item1 = mockery.mock(IValidationReportItem.class);
     List<IValidationReportItem>contents ;
     
@@ -72,7 +74,7 @@ public class DefaultValidationReportTest {
 	 *
 	 */
 	class DefaultValidationReportWithSettableDate extends DefaultValidationReport {
-		public DefaultValidationReportWithSettableDate(IMap map, List<IValidationReportItem> itemList) {
+		public DefaultValidationReportWithSettableDate(ICanvas map, List<IValidationReportItem> itemList) {
 			super(map, itemList);
 		}
 
@@ -105,7 +107,7 @@ public class DefaultValidationReportTest {
 	@Test
 	public void testGetMap() {
 		report = new DefaultValidationReport(map, createASingleItemList());	
-		assertEquals(map, report.getMap());
+		assertEquals(map, report.getCanvas());
 	}
 
 	@Test
@@ -193,7 +195,7 @@ public class DefaultValidationReportTest {
 		Thread.sleep(10);
 		report = new DefaultValidationReport(map, createASingleItemList());	
 		mockery.checking(new Expectations() {
-			{one(map).getLastModifiedTime();will(returnValue(MAP_NOT_MODIFIED));}
+			{one(map).getModified();will(returnValue(MAP_NOT_MODIFIED));}
 			
 		});
 		assertTrue(report.isReportCurrent());
@@ -206,7 +208,7 @@ public class DefaultValidationReportTest {
 		Thread.sleep(30);
 		final Date MAP_MODIFIED_AFTER_REPORT_CREATION = Calendar.getInstance().getTime();
 		mockery.checking(new Expectations() {
-			{one(map).getLastModifiedTime();will(returnValue(MAP_MODIFIED_AFTER_REPORT_CREATION));}
+			{one(map).getModified();will(returnValue(MAP_MODIFIED_AFTER_REPORT_CREATION));}
 			
 		});
 		assertFalse(report.isReportCurrent());
