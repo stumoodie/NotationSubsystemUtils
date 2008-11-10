@@ -13,6 +13,7 @@ public final class ShapeObjectType extends AbstractObjectType implements IShapeO
 
 	private IShapeAttributeDefaults defaultShapeAttributes;
 	private final IShapeParentingRules parentingRules= new ShapeParentingRules(this);
+	private EnumSet<EditableShapeAttributes> editableAttributes=EnumSet.noneOf(EditableShapeAttributes.class);
 	
 	public ShapeObjectType(IShapeAttributeDefaults defaultShapeAttributes, int uniqueId,String description, String name, INotationSyntaxService syntaxService){
 		super(uniqueId,description,name,syntaxService);
@@ -26,7 +27,11 @@ public final class ShapeObjectType extends AbstractObjectType implements IShapeO
 	}
 
 	public EnumSet<EditableShapeAttributes> getEditableAttributes() {
-		return EnumSet.allOf(IShapeObjectType.EditableShapeAttributes.class);
+		return editableAttributes;
+	}
+	
+	public void setEditableAttributes(EnumSet <EditableShapeAttributes>in){
+		editableAttributes=in;
 	}
 
 	public IShapeParentingRules getParentingRules() {

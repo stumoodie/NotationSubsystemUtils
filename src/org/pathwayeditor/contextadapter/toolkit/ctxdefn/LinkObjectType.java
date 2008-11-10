@@ -1,6 +1,7 @@
 package org.pathwayeditor.contextadapter.toolkit.ctxdefn;
 
 import java.util.EnumSet;
+import java.util.HashSet;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
@@ -9,6 +10,7 @@ import org.pathwayeditor.businessobjects.typedefn.ILinkConnectionRules;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefinition;
+import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType.LinkEditableAttributes;
 
 
 public final class LinkObjectType extends AbstractObjectType implements ILinkObjectType {
@@ -16,6 +18,7 @@ public final class LinkObjectType extends AbstractObjectType implements ILinkObj
 	private ILinkTerminusDefinition linkSourceEndDefinition;
 	private  ILinkTerminusDefinition linkTargetEndDefinition;
 	private ILinkAttributeDefaults defaultLinkAttributes;
+	private EnumSet<LinkEditableAttributes> editableAttributes= EnumSet.noneOf(LinkEditableAttributes.class);
 	
 
 	public LinkObjectType(ILinkAttributeDefaults defaultLinkAttributes, int uniqueID,
@@ -40,7 +43,10 @@ public final class LinkObjectType extends AbstractObjectType implements ILinkObj
 	}
 
 	public EnumSet<LinkEditableAttributes> getEditiableAttributes() {
-		return EnumSet.allOf(ILinkObjectType.LinkEditableAttributes.class);
+		return editableAttributes ;
+	}
+	public void setEditableAttributes(EnumSet<LinkEditableAttributes>in){
+		editableAttributes=in;
 	}
 
 	public ILinkTerminusDefinition getSourceTerminusDefinition() {
