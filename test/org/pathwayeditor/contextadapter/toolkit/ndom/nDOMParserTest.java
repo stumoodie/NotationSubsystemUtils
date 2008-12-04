@@ -15,6 +15,8 @@ import org.jmock.lib.legacy.ClassImposteriser;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
 import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
@@ -82,10 +84,13 @@ public class nDOMParserTest {
 	@Test
 	public void testGetIdString() {
 		final String name = "ObjecType";
-		final IShapeNode s=mockery.mock(IShapeNode.class);
+		final IDrawingElement s=mockery.mock(IDrawingElement.class);
 		final INodeObjectType otString=mockery.mock(INodeObjectType.class);
+		final ICanvasAttribute a=mockery.mock(ICanvasAttribute.class);
 		mockery.checking(new Expectations(){{
-			atLeast(1).of(s).getObjectType();
+			atLeast(1).of(s).getAttribute();
+			will(returnValue(a));
+			atLeast(1).of(a).getObjectType();
 			will(returnValue(otString));
 			atLeast(1).of(otString).getName();
 			will(returnValue(name));
@@ -104,10 +109,13 @@ public class nDOMParserTest {
 	public void testGetIdWrong() {
 		final String name = "Objec Type";
 		String nameOk = "ObjecType0";
-		final IShapeNode s=mockery.mock(IShapeNode.class);
+		final IDrawingElement s=mockery.mock(IDrawingElement.class);
 		final INodeObjectType otString=mockery.mock(INodeObjectType.class);
+		final ICanvasAttribute a=mockery.mock(ICanvasAttribute.class);
 		mockery.checking(new Expectations(){{
-			one(s).getObjectType();
+			atLeast(1).of(s).getAttribute();
+			will(returnValue(a));
+			atLeast(1).of(a).getObjectType();
 			will(returnValue(otString));
 			one(otString).getName();
 			will(returnValue(name));
@@ -124,10 +132,13 @@ public class nDOMParserTest {
 	public void testGetIdWeird() {
 		final String name = "£Objec%$ <Type>=*&";
 		String nameOk = "ObjecType0";
-		final IShapeNode s=mockery.mock(IShapeNode.class);
+		final IDrawingElement s=mockery.mock(IDrawingElement.class);
 		final INodeObjectType otString=mockery.mock(INodeObjectType.class);
+		final ICanvasAttribute a=mockery.mock(ICanvasAttribute.class);
 		mockery.checking(new Expectations(){{
-			one(s).getObjectType();
+			atLeast(1).of(s).getAttribute();
+			will(returnValue(a));
+			atLeast(1).of(a).getObjectType();
 			will(returnValue(otString));
 			one(otString).getName();
 			will(returnValue(name));
@@ -178,11 +189,13 @@ public class nDOMParserTest {
 	@Test
 	public void testParse() throws NdomException {
 		final String name = "ObjecType";
-		final IShapeNode s=mockery.mock(IShapeNode.class);
-		
+		final IDrawingElement s=mockery.mock(IDrawingElement.class);
 		final INodeObjectType otString=mockery.mock(INodeObjectType.class);
+		final ICanvasAttribute a=mockery.mock(ICanvasAttribute.class);
 		mockery.checking(new Expectations(){{
-			atLeast(1).of(s).getObjectType();
+			atLeast(1).of(s).getAttribute();
+			will(returnValue(a));
+			atLeast(1).of(a).getObjectType();
 			will(returnValue(otString));
 			atLeast(1).of(otString).getName();
 			will(returnValue(name));

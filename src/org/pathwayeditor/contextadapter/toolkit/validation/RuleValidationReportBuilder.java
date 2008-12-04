@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement;
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReport;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReportItem;
@@ -88,7 +89,7 @@ import org.pathwayeditor.businessobjects.repository.IMap;
 		state=READY_TO_VALIDATE;
 	}
 
-	public void setRuleFailed(IDrawingNode inValidObject, IValidationRuleDefinition ruleDefinition, String message) {
+	public void setRuleFailed(IDrawingElement inValidObject, IValidationRuleDefinition ruleDefinition, String message) {
 		checkRuleDefinition(ruleDefinition);
 		state=VALIDATING;
 		IValidationRuleConfig config = validationRuleStore.getRuleConfigByID(ruleDefinition.getRuleNumber());

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement;
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReportItem;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
@@ -16,20 +17,20 @@ import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefini
  */
 public class ValidationReportItem implements IValidationReportItem {
 
-	private IDrawingNode invalidDrawingNode;
+	private IDrawingElement invalidDrawingElement;
 	private IValidationRuleDefinition ruleDefinition;
 	private List<IValidationReportItem> childReports = new ArrayList<IValidationReportItem>();
 	private Severity severity;
 	private String message;
 	
-	public ValidationReportItem(IDrawingNode invalidDrawingNode,
+	public ValidationReportItem(IDrawingElement invalidDrawingElement,
 			                    IValidationRuleDefinition ruleDefinition, 
 			                     Severity severity,
 			                     String message) {
 		if(ruleDefinition == null || severity ==null || message ==null){
 			throw new IllegalArgumentException("Rule definition must not be null");
 		}
-		this.invalidDrawingNode = invalidDrawingNode;
+		this.invalidDrawingElement = invalidDrawingElement;
 		this.ruleDefinition = ruleDefinition;
 		this.severity=severity;
 		this.message = message;
@@ -51,15 +52,15 @@ public class ValidationReportItem implements IValidationReportItem {
 		return Collections.unmodifiableList(childReports);
 	}
 	
-	public IDrawingNode getInvalidObject() {
-		return invalidDrawingNode;
+	public IDrawingElement getInvalidObject() {
+		return invalidDrawingElement;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((invalidDrawingNode == null) ? 0 : invalidDrawingNode.hashCode());
+		result = prime * result + ((invalidDrawingElement == null) ? 0 : invalidDrawingElement.hashCode());
 		result = prime * result + ((message == null) ? 0 : message.hashCode());
 		result = prime * result + ((ruleDefinition == null) ? 0 : ruleDefinition.hashCode());
 		return result;
@@ -74,10 +75,10 @@ public class ValidationReportItem implements IValidationReportItem {
 		if (getClass() != obj.getClass())
 			return false;
 		final ValidationReportItem other = (ValidationReportItem) obj;
-		if (invalidDrawingNode == null) {
-			if (other.invalidDrawingNode != null)
+		if (invalidDrawingElement == null) {
+			if (other.invalidDrawingElement != null)
 				return false;
-		} else if (!invalidDrawingNode.equals(other.invalidDrawingNode))
+		} else if (!invalidDrawingElement.equals(other.invalidDrawingElement))
 			return false;
 		if (message == null) {
 			if (other.message != null)
@@ -105,8 +106,8 @@ public class ValidationReportItem implements IValidationReportItem {
 		sb.append("Rule id: ").append(ruleDefinition.getRuleNumber()).append("\n")
 		  .append("Message: ").append(message)
 		  .append("Severity:").append(severity);
-		if(invalidDrawingNode !=null){
-			sb.append("invalidDrawingNode: ").append(invalidDrawingNode.getAttribute().getCreationSerial());
+		if(invalidDrawingElement !=null){
+			sb.append("invalidDrawingNode: ").append(invalidDrawingElement.getAttribute().getCreationSerial());
 		}
 		return sb.toString();
 	}

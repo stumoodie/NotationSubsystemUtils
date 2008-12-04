@@ -1,5 +1,6 @@
 package org.pathwayeditor.contextadapter.toolkit.ctxdefn;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -18,8 +19,36 @@ public class LinkTerminusDefaults implements ILinkTerminusDefaults {
 	private Size termSize;
 	private LinkEndDecoratorShape linkEndDecoratorShape;
 	private PrimitiveShapeType termDecoratorType;
-	private Set <IPropertyDefinition> propertyDefinitions;
+	private Set <IPropertyDefinition> propertyDefinitions=new HashSet<IPropertyDefinition>();
 
+	
+
+	/**
+	 * 
+	 */
+	public LinkTerminusDefaults() {
+		super();
+	}
+
+	/**
+	 * 
+	 */
+	public LinkTerminusDefaults(LinkTerminusDefaults other) {
+		if(other==null) throw new IllegalArgumentException("Copy constructor require non NULL template object");
+		Size endSizeT = other.getEndSize();
+		setEndSize(new Size(endSizeT.getWidth(),endSizeT.getHeight()));
+		setGap(other.getGap());
+		setLinkEndDecoratorShape(other.getEndDecoratorType());
+		RGB termColourT = other.getTermColour();
+		setTermColour(new RGB(termColourT.getRed(),termColourT.getGreen(),termColourT.getBlue()));
+		setTermDecoratorType(other.getTermDecoratorType());
+		Size termSizeT = other.getTermSize();
+		setTermSize(new Size(termSizeT.getWidth(),termSizeT.getHeight()));
+		Iterator<IPropertyDefinition> it=other.propertyDefinitionIterator();
+		while(it.hasNext()){
+			addPropertyDefinition(it.next());
+		}
+	}
 
 	public LinkEndDecoratorShape getEndDecoratorType() {
 		return linkEndDecoratorShape;
@@ -69,6 +98,9 @@ public class LinkTerminusDefaults implements ILinkTerminusDefaults {
 		termSize=in;
 	}
 
+	public int getPropertyDefinitionNumber(){
+		return propertyDefinitions.size();
+	}
 	public Iterator<IPropertyDefinition> propertyDefinitionIterator() {
 		return propertyDefinitions.iterator();
 	}

@@ -22,13 +22,13 @@ public final class LinkObjectType extends AbstractObjectType implements ILinkObj
 	
 
 	public LinkObjectType(ILinkAttributeDefaults defaultLinkAttributes, int uniqueID,
-			String description, String name, INotationSyntaxService in, ILinkTerminusDefaults linkTerminusDefaults){
+			String description, String name, INotationSyntaxService in, ILinkTerminusDefaults srcTerminusDefaults, ILinkTerminusDefaults tgtTerminusDefaults){
 		super(uniqueID,description,name,in);
 		if(defaultLinkAttributes==null)
 			throw new IllegalArgumentException("Default link attributes cannot be null");
 		this.defaultLinkAttributes=defaultLinkAttributes;
-		this.linkSourceEndDefinition = new LinkTerminusDefinition(this, LinkTermType.SOURCE, linkTerminusDefaults);
-		this.linkTargetEndDefinition = new LinkTerminusDefinition(this, LinkTermType.TARGET, linkTerminusDefaults);
+		this.linkSourceEndDefinition = new LinkTerminusDefinition(this, LinkTermType.SOURCE, srcTerminusDefaults);
+		this.linkTargetEndDefinition = new LinkTerminusDefinition(this, LinkTermType.TARGET, tgtTerminusDefaults);
 		this.linkConnectionRules = new LinkConnectionRules(this);
 	}
 

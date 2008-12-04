@@ -3,11 +3,18 @@ package org.pathwayeditor.contextadapter.toolkit.ndom;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement;
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 
 public abstract class AbstractNDOMParser {
 
+	private static final String propName = "Name";
 	private IRootNode rmo;
 	private boolean parsed = false;
 	private boolean hasWarnings = false;
@@ -21,9 +28,9 @@ public abstract class AbstractNDOMParser {
 	 * @param o non-null map object. Object type should be non-null value
 	 * @return
 	 */
-	protected String getId(IDrawingNode o) {
+	protected String getId(IDrawingElement o) {
 		StringBuffer id = new StringBuffer();
-		id.append(o.getObjectType().getName().replaceAll("[^_a-zA-Z0-9]",
+		id.append(o.getAttribute().getObjectType().getName().replaceAll("[^_a-zA-Z0-9]",
 				""));
 		id.append(counter++);
 		return id.toString();
@@ -31,12 +38,19 @@ public abstract class AbstractNDOMParser {
 	
 
 	/**
-	 * Generate valid ASCII string from object name.
+	 * Generate valid ASCII string from node name.
 	 * @param o
 	 * @return
 	 */
 	public static String getASCIIName(IDrawingNode o) {
-		String name = o.getObjectType().getName();
+		//FIXME add code for conversion to ASCII name
+		String name = ((IShapeAttribute) o.getAttribute()).getName();
+		return name;
+	}
+
+	public static String getASCIIName(ILinkEdge e) {
+		//FIXME add code for conversion to ASCII name
+		String name = ((ILinkAttribute) e.getAttribute()).getName();
 		return name;
 	}
 

@@ -10,7 +10,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 /**
  * Class contains context-neutral geometry calculation utilities 
  * to be used in parsing of diagrams and validation.
- * <br>$Id:$
+ * <br>$Id$
  * @author Anatoly Sorokin
  * @date 5 Aug 2008
  * 

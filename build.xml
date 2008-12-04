@@ -40,7 +40,6 @@
 		<javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
 			<src path="src" />
 			<exclude name="org/pathwayeditor/contextadapter/toolkit/ndom/GeometryUtils.java" />
-			<exclude name="org/pathwayeditor/contextadapter/toolkit/ndom/ModelObject.java" />
 			<classpath refid="Toolkit.classpath" />
 			<compilerarg value="-Xlint" />
 		</javac>
@@ -52,7 +51,6 @@
 		<javac classpathref="Toolkit.classpath" debug="true" debuglevel="lines,vars,source" destdir="bin">
 			<src path="test" />
 			<exclude name="org/pathwayeditor/contextadapter/toolkit/ndom/GeometryTest.java" />
-			<exclude name="org/pathwayeditor/contextadapter/toolkit/ndom/ModelObjectTest.java" />
 		</javac>
 		<copy todir="bin">
 			<fileset dir="${test.dir}">

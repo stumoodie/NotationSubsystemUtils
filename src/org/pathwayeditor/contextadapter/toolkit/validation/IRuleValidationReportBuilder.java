@@ -1,5 +1,6 @@
 package org.pathwayeditor.contextadapter.toolkit.validation;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement;
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReport;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
@@ -32,13 +33,13 @@ public interface IRuleValidationReportBuilder {
 	 * The <code>ruleDefinition</code> parameter must be a rule found in the {@link IValidationRuleStore}.<br>
 	 * The first  time this method is called by a  client, isValidating() should return <code>true</code> and
 	 * any changes by external clients to the rule configuration should have no effect in this validation run.
-	 * @param mapObject An {@link IMapObject}, possibly null
+	 * @param inValidObject An {@link IDrawingElement}, possibly null
 	 * @param ruleDefinition A non-null {@link IValidationRuleDefinition} object
 	 * @param message A non-null<code>String</code>.
 	 * @throws IllegalStateException if the builder is not in a state where isReadyToValidate() or isValidating() == true.
 	 * @throws IllegalArgumentException if the <code>ruleDefinition</code>parameter is not in the IValidationRuleStore().
 	 */
-	void setRuleFailed(IDrawingNode inValidObject,IValidationRuleDefinition ruleDefinition, String message);
+	void setRuleFailed(IDrawingElement inValidObject,IValidationRuleDefinition ruleDefinition, String message);
 	
 	// do we need this? A rule may be tested several times; if it passes once it can still fail later.
 	// This is not used to generate the validation report.
