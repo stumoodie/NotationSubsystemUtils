@@ -2,6 +2,7 @@ package org.pathwayeditor.contextadapter.toolkit.validation;
 
 import java.util.List;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationValidationService;
@@ -33,7 +34,7 @@ public final class NotationValidationService implements INotationValidationServi
 		return serviceProvider;
 	}
 
-	public IMap getMapBeingValidated() {
+	public ICanvas getMapBeingValidated() {
 		return ndomValidation.getMapBeingValidated();
 	}
     
@@ -66,7 +67,7 @@ public final class NotationValidationService implements INotationValidationServi
 		return ndomValidation.isReadyToValidate();
 	}
 
-	public void setMapToValidate(IMap mapToValidate) {
+	public void setMapToValidate(ICanvas mapToValidate) {
 		if(mapToValidate==null) throw new IllegalArgumentException("Map to be validated should not be null");
 		ndomValidation.setMapToValidate(mapToValidate);
 	}

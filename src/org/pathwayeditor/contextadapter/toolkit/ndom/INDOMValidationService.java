@@ -1,5 +1,6 @@
 package org.pathwayeditor.contextadapter.toolkit.ndom;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReport;
 import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.contextadapter.toolkit.validation.IValidationRuleStore;
@@ -16,7 +17,7 @@ public interface INDOMValidationService {
 	/**
 	 * @param map map to be validated by this class
 	 */
-	public void setMapToValidate(IMap map);
+	public void setMapToValidate(ICanvas map);
 
 	/**
 	 *  implementers must generate a validation report and (if possible) an NDOM during validation 
@@ -33,6 +34,6 @@ public interface INDOMValidationService {
 
 	public boolean hasBeenValidated();
 
-	public IMap getMapBeingValidated();
+	public ICanvas getMapBeingValidated();
 
 }
