@@ -27,7 +27,8 @@ public class GeometryTest {
 		setImposteriser(ClassImposteriser.INSTANCE);
 	}};
 
-	private AbstractNDOMParser ndom=new nDOMParserTest.ParserStub();
+//	private AbstractNDOMParser ndom=new nDOMParserTest.ParserStub();
+	
 	@Before
 	public void setUp() throws Exception {
 	}
