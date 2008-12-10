@@ -13,8 +13,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
+import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 
@@ -24,7 +27,7 @@ public class GeometryTest {
 		setImposteriser(ClassImposteriser.INSTANCE);
 	}};
 
-	private AbstractNDOMParser ndom=new TestNDOMParser.ParserStub();
+	private AbstractNDOMParser ndom=new nDOMParserTest.ParserStub();
 	@Before
 	public void setUp() throws Exception {
 	}
@@ -39,17 +42,32 @@ public class GeometryTest {
 	@Test
 	public void testGetSrcLocationNoBends180() {
 		final ILinkEdge l=mockery.mock(ILinkEdge.class);
+		final ILinkAttribute lAtt=mockery.mock(ILinkAttribute.class);
+		final IShapeAttribute sAtt=mockery.mock(IShapeAttribute.class);
+		final IShapeAttribute tAtt=mockery.mock(IShapeAttribute.class);
 		final IShapeNode s=mockery.mock(IShapeNode.class);
 		final IShapeNode t=mockery.mock(IShapeNode.class);
 		this.mockery.checking(new Expectations() {{
-			atLeast(1).of(s).getAttribute().getLocation();
+			atLeast(1).of(s).getAttribute();
+			will(returnValue(sAtt));
+			atLeast(1).of(sAtt).getLocation();
 			will(returnValue(new Location(25,25)));
-			atLeast(1).of(l).getBendpointsI();
-			will(returnValue(new ArrayList<IBendpoint>()));
-			one(l).getTarget();
+			atLeast(1).of(sAtt).getSize();
+			will(returnValue(new Size(20,20)));
+			atLeast(1).of(l).getAttribute();
+			will(returnValue(lAtt));
+			atLeast(1).of(lAtt).numBendPoints();
+			will(returnValue(0));
+			atLeast(1).of(lAtt).bendPointIterator();
+			will(returnIterator(new ArrayList<IBendPoint>()));
+			one(l).getTargetShape();
 			will(returnValue(t));
-			atLeast(1).of(t).getCentre();
+			atLeast(1).of(t).getAttribute();
+			will(returnValue(tAtt));
+			atLeast(1).of(tAtt).getLocation();
 			will(returnValue(new Location(5,25)));
+			atLeast(1).of(tAtt).getSize();
+			will(returnValue(new Size(20,20)));
 		}});
 		Location a=GeometryUtils.getSrcLocation(l, s);
 		assertEquals(new Location(-20,0), a);
@@ -63,16 +81,38 @@ public class GeometryTest {
 	public void testGetSrcLocationBends180() {
 		final ILinkEdge l=mockery.mock(ILinkEdge.class);
 		final IShapeNode s=mockery.mock(IShapeNode.class);
-		final ArrayList<IBendpoint> bpl = new ArrayList<IBendpoint>();
-		final IBendpoint bp = this.mockery.mock(IBendpoint.class);
+		final ILinkAttribute lAtt=mockery.mock(ILinkAttribute.class);
+		final IShapeAttribute sAtt=mockery.mock(IShapeAttribute.class);
+		final IShapeAttribute tAtt=mockery.mock(IShapeAttribute.class);
+		final IShapeNode t=mockery.mock(IShapeNode.class);
+		final ArrayList<IBendPoint> bpl = new ArrayList<IBendPoint>();
+		final IBendPoint bp = this.mockery.mock(IBendPoint.class);
 		bpl.add(bp);
 		this.mockery.checking(new Expectations() {{
-			atLeast(1).of(s).getCentre();
+			atLeast(1).of(s).getAttribute();
+			will(returnValue(sAtt));
+			atLeast(1).of(sAtt).getLocation();
 			will(returnValue(new Location(25,25)));
-			atLeast(1).of(l).getBendpoints();
-			will(returnValue(bpl));
-			atLeast(1).of(bp).getFirstRelativeDimension();
-			will(returnValue(new Size(5,25)));
+			atLeast(1).of(sAtt).getSize();
+			will(returnValue(new Size(20,20)));
+			atLeast(1).of(l).getAttribute();
+			will(returnValue(lAtt));
+			atLeast(1).of(lAtt).numBendPoints();
+			will(returnValue(1));
+			atLeast(1).of(lAtt).bendPointIterator();
+			will(returnIterator(bpl));
+			atLeast(1).of(bp).getLocation();
+			will(returnValue(new Location(30,50)));
+			atLeast(1).of(l).getTargetShape();
+			will(returnValue(t));
+			atLeast(1).of(l).getSourceShape();
+			will(returnValue(s));
+			atLeast(1).of(t).getAttribute();
+			will(returnValue(tAtt));
+			atLeast(1).of(tAtt).getLocation();
+			will(returnValue(new Location(5,25)));
+			atLeast(1).of(tAtt).getSize();
+			will(returnValue(new Size(20,20)));
 		}});
 		Location a=GeometryUtils.getSrcLocation(l, s);
 		assertEquals(new Location(5,25), a);
