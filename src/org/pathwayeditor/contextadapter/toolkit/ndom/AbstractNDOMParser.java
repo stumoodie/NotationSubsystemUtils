@@ -9,12 +9,10 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 
 public abstract class AbstractNDOMParser {
 
-	private static final String propName = "Name";
+//	private static final String PROP_NAME = "Name";
 	private IRootNode rmo;
 	private boolean parsed = false;
 	private boolean hasWarnings = false;

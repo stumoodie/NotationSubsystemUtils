@@ -6,7 +6,6 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermTy
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefinition;
-import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType.EditableShapeAttributes;
 
 
 public class LinkTerminusDefinition implements ILinkTerminusDefinition {
@@ -34,12 +33,11 @@ public class LinkTerminusDefinition implements ILinkTerminusDefinition {
 		return editableAttributes;
 	}
 
-	public void setEditableAttributes(
-			EnumSet<LinkTermEditableAttributes> in) {
+	public void setEditableAttributes(EnumSet<LinkTermEditableAttributes> in) {
 		if(in==null)
 			throw new IllegalArgumentException("Shape Attribute Defaults cannot be null");
 
-		this.editableAttributes = editableAttributes;
+		this.editableAttributes = in;
 	}
 
 	public LinkTermType getLinkEndCode() {

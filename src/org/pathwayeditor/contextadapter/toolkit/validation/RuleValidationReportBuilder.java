@@ -7,14 +7,12 @@ import java.util.Map;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement;
-import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReport;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReportItem;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleConfig;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition.RuleEnforcement;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition.RuleLevel;
-import org.pathwayeditor.businessobjects.repository.IMap;
 /**
  * Builds a report.
  * Can be in 3 states:

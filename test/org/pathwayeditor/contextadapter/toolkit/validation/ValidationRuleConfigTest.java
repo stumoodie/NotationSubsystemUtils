@@ -100,7 +100,6 @@ public class ValidationRuleConfigTest {
 	@Test
 	public void testHashCode() {
 		IValidationRuleDefinition other = new ValidationRuleDefinition(notationValidationService, "MANDATORY", "LAYOUT", UNIQUE_OTHER_ID, RuleLevel.MANDATORY, RuleEnforcement.ERROR);
-		boolean ANY_BOOLEAN = false;
 		configAPI = new ValidationRuleConfig(OPTIONAL);
 		configImpl = configAPI;
 		ValidationRuleConfig config2 = new ValidationRuleConfig(other);
@@ -111,7 +110,6 @@ public class ValidationRuleConfigTest {
 	@Test
 	public void testEquals() {
 		IValidationRuleDefinition other = new ValidationRuleDefinition(notationValidationService, "MANDATORY", "LAYOUT", UNIQUE_OTHER_ID, RuleLevel.MANDATORY, RuleEnforcement.ERROR);
-		boolean ANY_BOOLEAN = false;
 		configAPI = new ValidationRuleConfig(OPTIONAL);
 		IValidationRuleConfig config2 = new ValidationRuleConfig(other);
 		assertFalse(config2.equals(configAPI));

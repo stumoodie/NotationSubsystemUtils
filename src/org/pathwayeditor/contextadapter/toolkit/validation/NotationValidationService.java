@@ -8,7 +8,6 @@ import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationValidationService;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReport;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
-import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.contextadapter.toolkit.ndom.INDOMValidationService;
 
 public final class NotationValidationService implements INotationValidationService {
@@ -77,7 +76,6 @@ public final class NotationValidationService implements INotationValidationServi
 		return true;
 	}
 
-	@SuppressWarnings("unchecked")
 	public List<IValidationRuleDefinition> getRules() {
 		return ndomValidation.getRuleStore().getAllRuleDefinitions();
 	}

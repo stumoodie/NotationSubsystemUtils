@@ -10,6 +10,10 @@
 	<classpathentry kind="lib" path="lib/jmock-2.3.0/jmock-2.3.0.jar"/>
 	<classpathentry kind="lib" path="lib/jmock-2.3.0/jmock-junit4-2.3.0.jar"/>
 	<classpathentry kind="lib" path="lib/jmock-2.3.0/objenesis-1.0.jar"/>
-	<classpathentry kind="lib" path="lib/BusinessObjects.jar" sourcepath="/BusinessObjects/src"/>
+	<classpathentry kind="lib" path="lib/BusinessObjects/BusinessObjects.jar" sourcepath="lib/BusinessObjects/BusinessObjects-src.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/Toolkit/lib/BusinessObjects/BusinessObjects-docs.jar!/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

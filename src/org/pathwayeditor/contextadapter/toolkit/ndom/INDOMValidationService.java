@@ -2,7 +2,6 @@ package org.pathwayeditor.contextadapter.toolkit.ndom;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReport;
-import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.contextadapter.toolkit.validation.IValidationRuleStore;
 
 

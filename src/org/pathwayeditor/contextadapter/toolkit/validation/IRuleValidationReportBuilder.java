@@ -1,7 +1,6 @@
 package org.pathwayeditor.contextadapter.toolkit.validation;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement;
-import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReport;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
 

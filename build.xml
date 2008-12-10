@@ -2,62 +2,78 @@
 <project basedir="." default="build" name="Toolkit">
 	<property environment="env" />
 	<property name="debuglevel" value="source,lines,vars" />
-	<property name="build.dir" value="bin" />
-	<property name="test.dir" value="test" />
+	<property name="build.dir" value="./antBuild" />
+	<property name="build.dir.src" value="${build.dir}/src"/>
+	<property name="build.dir.tests" value="${build.dir}/test"/>
 	<property name="target" value="1.5" />
 	<property name="source" value="1.5" />
-	<path id="Toolkit.classpath">
-		<pathelement location="bin" />
-		<pathelement location="lib/BusinessObjects.jar" />
+	<property name="jar.dir" value="./jars" />
+	<property name="jar.name.bin" value="toolkit.jar" />
+	<property name="jar.name.src" value="toolkit-src.jar" />
+	<property name="jar.name.doc" value="toolkit-docs.jar" />
+	<property name="docs.build.dir" value="./doc"/>
+	<property name="src.dir" value="./src" />
+	<property name="test.dir" value="./test" />
+
+	<path id="classpath">
+		<pathelement location="${build.dir.src}" />
+		<pathelement location="lib/BusinessObjects/BusinessObjects.jar" />
+	</path>
+
+	<path id="test.classpath">
+		<path refid="classpath" />
+		<pathelement location="${build.dir.src}" />
+		<pathelement location="${build.dir.tests}" />
 		<pathelement location="lib/junit-4.4.jar" />
 		<fileset dir="lib/jmock-2.3.0">
 			<include name="**/*.jar" />
 		</fileset>
 	</path>
 
-	<target name="init">
-		<mkdir dir="bin" />
-		<copy includeemptydirs="false" todir="bin">
-			<fileset dir="src" excludes="**/*.launch, **/*.java" />
-		</copy>
-		<copy includeemptydirs="false" todir="bin">
-			<fileset dir="test" excludes="**/*.launch, **/*.java" />
-		</copy>
+	<target name="mkdirs" depends="" description="--> Creates the directories used in the build">
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${build.dir.src}" />
+		<mkdir dir="${build.dir.tests}" />
 	</target>
 
 	<target name="clean">
-		<delete dir="bin" />
+		<delete dir="${build.dir}" />
 	</target>
 
 	<target depends="clean" name="cleanall" />
 
-	<target depends="cleanall,build-subprojects,build-project,toolkit-jar" name="build" />
+	<target depends="cleanall,buildSrc,buildTest,jarAll" name="build" />
 
-	<target name="build-subprojects" />
-
-	<target depends="init" name="build-project">
-		<echo message="${ant.project.name}: ${ant.file}" />
-		<javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
-			<src path="src" />
-			<classpath refid="Toolkit.classpath" />
-			<compilerarg value="-Xlint" />
+	<target name="buildSrc" description="src build task" depends="mkdirs">
+		<!-- <echo>running with classpath ${toString:classpath}</echo>-->
+		<javac classpathref="classpath" srcdir="${src.dir}" source="${source}" target="${target}" debug="true" debuglevel="lines,vars,source" destdir="${build.dir.src}">
 		</javac>
-
-		<antcall target="buildTest" />
-	</target>
-
-	<target name="buildTest" description="test build task">
-		<javac classpathref="Toolkit.classpath" debug="true" debuglevel="lines,vars,source" destdir="bin">
-			<src path="test" />
-		</javac>
-		<copy todir="bin">
-			<fileset dir="${test.dir}">
+		<copy todir="${build.dir.src}">
+			<fileset dir="${src.dir}">
 				<exclude name="**/*.java" />
+				<exclude name="**/*.class" />
 			</fileset>
 		</copy>
 	</target>
 
-	<target name="tests">
+	<target name="api-docs" depends="buildSrc">
+		<javadoc access="package" author="true" splitindex="true" use="true" version="true" source="1.5" sourcepath="${src.dir}" destdir="${docs.build.dir}" doctitle="Business Objects API" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false">
+			<classpath refid="classpath" />
+		</javadoc>
+	</target>
+
+	<target name="buildTest" description="test build task" depends="buildSrc">
+		<javac source="${source}" target="${target}" classpathref="test.classpath" srcdir="${test.dir}" debug="true" debuglevel="lines,vars,source" destdir="${build.dir.tests}">
+		</javac>
+		<copy todir="${build.dir.tests}">
+			<fileset dir="${test.dir}">
+				<exclude name="**/*.java" />
+				<exclude name="**/*.class" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="tests" depends="buildTest">
 		<delete dir="${build.dir}/test/logs" />
 		<mkdir dir="${build.dir}/test/logs" />
 		<!-- <echo>running with classpath ${toString:test.classpath}</echo>-->
@@ -65,13 +81,13 @@
 			run test cases. All test class names should end in 'Test' to avoid
 			inclusion of inner classes.
 		-->
-		<junit printsummary="yes" haltonfailure="no" fork="true">
+		<junit printsummary="yes" haltonfailure="no" fork="yes">
 			<classpath>
-				<path refid="Toolkit.classpath" />
+				<path refid="test.classpath" />
 			</classpath>
 			<batchtest todir="${build.dir}/test/logs">
 				<formatter type="xml" />
-				<fileset dir="${build.dir}">
+				<fileset dir="${build.dir.tests}">
 					<include name="**/*Test.class" />
 				</fileset>
 			</batchtest>
@@ -88,7 +104,29 @@
 		</junitreport>
 	</target>
 
-	<target name="toolkit-jar" depends="build-project">
-		<jar destfile="Toolkit.jar" basedir="bin" />
+	<target name="jarAll" depends="jar-bin, jar-src, jar-docs"/>
+	
+	<target name="init-jardirs">
+		<delete dir="${jar.dir}" />
+		<mkdir dir="${jar.dir}" />
+	</target>
+	
+	<target name="jar-bin" depends="buildSrc, init-jardirs">
+		<jar destfile="${jar.dir}/${jar.name.bin}">
+			<fileset dir="${build.dir.src}" />
+		</jar>
+	</target>
+	
+	<target name="jar-src" depends="init-jardirs">
+		<jar destfile="${jar.dir}/${jar.name.src}">
+			<fileset dir="${src.dir}" />
+		</jar>
+	</target>
+	
+	<target name="jar-docs" depends="api-docs">
+		<mkdir dir="${jar.dir}" />
+		<jar destfile="${jar.dir}/${jar.name.doc}">
+			<fileset dir="${docs.build.dir}" />
+		</jar>
 	</target>
 </project>

@@ -1,7 +1,6 @@
 package org.pathwayeditor.contextadapter.toolkit.ctxdefn;
 
 import java.util.EnumSet;
-import java.util.HashSet;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
@@ -10,7 +9,6 @@ import org.pathwayeditor.businessobjects.typedefn.ILinkConnectionRules;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefinition;
-import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType.LinkEditableAttributes;
 
 
 public final class LinkObjectType extends AbstractObjectType implements ILinkObjectType {

@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement;
-import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReportItem;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
 

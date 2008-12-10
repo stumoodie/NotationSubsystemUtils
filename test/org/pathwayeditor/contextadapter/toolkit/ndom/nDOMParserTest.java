@@ -18,9 +18,7 @@ import org.junit.Test;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootNode;
-import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
 import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
-import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 
 
 /**
