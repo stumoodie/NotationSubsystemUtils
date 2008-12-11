@@ -12,8 +12,8 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyD
 
 public class LinkTerminusDefaultsTest {
 
-	private LinkTerminusDefaults templ;
 	private LinkTerminusDefaults obj;
+//	private LinkTerminusDefaults obj;
 	private LinkEndDecoratorShape src=LinkEndDecoratorShape.ARROW;
 	private Size srcEndSize=new Size(20,20);
 	private IPropertyDefinition srcP=new PlainTextPropertyDefinition("test","valie",true,true);
@@ -24,19 +24,18 @@ public class LinkTerminusDefaultsTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		templ=new LinkTerminusDefaults();
-		templ.setTermDecoratorType(term);
-		templ.setGap(gap);
-		templ.setLinkEndDecoratorShape(src);
-		templ.setEndSize(srcEndSize);
-		templ.setTermSize(termSize);
-		templ.setTermColour(termColor);
-		templ.addPropertyDefinition(srcP);
+		obj=new LinkTerminusDefaults(null);
+		obj.setTermDecoratorType(term);
+		obj.setGap(gap);
+		obj.setLinkEndDecoratorShape(src);
+		obj.setEndSize(srcEndSize);
+		obj.setTermSize(termSize);
+		obj.setTermColour(termColor);
+		obj.addPropertyDefinition(srcP);
 	}
 	
 	@Test
 	public void testLinkTerminusDefaults() {
-		obj=new LinkTerminusDefaults(templ);
 		assertEquals(src, obj.getEndDecoratorType());
 		assertEquals(srcEndSize, obj.getEndSize());
 		assertEquals(gap, obj.getGap());
@@ -44,11 +43,6 @@ public class LinkTerminusDefaultsTest {
 		assertEquals(term, obj.getTermDecoratorType());
 		assertEquals(termColor, obj.getTermColour());
 		assertEquals(1, obj.getPropertyDefinitionNumber());
-	}
-
-	@Test(expected=IllegalArgumentException.class)
-	public void testLinkTerminusDefaultsNullTemplate() {
-		obj=new LinkTerminusDefaults(null);
 	}
 
 }

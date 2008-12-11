@@ -3,18 +3,16 @@ package org.pathwayeditor.contextadapter.toolkit.ctxdefn;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 
-public class AbstractObjectType implements IObjectType{
+public abstract class AbstractObjectType implements IObjectType{
+    private static final String DEFAULT_DESCN = "No descn";  
 	private int uniqueID;
-	private String description="";
-	private String name;
+	private String description = DEFAULT_DESCN;
+	private final String name;
 	private final INotationSyntaxService notationSyntaxService;
 	
-	public AbstractObjectType( int uniqueID,
-			String description, String name, INotationSyntaxService in){
+	protected AbstractObjectType( int uniqueID, String name, INotationSyntaxService in){
 		if(name==null||name.equals(""))
 			throw new IllegalArgumentException("name must be a non null, non empty string");
-		if(description==null)
-			throw new IllegalArgumentException("description must be non null");
 		this.name=name;
 		if(in==null)
 			throw new IllegalArgumentException("notation syntax service cannot be null");
@@ -25,7 +23,7 @@ public class AbstractObjectType implements IObjectType{
 	}
 	
 	@Override
-	public int hashCode() {
+	public final int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((notationSyntaxService== null) ? 0 : notationSyntaxService.hashCode());
@@ -34,7 +32,7 @@ public class AbstractObjectType implements IObjectType{
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public final boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
@@ -53,29 +51,29 @@ public class AbstractObjectType implements IObjectType{
 	}
 	
 	
-	public String getDescription() {
+	public final String getDescription() {
 		return description;
 	}
 	
-	public void setDescription(String in){
+	public final void setDescription(String in){
 		if(in==null)
 			throw new IllegalArgumentException("description must be non null");
 		description=in;
 	}
 
-	public String getName() {
+	public final String getName() {
 		return name;
 	}
 	
-	public int getUniqueId() {
+	public final int getUniqueId() {
 		return uniqueID;
 	}
 
-	public INotationSyntaxService getSyntaxService() {
+	public final INotationSyntaxService getSyntaxService() {
 		return notationSyntaxService;
 	}
 
-	public int compareTo(IObjectType o) {
-		return name.compareTo(o.getName());
-	}
+    public final int compareTo(IObjectType o) {
+        return (getUniqueId() == o.getUniqueId()) ? 0 : (getUniqueId() < o.getUniqueId() ? -1 : 1);
+    }
 }

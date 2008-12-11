@@ -11,34 +11,19 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyD
 import org.pathwayeditor.businessobjects.typedefn.ILinkAttributeDefaults;
 
 public class LinkAttributeDefaults implements ILinkAttributeDefaults{
-
 	private String description;
 	private String detailedDescription;
 	private String url;
-	private Set <IPropertyDefinition> propertyDefinitions = new HashSet<IPropertyDefinition>();
+	private final Set <IPropertyDefinition> propertyDefinitions = new HashSet<IPropertyDefinition>();
 	private ConnectionRouter router;
-	private RGB lineColour = new RGB(0, 0, 0);
-	private LineStyle lineStyle = LineStyle.SOLID;
+	private RGB lineColour;
+	private LineStyle lineStyle;
 	private int lineWidth = 1;
 	private String name;
+	private final LinkObjectType linkObjectType;
 	
-	public LinkAttributeDefaults(String description, String detailedDescription, String url, Set<IPropertyDefinition> propertyDefinitions, ConnectionRouter router,
-			RGB lineColour, LineStyle lineStyle, int lineWidth, String name) {
-		super();
-		this.description = description;
-		this.detailedDescription = detailedDescription;
-		this.url = url;
-		if(propertyDefinitions!=null)
-			this.propertyDefinitions = propertyDefinitions;
-		if(router==null)
-			throw new IllegalArgumentException("router cannot be null");
-		this.router = router;
-		this.lineColour = lineColour;
-		if(lineStyle!=null)
-			this.lineStyle = lineStyle;
-		if(lineWidth>0)
-			this.lineWidth = lineWidth;
-		this.name = name;
+	public LinkAttributeDefaults(LinkObjectType linkObjectType) {
+		this.linkObjectType = linkObjectType;
 	}
 
 
@@ -93,6 +78,14 @@ public class LinkAttributeDefaults implements ILinkAttributeDefaults{
 		propertyDefinitions.add(in);
 	}
 
+    public boolean containsPropertyDefinition(IPropertyDefinition defn) {
+        boolean retVal = false;
+        if(defn != null) {
+            retVal = this.propertyDefinitions.contains(defn);
+        }
+        return retVal;
+    }
+    
 	public void setLineColour(RGB lineColour) {
 		this.lineColour = lineColour;
 	}
@@ -104,5 +97,10 @@ public class LinkAttributeDefaults implements ILinkAttributeDefaults{
 	public void setLineWidth(int lineWidth) {
 		this.lineWidth = lineWidth;
 	}
+
+
+    public LinkObjectType getLinkObjectType() {
+        return linkObjectType;
+    }
 
 }

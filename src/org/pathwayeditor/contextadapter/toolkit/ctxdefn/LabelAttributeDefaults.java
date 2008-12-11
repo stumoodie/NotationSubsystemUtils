@@ -6,29 +6,15 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
 
 public class LabelAttributeDefaults implements ILabelAttributeDefaults {
-
+    private final AbstractPropertyDefinition propertyDefinition;
 	private RGB fillColour = new RGB(255, 255, 255);
 	private RGB lineColour = new RGB(0, 0, 0);
 	private LineStyle lineStyle = LineStyle.SOLID;
 	private int lineWidth = 1;
 	private Size size= new Size(10,10); 
 
-	public LabelAttributeDefaults() {
-
-	}
-
-	public LabelAttributeDefaults(RGB fillColour, RGB lineColour, LineStyle lineStyle, int lineWidth, Size size) {
-		if(fillColour!=null)
-			this.fillColour = fillColour;
-		if(lineColour!=null)
-			this.lineColour = lineColour;
-		if(lineStyle!=null)
-			this.lineStyle = lineStyle;
-		if(lineWidth>0)
-			this.lineWidth = lineWidth;
-		if(size==null)
-			throw new IllegalArgumentException("size cannot be null");
-		this.size = size;
+	public LabelAttributeDefaults(AbstractPropertyDefinition propDefn) {
+	    this.propertyDefinition = propDefn;
 	}
 
 	public RGB getFillColour() {
@@ -70,5 +56,9 @@ public class LabelAttributeDefaults implements ILabelAttributeDefaults {
 	public void setLineWidth(int width) {
 		lineWidth = width;
 	}
+
+    public AbstractPropertyDefinition getPropertyDefinition() {
+        return propertyDefinition;
+    }
 
 }

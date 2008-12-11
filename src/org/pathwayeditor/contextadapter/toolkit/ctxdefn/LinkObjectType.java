@@ -4,42 +4,29 @@ import java.util.EnumSet;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
-import org.pathwayeditor.businessobjects.typedefn.ILinkAttributeDefaults;
-import org.pathwayeditor.businessobjects.typedefn.ILinkConnectionRules;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
-import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults;
-import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefinition;
 
 
 public final class LinkObjectType extends AbstractObjectType implements ILinkObjectType {
-	private ILinkConnectionRules linkConnectionRules;
-	private ILinkTerminusDefinition linkSourceEndDefinition;
-	private  ILinkTerminusDefinition linkTargetEndDefinition;
-	private ILinkAttributeDefaults defaultLinkAttributes;
+	private final LinkConnectionRules linkConnectionRules;
+	private final LinkTerminusDefinition linkSourceEndDefinition;
+	private final LinkTerminusDefinition linkTargetEndDefinition;
+	private final LinkAttributeDefaults defaultLinkAttributes;
 	private EnumSet<LinkEditableAttributes> editableAttributes= EnumSet.noneOf(LinkEditableAttributes.class);
 	
 
-	public LinkObjectType(ILinkAttributeDefaults defaultLinkAttributes, int uniqueID,
-			String description, String name, INotationSyntaxService in, ILinkTerminusDefaults srcTerminusDefaults, ILinkTerminusDefaults tgtTerminusDefaults){
-		super(uniqueID,description,name,in);
-		if(defaultLinkAttributes==null)
-			throw new IllegalArgumentException("Default link attributes cannot be null");
-		this.defaultLinkAttributes=defaultLinkAttributes;
-		this.linkSourceEndDefinition = new LinkTerminusDefinition(this, LinkTermType.SOURCE, srcTerminusDefaults);
-		this.linkTargetEndDefinition = new LinkTerminusDefinition(this, LinkTermType.TARGET, tgtTerminusDefaults);
+	public LinkObjectType(INotationSyntaxService in, int uniqueID, String name){
+		super(uniqueID, name, in);
+		this.defaultLinkAttributes = new LinkAttributeDefaults(this);
+		this.linkSourceEndDefinition = new LinkTerminusDefinition(this, LinkTermType.SOURCE);
+		this.linkTargetEndDefinition = new LinkTerminusDefinition(this, LinkTermType.TARGET);
 		this.linkConnectionRules = new LinkConnectionRules(this);
 	}
 
-	public ILinkAttributeDefaults getDefaultLinkAttributes() {
+	public LinkAttributeDefaults getDefaultLinkAttributes() {
 		return defaultLinkAttributes;
 	}
 	
-	public void setDefaultLinkAttributes(ILinkAttributeDefaults in){
-		if(in==null)
-			throw new IllegalArgumentException("Default link attributes cannot be null");
-		this.defaultLinkAttributes=in;
-	}
-
 	public EnumSet<LinkEditableAttributes> getEditiableAttributes() {
 		return editableAttributes ;
 	}
@@ -47,34 +34,16 @@ public final class LinkObjectType extends AbstractObjectType implements ILinkObj
 		editableAttributes=in;
 	}
 
-	public ILinkTerminusDefinition getSourceTerminusDefinition() {
+	public LinkTerminusDefinition getSourceTerminusDefinition() {
 		return linkSourceEndDefinition;
 	}
-	
-	public void  setSourceTerminusDefinition(ILinkTerminusDefinition in) {
-		if(in==null)
-			throw new IllegalArgumentException("Source end definition cannot be null");
-		this.linkSourceEndDefinition=in;
-	}
 
-	public ILinkTerminusDefinition getTargetTerminusDefinition() {
+	public LinkTerminusDefinition getTargetTerminusDefinition() {
 		return linkTargetEndDefinition;
 	}
 	
-	public void setTargetTerminusDefinition(ILinkTerminusDefinition in){
-		if(in==null)
-			throw new IllegalArgumentException("Target end definition cannot be null");
-		linkTargetEndDefinition=in;
-	}
 
-	public ILinkConnectionRules getLinkConnectionRules() {
+	public LinkConnectionRules getLinkConnectionRules() {
 		return linkConnectionRules;
 	}
-	
-	public void setLinkConnectionRules(ILinkConnectionRules in){
-		if(in==null)
-			throw new IllegalArgumentException("connection rules cannot be null");
-		this.linkConnectionRules=in;
-	}
-	
 }

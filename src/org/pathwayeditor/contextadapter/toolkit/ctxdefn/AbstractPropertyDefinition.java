@@ -1,25 +1,22 @@
 package org.pathwayeditor.contextadapter.toolkit.ctxdefn;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
-import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
 
 public abstract class AbstractPropertyDefinition implements IPropertyDefinition{
 	private final String name;
 	private final Object value;
 	private final boolean visualisable;
 	private final boolean editable;
-	private ILabelAttributeDefaults labelAttributeDefaults;
+	private final LabelAttributeDefaults labelAttributeDefaults;
 	
-	public AbstractPropertyDefinition(String name, Object value, boolean isVisualisable, boolean isEditable){
+	protected AbstractPropertyDefinition(String name, Object value, boolean isVisualisable, boolean isEditable){
 		if(name==null)
 			throw new IllegalArgumentException("Name cannot be null");
 		this.name = name;
 		this.value = value;
 		this.visualisable = isVisualisable;
 		this.editable = isEditable;
-		if(isVisualisable()){
-			setLabelAttributeDefaults(new LabelAttributeDefaults());
-		}
+		this.labelAttributeDefaults = new LabelAttributeDefaults(this);
 	}
 	public Object getDefaultValue(){
 		return value;
@@ -40,11 +37,7 @@ public abstract class AbstractPropertyDefinition implements IPropertyDefinition{
 		return this.name.compareTo(o.getName());
 	}
 
-	public void setLabelAttributeDefaults(ILabelAttributeDefaults defaults) {
-		this.labelAttributeDefaults=defaults;
-	}
-	
-	public ILabelAttributeDefaults getLabelDefaults() {
+	public LabelAttributeDefaults getLabelDefaults() {
 		return labelAttributeDefaults;
 	}
 
