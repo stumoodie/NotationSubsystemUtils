@@ -49,7 +49,7 @@ public class LinkTerminusDefaults implements ILinkTerminusDefaults {
 		return linkEndDecoratorShape;
 	}
 	
-	public void setLinkEndDecoratorShape(LinkEndDecoratorShape in){
+	public void setEndDecoratorType(LinkEndDecoratorShape in){
 		linkEndDecoratorShape=in;
 	}
 

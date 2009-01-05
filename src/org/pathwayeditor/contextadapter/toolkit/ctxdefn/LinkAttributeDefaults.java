@@ -103,4 +103,14 @@ public class LinkAttributeDefaults implements ILinkAttributeDefaults{
         return linkObjectType;
     }
 
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+
+    public void setDetailedDescription(String detailedDescription) {
+        this.detailedDescription = detailedDescription;
+    }
+
 }

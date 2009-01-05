@@ -14,9 +14,9 @@ import org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults;
 public class ShapeAttributeDefaults implements IShapeAttributeDefaults {
     private final ShapeObjectType shapeObjectType;
     private PrimitiveShapeType shapeType;
-    private String name;
-    private String description;
-    private String detailedDescription;
+    private String name = "";
+    private String description = "";
+    private String detailedDescription = "";
     private RGB fillColour;
     private RGB lineColour;
     private LineStyle lineStyle;

@@ -27,7 +27,7 @@ public class LinkTerminusDefaultsTest {
 		obj=new LinkTerminusDefaults(null);
 		obj.setTermDecoratorType(term);
 		obj.setGap(gap);
-		obj.setLinkEndDecoratorShape(src);
+		obj.setEndDecoratorType(src);
 		obj.setEndSize(srcEndSize);
 		obj.setTermSize(termSize);
 		obj.setTermColour(termColor);
