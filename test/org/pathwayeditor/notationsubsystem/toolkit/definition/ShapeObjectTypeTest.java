@@ -1,4 +1,4 @@
-package org.pathwayeditor.notationsubsystem.toolkit.ctxdefn;
+package org.pathwayeditor.notationsubsystem.toolkit.definition;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -14,7 +14,7 @@ import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IShapeParentingRules;
-import org.pathwayeditor.notationsubsystem.toolkit.ctxdefn.ShapeObjectType;
+import org.pathwayeditor.notationsubsystem.toolkit.definition.ShapeObjectType;
 
 @RunWith(JMock.class)
 public class ShapeObjectTypeTest {

@@ -1,4 +1,4 @@
-package org.pathwayeditor.notationsubsystem.toolkit.ctxdefn;
+package org.pathwayeditor.notationsubsystem.toolkit.definition;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -15,7 +15,7 @@ import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
-import org.pathwayeditor.notationsubsystem.toolkit.ctxdefn.RootObjectParentingRules;
+import org.pathwayeditor.notationsubsystem.toolkit.definition.RootObjectParentingRules;
 
 
 @RunWith(JMock.class)

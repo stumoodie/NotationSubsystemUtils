@@ -1,4 +1,4 @@
-package org.pathwayeditor.notationsubsystem.toolkit.ctxdefn;
+package org.pathwayeditor.notationsubsystem.toolkit.definition;
 
 import static org.junit.Assert.assertEquals;
 
@@ -9,8 +9,8 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveS
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
-import org.pathwayeditor.notationsubsystem.toolkit.ctxdefn.LinkTerminusDefaults;
-import org.pathwayeditor.notationsubsystem.toolkit.ctxdefn.PlainTextPropertyDefinition;
+import org.pathwayeditor.notationsubsystem.toolkit.definition.LinkTerminusDefaults;
+import org.pathwayeditor.notationsubsystem.toolkit.definition.PlainTextPropertyDefinition;
 
 public class LinkTerminusDefaultsTest {
 

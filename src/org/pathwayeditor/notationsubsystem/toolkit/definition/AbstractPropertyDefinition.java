@@ -1,4 +1,4 @@
-package org.pathwayeditor.notationsubsystem.toolkit.ctxdefn;
+package org.pathwayeditor.notationsubsystem.toolkit.definition;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 

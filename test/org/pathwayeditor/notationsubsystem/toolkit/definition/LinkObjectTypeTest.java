@@ -1,4 +1,4 @@
-package org.pathwayeditor.notationsubsystem.toolkit.ctxdefn;
+package org.pathwayeditor.notationsubsystem.toolkit.definition;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -14,7 +14,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
-import org.pathwayeditor.notationsubsystem.toolkit.ctxdefn.LinkObjectType;
+import org.pathwayeditor.notationsubsystem.toolkit.definition.LinkObjectType;
 
 @RunWith(JMock.class)
 public class LinkObjectTypeTest {

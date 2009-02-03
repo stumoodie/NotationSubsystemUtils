@@ -1,5 +1,5 @@
 
-package org.pathwayeditor.notationsubsystem.toolkit.ctxdefn;
+package org.pathwayeditor.notationsubsystem.toolkit.definition;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -12,7 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
-import org.pathwayeditor.notationsubsystem.toolkit.ctxdefn.LinkConnectionRules;
+import org.pathwayeditor.notationsubsystem.toolkit.definition.LinkConnectionRules;
 
 
 /**
@@ -49,7 +49,7 @@ public class LinkConnectionRulesTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.notationsubsystem.toolkit.ctxdefn.LinkConnectionRules#LinkConnectionRules()}.
+	 * Test method for {@link org.pathwayeditor.notationsubsystem.toolkit.definition.LinkConnectionRules#LinkConnectionRules()}.
 	 * Test uninitialised state
 	 */
 	@Test
@@ -66,7 +66,7 @@ public class LinkConnectionRulesTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.notationsubsystem.toolkit.ctxdefn.LinkConnectionRules#addConnection(org.pathwayeditor.contextadapter.publicapi.IShapeObjectType, org.pathwayeditor.contextadapter.publicapi.IShapeObjectType)}.
+	 * Test method for {@link org.pathwayeditor.notationsubsystem.toolkit.definition.LinkConnectionRules#addConnection(org.pathwayeditor.contextadapter.publicapi.IShapeObjectType, org.pathwayeditor.contextadapter.publicapi.IShapeObjectType)}.
 	 * Test that methods connections are set up correctly
 	 */
 	@Test
@@ -89,7 +89,7 @@ public class LinkConnectionRulesTest {
 	 }
 
 	/**
-	 * Test method for {@link org.pathwayeditor.notationsubsystem.toolkit.ctxdefn.LinkConnectionRules#isValidSource(java.lang.Enum)}.
+	 * Test method for {@link org.pathwayeditor.notationsubsystem.toolkit.definition.LinkConnectionRules#isValidSource(java.lang.Enum)}.
 	 */
 	@Test
 	public final void testIsValidSource() {
@@ -105,7 +105,7 @@ public class LinkConnectionRulesTest {
 	}
 	
 	/**
-	 * Test method for {@link org.pathwayeditor.notationsubsystem.toolkit.ctxdefn.LinkConnectionRules#isValidTarget(java.lang.Enum, java.lang.Enum)}.
+	 * Test method for {@link org.pathwayeditor.notationsubsystem.toolkit.definition.LinkConnectionRules#isValidTarget(java.lang.Enum, java.lang.Enum)}.
 	 */
 	@Test
 	public final void testIsValidTarget() {
