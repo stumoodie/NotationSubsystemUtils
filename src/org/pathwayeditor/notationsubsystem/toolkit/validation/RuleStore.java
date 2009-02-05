@@ -1,9 +1,7 @@
 package org.pathwayeditor.notationsubsystem.toolkit.validation;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleConfig;
@@ -13,29 +11,23 @@ import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefini
 
 /**
  * Default implementation of a <code>IValidationRuleStore</code>.<br>
- * @author Richard Adams 
+ * @author Richard Adams/Stuart Moodie 
  *
  */
 public class RuleStore implements IValidationRuleStore {
+	private final Set<IValidationRuleConfig> configs;
    
-    
-    private static IValidationRuleStore instance;
-	private Set<IValidationRuleConfig>configs;
-    private IDefaultValidationRuleConfigLoader loader;
-   
-	private RuleStore(IDefaultValidationRuleConfigLoader loader) {
-		this.loader=loader;
-		 configs=getCopyOfDefaults(this.loader.loadDefaultRuleConfigurations());
+	public RuleStore() {
+		this.configs = new HashSet<IValidationRuleConfig>();
 	}
 	
-	public static  IValidationRuleStore getInstance(IDefaultValidationRuleConfigLoader loader){
-		if(instance==null){
-			instance= new RuleStore(loader);
-		}
-		return instance;
+	public void addConfiguredRule(IValidationRuleConfig newRule){
+		if(this.configs.contains(newRule)) throw new IllegalArgumentException("Rule is already contained in the rule store.");
+		
+		this.configs.add(newRule);
 	}
+	
 	public boolean containsRule(int ruleNumber) {
-		checkIsInitialized();
 		for(IValidationRuleConfig config: configs){
 			if(config.getValidationRuleDefinition().getRuleNumber()==ruleNumber){
 				return true;
@@ -43,17 +35,9 @@ public class RuleStore implements IValidationRuleStore {
 		}
 		return false;
 	}
-	private void checkIsInitialized() {
-		if(!isInitialized()){
-			throw new IllegalStateException("Not initialized");
-		}
-	}
-
-
 	
-	public List<IValidationRuleDefinition> getAllRuleDefinitions() {
-		checkIsInitialized();
-		List <IValidationRuleDefinition> definitions = new ArrayList<IValidationRuleDefinition>();
+	public Set<IValidationRuleDefinition> getAllRuleDefinitions() {
+		Set <IValidationRuleDefinition> definitions = new HashSet<IValidationRuleDefinition>();
 		for(IValidationRuleConfig config: configs){
 			definitions.add(config.getValidationRuleDefinition());
 		}
@@ -74,57 +58,30 @@ public class RuleStore implements IValidationRuleStore {
 	}
 	
 	public Set<IValidationRuleConfig> getAllRuleConfigurations() {
-		checkIsInitialized();
 		return Collections.unmodifiableSet(configs);
 	}
 	
 	public IValidationRuleDefinition getRuleById(int ruleNumber) {
-		checkIsInitialized();
+		IValidationRuleDefinition retVal = null;
 		for(IValidationRuleConfig config: configs){
 			if(config.getValidationRuleDefinition().getRuleNumber()==ruleNumber){
-				return config.getValidationRuleDefinition();
+				retVal = config.getValidationRuleDefinition();
+				break;
 			}
 		}
-		return null;
+
+		return retVal;
 	}
 
 	public IValidationRuleConfig getRuleConfigByID(int ruleNumber) {
-		checkIsInitialized();
+		IValidationRuleConfig retVal = null;
 		for(IValidationRuleConfig config: configs){
 			if(config.getValidationRuleDefinition().getRuleNumber()==ruleNumber){
-				return config;
+				retVal = config;
+				break;
 			}
 		}
-		return null;
+		
+		return retVal;
 	}
-
-	public Set<IValidationRuleConfig> getDefaultRuleConfigurations() {
-		checkIsInitialized();
-		return Collections.unmodifiableSet(loader.loadDefaultRuleConfigurations());
-	}
-
-	public boolean isInitialized() {
-		if(configs!=null && loader!=null){
-			return true;
-		}
-		return false;
-	}
-	
-	
-	private Set<IValidationRuleConfig> getCopyOfDefaults(
-			Set<IValidationRuleConfig> defaults) {
-		Set<IValidationRuleConfig> copies = new HashSet<IValidationRuleConfig>();
-		for (IValidationRuleConfig originalConfig: defaults){
-			IValidationRuleDefinition originalDefn = originalConfig.getValidationRuleDefinition();
-			ValidationRuleDefinition defnCopy= new ValidationRuleDefinition(originalDefn.getValidationService(), originalDefn.getName(),
-					                                            originalDefn.getRuleCategory(), originalDefn.getRuleNumber(), 
-					                                               originalDefn.getRuleLevel(), originalDefn.getDefaultEnforcementLevel());
-			defnCopy.setDesc(originalDefn.getDescription());
-			defnCopy.setDetailedDesc(originalDefn.getDetailedDescription());
-			ValidationRuleConfig configCopy= new ValidationRuleConfig(defnCopy);
-		   copies.add(configCopy);
-		}
-		return copies;
-	}
-
 }

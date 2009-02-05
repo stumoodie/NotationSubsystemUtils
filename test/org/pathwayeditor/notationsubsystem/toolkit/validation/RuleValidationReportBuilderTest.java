@@ -22,9 +22,6 @@ import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleConfig
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition.RuleEnforcement;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition.RuleLevel;
-import org.pathwayeditor.notationsubsystem.toolkit.validation.IRuleValidationReportBuilder;
-import org.pathwayeditor.notationsubsystem.toolkit.validation.IValidationRuleStore;
-import org.pathwayeditor.notationsubsystem.toolkit.validation.RuleValidationReportBuilder;
 
 @RunWith(JMock.class)
 public class RuleValidationReportBuilderTest {
@@ -173,7 +170,7 @@ public class RuleValidationReportBuilderTest {
 		final Set<IValidationRuleConfig> configs = new HashSet<IValidationRuleConfig> (Arrays.asList(new IValidationRuleConfig[]{CONFIG1}));
 		final int RULE_ID=1;
 		setUpRuleAssertions(configs, RULE_ID);
-		reportBuilderAPI.setRuleFailed(null, mandatoryRuleDefinition, "Failed");
+		reportBuilderAPI.setRuleFailed(null, mandatoryRuleDefinition.getRuleNumber(), "Failed");
 		reportBuilderAPI.createValidationReport();
 		IValidationReport report = reportBuilderAPI.getValidationReport();
 		assertEquals(1, report.getValidationReportItems().size());
@@ -185,37 +182,38 @@ public class RuleValidationReportBuilderTest {
 		final Set<IValidationRuleConfig> configs = new HashSet<IValidationRuleConfig> (Arrays.asList(new IValidationRuleConfig[]{CONFIG1}));
 		final int RULE_ID=1;
 		setUpOptionalRuleAssertions(configs, RULE_ID);
-		reportBuilderAPI.setRuleFailed(null, optionalRuleDefinition, "Failed");
+		reportBuilderAPI.setRuleFailed(null, RULE_ID, "Failed");
 		reportBuilderAPI.createValidationReport();
 		IValidationReport report = reportBuilderAPI.getValidationReport();
-		assertEquals(0, report.getValidationReportItems().size());
+		assertEquals(1, report.getValidationReportItems().size());
 	}
 
 	private void setUpRuleAssertions(final Set<IValidationRuleConfig> configs, final int RULE_ID) {
 		mockery.checking(new Expectations() {
-			{atLeast(1).of(mandatoryRuleDefinition).getRuleNumber(); will(returnValue(RULE_ID));}
+			{allowing(mandatoryRuleDefinition).getRuleNumber(); will(returnValue(RULE_ID));}
 			{allowing(CONFIG1).getValidationRuleDefinition(); will(returnValue(mandatoryRuleDefinition));}
 			{allowing(CONFIG1).getCurrentRuleEnforcement(); will(returnValue(RuleEnforcement.ERROR));}
 		//	{atLeast(1).of(store).getConfigurableRules();will(returnValue(configs));}
-			{atLeast(1).of(store).containsRule(RULE_ID);will(returnValue(true));}
-			{atLeast(1).of(store).getRuleConfigByID(RULE_ID);will(returnValue(CONFIG1));}
+			{allowing(store).containsRule(RULE_ID);will(returnValue(true));}
+			{allowing(store).getRuleConfigByID(RULE_ID);will(returnValue(CONFIG1));}
 		});
 	}
 	private void setUpOptionalRuleAssertions(final Set<IValidationRuleConfig> configs, final int RULE_ID) {
 		mockery.checking(new Expectations() {
-			{atLeast(1).of(optionalRuleDefinition).getRuleNumber(); will(returnValue(RULE_ID));}
+			{allowing(optionalRuleDefinition).getRuleNumber(); will(returnValue(RULE_ID));}
 			{allowing(CONFIG1).getValidationRuleDefinition(); will(returnValue(optionalRuleDefinition));}
 			{allowing(CONFIG1).getCurrentRuleEnforcement(); will(returnValue(RuleEnforcement.ERROR));}
 		//	{atLeast(1).of(store).getConfigurableRules();will(returnValue(configs));}
-			{atLeast(1).of(store).containsRule(RULE_ID);will(returnValue(true));}
-			{atLeast(1).of(store).getRuleConfigByID(RULE_ID);will(returnValue(CONFIG1));}
+			{allowing(store).containsRule(RULE_ID);will(returnValue(true));}
+			{allowing(store).getRuleConfigByID(RULE_ID);will(returnValue(CONFIG1));}
 		});
 	}
 
 	@Test
 	public void testSetRulePassed() {
-//		final Set<IValidationRuleConfig> configs = new HashSet<IValidationRuleConfig> (Arrays.asList(new IValidationRuleConfig[]{CONFIG1}));
-		reportBuilderAPI.setRulePassed(mandatoryRuleDefinition);
+		final Set<IValidationRuleConfig> configs = new HashSet<IValidationRuleConfig> (Arrays.asList(new IValidationRuleConfig[]{CONFIG1}));
+		setUpRuleAssertions(configs, 1);
+		reportBuilderAPI.setRulePassed(mandatoryRuleDefinition.getRuleNumber());
 		reportBuilderAPI.createValidationReport();
 		IValidationReport report = reportBuilderAPI.getValidationReport();
 		assertEquals(0, report.getValidationReportItems().size());
@@ -229,7 +227,7 @@ public class RuleValidationReportBuilderTest {
 			{atLeast(1).of(def).getRuleNumber(); will(returnValue(RULE_ID));}
 			{atLeast(1).of(store).containsRule(RULE_ID);will(returnValue(false));}
 		});
-		reportBuilderAPI.setRuleFailed(null, def, "Any message");
+		reportBuilderAPI.setRuleFailed(null, def.getRuleNumber(), "Any message");
 	}
 
 }

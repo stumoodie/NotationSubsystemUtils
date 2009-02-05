@@ -20,8 +20,6 @@ import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleConfig
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition.RuleEnforcement;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition.RuleLevel;
-import org.pathwayeditor.notationsubsystem.toolkit.validation.ValidationRuleConfig;
-import org.pathwayeditor.notationsubsystem.toolkit.validation.ValidationRuleDefinition;
 
 @RunWith(JMock.class)
 public class ValidationRuleConfigTest {
@@ -44,11 +42,11 @@ public class ValidationRuleConfigTest {
 	}
 
 	private IValidationRuleDefinition createMandatoryRuleDefinition() {
-		return new ValidationRuleDefinition(notationValidationService, "MANDATORY", "LAYOUT", 1, RuleLevel.MANDATORY, RuleEnforcement.ERROR);
+		return new ValidationRuleDefinition("MANDATORY", "LAYOUT", 1, RuleLevel.MANDATORY, RuleEnforcement.ERROR);
 	}
 
 	private IValidationRuleDefinition createOptionalRuleDefinition() {
-		return new ValidationRuleDefinition(notationValidationService, "OPTIONAL", "LAYOUT", 2, RuleLevel.OPTIONAL, RuleEnforcement.ERROR);
+		return new ValidationRuleDefinition("OPTIONAL", "LAYOUT", 2, RuleLevel.OPTIONAL, RuleEnforcement.ERROR);
 	}
 
 	@Test
@@ -101,7 +99,7 @@ public class ValidationRuleConfigTest {
 
 	@Test
 	public void testHashCode() {
-		IValidationRuleDefinition other = new ValidationRuleDefinition(notationValidationService, "MANDATORY", "LAYOUT", UNIQUE_OTHER_ID, RuleLevel.MANDATORY, RuleEnforcement.ERROR);
+		IValidationRuleDefinition other = new ValidationRuleDefinition("MANDATORY", "LAYOUT", UNIQUE_OTHER_ID, RuleLevel.MANDATORY, RuleEnforcement.ERROR);
 		configAPI = new ValidationRuleConfig(OPTIONAL);
 		configImpl = configAPI;
 		ValidationRuleConfig config2 = new ValidationRuleConfig(other);
@@ -111,7 +109,7 @@ public class ValidationRuleConfigTest {
 
 	@Test
 	public void testEquals() {
-		IValidationRuleDefinition other = new ValidationRuleDefinition(notationValidationService, "MANDATORY", "LAYOUT", UNIQUE_OTHER_ID, RuleLevel.MANDATORY, RuleEnforcement.ERROR);
+		IValidationRuleDefinition other = new ValidationRuleDefinition("MANDATORY", "LAYOUT", UNIQUE_OTHER_ID, RuleLevel.MANDATORY, RuleEnforcement.ERROR);
 		configAPI = new ValidationRuleConfig(OPTIONAL);
 		IValidationRuleConfig config2 = new ValidationRuleConfig(other);
 		assertFalse(config2.equals(configAPI));

@@ -13,7 +13,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
-import org.pathwayeditor.notationsubsystem.toolkit.ndom.ModelObject;
 
 
 public class ModelObjectTest {

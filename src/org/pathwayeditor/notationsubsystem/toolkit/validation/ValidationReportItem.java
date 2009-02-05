@@ -16,12 +16,16 @@ import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefini
  */
 public class ValidationReportItem implements IValidationReportItem {
 
-	private IDrawingElement invalidDrawingElement;
-	private IValidationRuleDefinition ruleDefinition;
-	private List<IValidationReportItem> childReports = new ArrayList<IValidationReportItem>();
-	private Severity severity;
-	private String message;
+	private final IDrawingElement invalidDrawingElement;
+	private final IValidationRuleDefinition ruleDefinition;
+	private final List<IValidationReportItem> childReports = new ArrayList<IValidationReportItem>();
+	private final Severity severity;
+	private final String message;
 	
+	public ValidationReportItem(IValidationRuleDefinition ruleDefinition, Severity severity, String message) {
+		this(null, ruleDefinition, severity, message);
+	}
+		
 	public ValidationReportItem(IDrawingElement invalidDrawingElement,
 			                    IValidationRuleDefinition ruleDefinition, 
 			                     Severity severity,
@@ -53,43 +57,6 @@ public class ValidationReportItem implements IValidationReportItem {
 	
 	public IDrawingElement getInvalidObject() {
 		return invalidDrawingElement;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((invalidDrawingElement == null) ? 0 : invalidDrawingElement.hashCode());
-		result = prime * result + ((message == null) ? 0 : message.hashCode());
-		result = prime * result + ((ruleDefinition == null) ? 0 : ruleDefinition.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		final ValidationReportItem other = (ValidationReportItem) obj;
-		if (invalidDrawingElement == null) {
-			if (other.invalidDrawingElement != null)
-				return false;
-		} else if (!invalidDrawingElement.equals(other.invalidDrawingElement))
-			return false;
-		if (message == null) {
-			if (other.message != null)
-				return false;
-		} else if (!message.equals(other.message))
-			return false;
-		if (ruleDefinition == null) {
-			if (other.ruleDefinition != null)
-				return false;
-		} else if (!ruleDefinition.equals(other.ruleDefinition))
-			return false;
-		return true;
 	}
 
 	public Severity getSeverity() {

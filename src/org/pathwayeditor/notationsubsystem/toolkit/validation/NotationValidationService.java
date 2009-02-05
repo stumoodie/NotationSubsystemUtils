@@ -1,6 +1,6 @@
 package org.pathwayeditor.notationsubsystem.toolkit.validation;
 
-import java.util.List;
+import java.util.Set;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
@@ -33,18 +33,18 @@ public final class NotationValidationService implements INotationValidationServi
 		return serviceProvider;
 	}
 
-	public ICanvas getMapBeingValidated() {
+	public ICanvas getCanvasBeingValidated() {
 		return ndomValidation.getMapBeingValidated();
 	}
     
 	public IValidationReport getValidationReport() {
-		if(!(hasMapBeenValidated())){
+		if(!(hasBeenValidated())){
 			throw new IllegalStateException("Map has not been validated - no report available");
 		}
 		return ndomValidation.getValidationReport();
 	}
     
-	public boolean hasMapBeenValidated() {
+	public boolean hasBeenValidated() {
 		return ndomValidation.hasBeenValidated();
 	}
 	
@@ -56,7 +56,7 @@ public final class NotationValidationService implements INotationValidationServi
      * <li> Handling exceptions thrown by the parser
      * @throw {@link IllegalStateException} if service isReadyToValidate == false
      */
-	public void validateMap() {
+	public void validate() {
 		if(!isReadyToValidate())
 			throw new IllegalStateException("Service not ready to validate");
 		this.ndomValidation.validateMap();		
@@ -66,7 +66,7 @@ public final class NotationValidationService implements INotationValidationServi
 		return ndomValidation.isReadyToValidate();
 	}
 
-	public void setMapToValidate(ICanvas mapToValidate) {
+	public void setCanvasToValidate(ICanvas mapToValidate) {
 		if(mapToValidate==null) throw new IllegalArgumentException("Map to be validated should not be null");
 		ndomValidation.setMapToValidate(mapToValidate);
 	}
@@ -76,7 +76,7 @@ public final class NotationValidationService implements INotationValidationServi
 		return true;
 	}
 
-	public List<IValidationRuleDefinition> getRules() {
+	public Set<IValidationRuleDefinition> getRules() {
 		return ndomValidation.getRuleStore().getAllRuleDefinitions();
 	}
 

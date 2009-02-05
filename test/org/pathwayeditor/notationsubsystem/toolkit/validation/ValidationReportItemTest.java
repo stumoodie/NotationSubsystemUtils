@@ -1,6 +1,7 @@
 package org.pathwayeditor.notationsubsystem.toolkit.validation;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -14,7 +15,6 @@ import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReportItem;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
-import org.pathwayeditor.notationsubsystem.toolkit.validation.ValidationReportItem;
 
 @RunWith(JMock.class)
 public class ValidationReportItemTest {
@@ -89,7 +89,7 @@ public class ValidationReportItemTest {
 		reportItem = createAValidationReportItem();
 		assertEquals(reportItem, reportItem);
 		IValidationReportItem item2 = createAValidationReportItem();
-		assertEquals(item2, reportItem);
+		assertFalse("not equal", item2.equals(reportItem));
 	}
 	
 	@Test
@@ -97,7 +97,7 @@ public class ValidationReportItemTest {
 		reportItem = createAValidationReportItem();
 		assertEquals(reportItem.hashCode(), reportItem.hashCode());
 		IValidationReportItem item2 = createAValidationReportItem();
-		assertEquals(item2.hashCode(), reportItem.hashCode());
+		assertFalse(item2.hashCode() == reportItem.hashCode());
 	}
 	
 	

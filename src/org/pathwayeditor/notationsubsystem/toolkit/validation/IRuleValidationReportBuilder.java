@@ -2,7 +2,6 @@ package org.pathwayeditor.notationsubsystem.toolkit.validation;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReport;
-import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
 
 
 /**
@@ -33,12 +32,12 @@ public interface IRuleValidationReportBuilder {
 	 * The first  time this method is called by a  client, isValidating() should return <code>true</code> and
 	 * any changes by external clients to the rule configuration should have no effect in this validation run.
 	 * @param inValidObject An {@link IDrawingElement}, possibly null
-	 * @param ruleDefinition A non-null {@link IValidationRuleDefinition} object
+	 * @param ruleNum the number that uniquely identifies the rule.
 	 * @param message A non-null<code>String</code>.
 	 * @throws IllegalStateException if the builder is not in a state where isReadyToValidate() or isValidating() == true.
 	 * @throws IllegalArgumentException if the <code>ruleDefinition</code>parameter is not in the IValidationRuleStore().
 	 */
-	void setRuleFailed(IDrawingElement inValidObject,IValidationRuleDefinition ruleDefinition, String message);
+	void setRuleFailed(IDrawingElement inValidObject, int ruleNum, String message);
 	
 	// do we need this? A rule may be tested several times; if it passes once it can still fail later.
 	// This is not used to generate the validation report.
@@ -53,11 +52,11 @@ public interface IRuleValidationReportBuilder {
 	
 	// RA - now does nothing apart from move builder to isValidating==true state. No longer records a rule as passed.
 	/**
-	 * @param rule A non-null {@link IValidationRuleDefinition}
+	 * @param ruleNum the number that uniquely identifies the rule.
 	 * @throws IllegalStateException if the builder is not in a state where isReadyToValidate() or isValidating() == true.
 	 * @throws IllegalArgumentException if the <code>ruleDefinition</code>parameter is not in the IValidationRuleStore().
 	 */
-	void setRulePassed(IValidationRuleDefinition rule);
+	void setRulePassed(int ruleNum);
 	
 	/**
 	 * Accessor for the <code>IValidationRuleStore</code>

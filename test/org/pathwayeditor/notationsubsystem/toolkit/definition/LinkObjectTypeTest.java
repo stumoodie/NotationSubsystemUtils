@@ -14,7 +14,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
-import org.pathwayeditor.notationsubsystem.toolkit.definition.LinkObjectType;
 
 @RunWith(JMock.class)
 public class LinkObjectTypeTest {

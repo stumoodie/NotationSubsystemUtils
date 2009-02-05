@@ -3,15 +3,13 @@ package org.pathwayeditor.notationsubsystem.toolkit.validation;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleConfig;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition.RuleEnforcement;
-import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition.RuleLevel;
 
 
 
 public class ValidationRuleConfig implements IValidationRuleConfig {
 
-	private IValidationRuleDefinition definition;
-	private boolean mustBeRun;
-	private Object isError;
+	private final IValidationRuleDefinition definition;
+	private RuleEnforcement currentEnforcement;
 	
 	public ValidationRuleConfig(IValidationRuleDefinition definition) {
 		super();
@@ -19,12 +17,7 @@ public class ValidationRuleConfig implements IValidationRuleConfig {
 			throw new IllegalArgumentException("Rule definition cannot be null");
 		}
 		this.definition = definition;
-		if(definition.getRuleLevel().equals(RuleLevel.MANDATORY)){
-			this.mustBeRun = true;
-		}else {
-			this.mustBeRun = false;
-		}
-		this.isError = definition.getDefaultEnforcementLevel().equals(RuleEnforcement.ERROR);
+		this.currentEnforcement = definition.getDefaultEnforcementLevel();
 	}
 
 	public IValidationRuleDefinition getValidationRuleDefinition() {
@@ -38,52 +31,57 @@ public class ValidationRuleConfig implements IValidationRuleConfig {
 		return definition.compareTo(other.getValidationRuleDefinition());
 	}
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((definition == null) ? 0 : definition.hashCode());
+		result = prime * result
+				+ ((definition == null) ? 0 : definition.hashCode());
 		return result;
 	}
 
-	@Override
-	/**
-	 * Two rule configurations are equal if they share the same rule definition;
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
 			return false;
-		if (getClass() != obj.getClass())
+		if (!(obj instanceof IValidationRuleConfig))
 			return false;
-		final ValidationRuleConfig other = (ValidationRuleConfig) obj;
+		IValidationRuleConfig other = (ValidationRuleConfig) obj;
 		if (definition == null) {
-			if (other.definition != null)
+			if (other.getValidationRuleDefinition() != null)
 				return false;
-		} else if (!definition.equals(other.definition))
+		} else if (!definition.equals(other.getValidationRuleDefinition()))
 			return false;
 		return true;
 	}
-	
+
 	public String toString () {
-		StringBuffer sb = new StringBuffer();
-		sb.append("Config for: ").append(definition.getRuleNumber()).append("\n")
-		.append("Must be run: ").append(mustBeRun).append("\n")
-		.append("IsError? :").append(isError);
+		StringBuilder sb = new StringBuilder(this.getClass().getSimpleName());
+		sb.append("(").append("definition=");
+		sb.append(definition);
+		sb.append("currentEnforcement=");
+		sb.append(currentEnforcement);
+		sb.append(")");
 		return sb.toString();
 	}
 
 
 	public RuleEnforcement getCurrentRuleEnforcement() {
-		return definition.getDefaultEnforcementLevel();
+		return this.currentEnforcement;
 	}
 
 	public void setRuleEnforcement(RuleEnforcement ruleEnforcement) {
-		if(definition.isValidEnforcement(ruleEnforcement))
-			((ValidationRuleDefinition)definition).setRuleEnforcement(ruleEnforcement);
-		else
-			throw new IllegalArgumentException("This rule enforcement is not valid for the rule level");
+		if(!this.definition.isValidEnforcement(ruleEnforcement)) throw new IllegalArgumentException("Enforcement level invalid for the run level of this rule: " + this.definition);
+		
+		this.currentEnforcement = ruleEnforcement;
 	}
 
 }

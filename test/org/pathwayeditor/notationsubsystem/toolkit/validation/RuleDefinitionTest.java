@@ -22,7 +22,6 @@ import org.pathwayeditor.businessobjects.notationsubsystem.INotationValidationSe
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition.RuleEnforcement;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition.RuleLevel;
-import org.pathwayeditor.notationsubsystem.toolkit.validation.ValidationRuleDefinition;
 
 @RunWith(JMock.class)
 public class RuleDefinitionTest {
@@ -54,24 +53,19 @@ public class RuleDefinitionTest {
 	}
 
 	private ValidationRuleDefinition createARuleDefinitionUsingExpectedValues() {
-		return new ValidationRuleDefinition(validationService, EXPECTED_NAME, EXPECTED_CATEGORY, EXPECTED_RULE_NUMBER, EXPECTED_LEVEL, RuleEnforcement.ERROR);
+		return new ValidationRuleDefinition(EXPECTED_NAME, EXPECTED_CATEGORY, EXPECTED_RULE_NUMBER, EXPECTED_LEVEL, RuleEnforcement.ERROR);
 	}
 
 	private ValidationRuleDefinition createARuleWithHigherNumber() {
-		return new ValidationRuleDefinition(validationService, EXPECTED_NAME, EXPECTED_CATEGORY, DIFFERENT_RULE_NUMBER, EXPECTED_LEVEL, RuleEnforcement.ERROR);
+		return new ValidationRuleDefinition(EXPECTED_NAME, EXPECTED_CATEGORY, DIFFERENT_RULE_NUMBER, EXPECTED_LEVEL, RuleEnforcement.ERROR);
 	}
 
 	private ValidationRuleDefinition createARuleWithDifferentContext() {
-		return new ValidationRuleDefinition(differentValidationService, EXPECTED_NAME, EXPECTED_CATEGORY, EXPECTED_RULE_NUMBER, EXPECTED_LEVEL, RuleEnforcement.ERROR);
+		return new ValidationRuleDefinition(EXPECTED_NAME, EXPECTED_CATEGORY, EXPECTED_RULE_NUMBER, EXPECTED_LEVEL, RuleEnforcement.ERROR);
 	}
 
 	@After
 	public void tearDown() throws Exception {
-	}
-
-	@Test
-	public void testGetContext() {
-		assertEquals(validationService, definitionAPI.getValidationService());
 	}
 
 	@Test
@@ -111,7 +105,7 @@ public class RuleDefinitionTest {
 		assertFalse(definition.equals(RULENUMBERCHANGE_DEFINITION));
 
 		ValidationRuleDefinition RULE_CONTEXT_CHANGE_DEFINITION = createARuleWithDifferentContext();
-		assertFalse(definition.equals(RULE_CONTEXT_CHANGE_DEFINITION));
+		assertTrue(definition.equals(RULE_CONTEXT_CHANGE_DEFINITION));
 	}
 
 	@Test
@@ -123,7 +117,7 @@ public class RuleDefinitionTest {
 		assertFalse(definition.hashCode() == RULENUMBERCHANGE_DEFINITION.hashCode());
 
 		ValidationRuleDefinition RULE_CONTEXT_CHANGE_DEFINITION = createARuleWithDifferentContext();
-		assertFalse(definition.hashCode() == RULE_CONTEXT_CHANGE_DEFINITION.hashCode());
+		assertTrue(definition.hashCode() == RULE_CONTEXT_CHANGE_DEFINITION.hashCode());
 	}
 	
 	@Test

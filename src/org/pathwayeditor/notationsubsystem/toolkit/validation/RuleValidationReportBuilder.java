@@ -1,8 +1,6 @@
 package org.pathwayeditor.notationsubsystem.toolkit.validation;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
@@ -10,9 +8,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReport;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReportItem;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleConfig;
-import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition.RuleEnforcement;
-import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition.RuleLevel;
 /**
  * Builds a report.
  * Can be in 3 states:
@@ -23,7 +19,7 @@ import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefini
  * </ul>
  * When the first call to setRuleFailed() or setRulePassed() is called by the validator,
  * a copy of the rule configuration is taken. This is to prevent
- * @author Richard Adams
+ * @author Richard Adams/Stuart Moodie
  *
  */
  public class RuleValidationReportBuilder implements IRuleValidationReportBuilder {
@@ -33,26 +29,28 @@ import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefini
     static final int VALIDATING        = 2;
     static final int COMPLETED         = 3;
     
-    List<IValidationReportItem> reportItems = new ArrayList<IValidationReportItem>();
-    private IValidationRuleStore validationRuleStore;
-    private ICanvas mapToValidate;
-    private Map<Integer, Boolean> checkedRules= new HashMap<Integer, Boolean>();
+    private final IValidationRuleStore validationRuleStore;
+    private final ICanvas mapToValidate;
+    private ValidationReport currValidationReport;
+    private Map<Integer, Boolean> checkedRules = new HashMap<Integer, Boolean>();
 
-    
     public RuleValidationReportBuilder(IValidationRuleStore store, ICanvas map) {
     	if(map == null || store == null){
     		throw new IllegalArgumentException("Arguments must not be null");
     	}
     	this.validationRuleStore=store;
     	this.mapToValidate=map;
+    	this.currValidationReport = new ValidationReport(this.mapToValidate);
     	state=READY_TO_VALIDATE;
     }
+    
 	public void createValidationReport() {
 		if(!isValidating() && !isComplete() && !isReadyToValidate()){
 			throw new IllegalStateException("");
 		}
 		
 		state=COMPLETED;
+		
 	}
 	
 	public IValidationRuleStore getRuleStore() {
@@ -63,7 +61,7 @@ import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefini
 		if(getState()!=COMPLETED){
 			throw new IllegalStateException("CAnnot access report until validation completed");
 		}
-		return new DefaultValidationReport(mapToValidate, reportItems);
+		return this.currValidationReport;
 	}
 
 	public boolean isComplete() {
@@ -82,33 +80,34 @@ import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefini
 		if(state==VALIDATING){
 			throw new IllegalStateException("Cannot clear during validation");
 		}
-		reportItems.clear();
+    	this.currValidationReport = new ValidationReport(this.mapToValidate);
 		checkedRules.clear();
 		state=READY_TO_VALIDATE;
 	}
 
-	public void setRuleFailed(IDrawingElement inValidObject, IValidationRuleDefinition ruleDefinition, String message) {
-		checkRuleDefinition(ruleDefinition);
+	public void setRuleFailed(IDrawingElement inValidObject, int ruleId, String message) {
+		checkRuleDefinition(ruleId);
 		state=VALIDATING;
-		IValidationRuleConfig config = validationRuleStore.getRuleConfigByID(ruleDefinition.getRuleNumber());
-		if(!ruleDefinition.getRuleLevel().equals(RuleLevel.MANDATORY)){
-			return;
+		IValidationRuleConfig config = validationRuleStore.getRuleConfigByID(ruleId);
+		// if set to ignore then do nothing
+		if(config.getCurrentRuleEnforcement() != RuleEnforcement.IGNORE){
+			IValidationReportItem.Severity severity = (config.getCurrentRuleEnforcement() == RuleEnforcement.ERROR) ?
+					IValidationReportItem.Severity.ERROR : IValidationReportItem.Severity.WARNING;
+			this.currValidationReport.addReportItem(new ValidationReportItem(inValidObject, config.getValidationRuleDefinition(), severity, message));
 		}
-		IValidationReportItem.Severity severity = config.getCurrentRuleEnforcement().equals(RuleEnforcement.ERROR)?IValidationReportItem.Severity.ERROR:IValidationReportItem.Severity.WARNING;
-		reportItems.add(new ValidationReportItem(inValidObject, ruleDefinition, severity, message));
 	}
 
 
-	private void checkRuleDefinition(IValidationRuleDefinition ruleDefinition) {
+	private void checkRuleDefinition(int ruleId) {
 		if(getState()==COMPLETED){
 			throw new IllegalStateException("validation completed");
 		}
-		if(!validationRuleStore.containsRule(ruleDefinition.getRuleNumber())){
+		if(!validationRuleStore.containsRule(ruleId)){
 			throw new IllegalArgumentException("Rule not in rule store");
 		}
 	}
 
-	public void setRulePassed(IValidationRuleDefinition ruleDefinition) {
+	public void setRulePassed(int ruleId) {
 		state=VALIDATING;
 	}
 	int getState() {

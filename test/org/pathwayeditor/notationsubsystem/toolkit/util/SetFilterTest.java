@@ -9,8 +9,6 @@ import java.util.TreeSet;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.pathwayeditor.notationsubsystem.toolkit.util.IFilterCriteria;
-import org.pathwayeditor.notationsubsystem.toolkit.util.SetFilter;
 
 public class SetFilterTest {
 	private SetFilter<String> testInstance;

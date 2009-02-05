@@ -1,7 +1,4 @@
 package org.pathwayeditor.notationsubsystem.toolkit.validation;
-
-import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
-import org.pathwayeditor.businessobjects.notationsubsystem.INotationValidationService;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
 
 /**
@@ -12,13 +9,13 @@ import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefini
  * 
  */
 public class ValidationRuleDefinition implements IValidationRuleDefinition {
-
-	private INotationSubsystem context;
-	private String desc, detailedDesc, name, ruleCategory;
-	private int ruleNumber;
-	private RuleLevel ruleLevel;
-	private RuleEnforcement ruleEnforcement;
-	private INotationValidationService validationService;
+	private String desc = "";
+	private String detailedDesc = "";
+	private final String name;
+	private final String ruleCategory;
+	private final int ruleNumber;
+	private final RuleLevel ruleLevel;
+	private final RuleEnforcement ruleEnforcement;
 
 	/**
 	 * 
@@ -32,32 +29,31 @@ public class ValidationRuleDefinition implements IValidationRuleDefinition {
 	 *            A unique <code>int</code> identifier for the rule in its validationService.
 	 * @param ruleLevel
 	 *            A {@link RuleLevel} Enum.
+	 * @param defaultEnforcementLevel The default enforcement for the given rule, must be valid for the run level.
 	 * @throws IllegalArgumentException
 	 *             if any argument is null
+	 * @throws IllegalArgumentException if the enforcement level if not consistent with the run level. 
 	 */
-	public ValidationRuleDefinition(INotationValidationService validationService, String name, String ruleCategory, int ruleNumber, RuleLevel ruleLevel, RuleEnforcement enforcement) {
-		if (validationService== null || name == null || ruleCategory == null || ruleLevel == null||enforcement==null) {
+	public ValidationRuleDefinition(String name, String ruleCategory, int ruleNumber, RuleLevel ruleLevel, RuleEnforcement defaultEnforcementLevel) {
+		if (name == null || ruleCategory == null || ruleLevel == null||defaultEnforcementLevel==null) {
 			throw new IllegalArgumentException("No null arguments allowed in constructor");
 		}
-		this.context = validationService.getNotationSubsystem();
-		this.validationService=validationService;
+		if(!isValidEnforcement(ruleLevel, defaultEnforcementLevel)){
+			throw new IllegalArgumentException("A mandatory rule must have a default enforecment of ERROR");
+		}
 		this.name = name;
 		this.ruleCategory = ruleCategory;
 		this.ruleNumber = ruleNumber;
 		this.ruleLevel = ruleLevel;
-		this.ruleEnforcement = enforcement;
-	}
-
-	public void setRuleEnforcement(RuleEnforcement in) {
-		ruleEnforcement = in;
+		this.ruleEnforcement = defaultEnforcementLevel;
 	}
 
 	public String getDescription() {
-		return desc == null ? "" : desc;
+		return desc;
 	}
-
 	public String getDetailedDescription() {
-		return detailedDesc == null ? "" : detailedDesc;
+		return detailedDesc;
+		
 	}
 
 	public String getName() {
@@ -80,7 +76,6 @@ public class ValidationRuleDefinition implements IValidationRuleDefinition {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((context == null) ? 0 : context.hashCode());
 		result = prime * result + ruleNumber;
 		return result;
 	}
@@ -94,21 +89,16 @@ public class ValidationRuleDefinition implements IValidationRuleDefinition {
 		if (getClass() != obj.getClass())
 			return false;
 		final ValidationRuleDefinition other = (ValidationRuleDefinition) obj;
-		if (context == null) {
-			if (other.context != null)
-				return false;
-		} else if (!context.equals(other.context))
-			return false;
 		if (ruleNumber != other.ruleNumber)
 			return false;
 		return true;
 	}
 
-	void setDesc(String desc) {
+	public void setDesc(String desc) {
 		this.desc = desc;
 	}
 
-	void setDetailedDesc(String detailedDesc) {
+	public void setDetailedDesc(String detailedDesc) {
 		this.detailedDesc = detailedDesc;
 	}
 
@@ -122,26 +112,22 @@ public class ValidationRuleDefinition implements IValidationRuleDefinition {
 	 * Sorts by ascending rule number
 	 */
 	public int compareTo(IValidationRuleDefinition other) {
-		return new Integer(ruleNumber).compareTo(new Integer(other.getRuleNumber()));
+		return ruleNumber == other.getRuleNumber() ? 0 : (ruleNumber < other.getRuleNumber() ? -1 : 1);
 	}
 
 	public RuleEnforcement getDefaultEnforcementLevel() {
-		if (isValidEnforcement(ruleEnforcement))
-			return ruleEnforcement;
-		throw new RuntimeException("Default rule enforcement is invalid for rule level");
+		return ruleEnforcement;
 	}
 
-	public INotationValidationService getValidationService() {
-		return validationService;
+	private static boolean isValidEnforcement(RuleLevel level, RuleEnforcement enforcement){
+		return level != null && enforcement != null
+			&& (
+				(level == IValidationRuleDefinition.RuleLevel.MANDATORY && enforcement == IValidationRuleDefinition.RuleEnforcement.ERROR)
+					|| level == IValidationRuleDefinition.RuleLevel.OPTIONAL
+				);
 	}
-
-	public boolean isValidEnforcement(RuleEnforcement ruleEnforecement) {
-		if (ruleLevel.equals(RuleLevel.MANDATORY) && ruleEnforecement.equals(RuleEnforcement.ERROR))
-			return true;
-		else if (ruleLevel.equals(RuleLevel.MANDATORY))
-			return false;
-		else
-			// optional rule level is valid with any type of enforcement
-			return true;
+	
+	public boolean isValidEnforcement(RuleEnforcement ruleEnforcement) {
+		return isValidEnforcement(this.ruleLevel, ruleEnforcement);
 	}
 }

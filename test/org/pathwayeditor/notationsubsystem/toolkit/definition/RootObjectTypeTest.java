@@ -9,7 +9,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
 import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
-import org.pathwayeditor.notationsubsystem.toolkit.definition.RootObjectType;
 
 //Note - the bulk of the class uses AbstractObjectType and this is tested elsewhere
 

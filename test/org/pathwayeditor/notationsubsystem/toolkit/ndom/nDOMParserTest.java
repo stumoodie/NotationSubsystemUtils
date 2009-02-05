@@ -19,8 +19,6 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootNode;
 import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
-import org.pathwayeditor.notationsubsystem.toolkit.ndom.AbstractNDOMParser;
-import org.pathwayeditor.notationsubsystem.toolkit.ndom.NdomException;
 
 
 /**

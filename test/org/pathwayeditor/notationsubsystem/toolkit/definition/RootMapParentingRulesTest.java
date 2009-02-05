@@ -15,7 +15,6 @@ import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
-import org.pathwayeditor.notationsubsystem.toolkit.definition.RootObjectParentingRules;
 
 
 @RunWith(JMock.class)

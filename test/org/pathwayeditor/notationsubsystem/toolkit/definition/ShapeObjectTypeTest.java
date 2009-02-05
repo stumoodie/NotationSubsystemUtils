@@ -14,7 +14,6 @@ import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IShapeParentingRules;
-import org.pathwayeditor.notationsubsystem.toolkit.definition.ShapeObjectType;
 
 @RunWith(JMock.class)
 public class ShapeObjectTypeTest {

@@ -18,13 +18,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
-import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReport;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReportItem;
-import org.pathwayeditor.notationsubsystem.toolkit.validation.DefaultValidationReport;
 
 @RunWith(JMock.class)
-public class DefaultValidationReportTest {
-    private IValidationReport report;
+public class ValidationReportTest {
+    private ValidationReport report;
     Mockery mockery = new JUnit4Mockery();
 	
     final ICanvas map = mockery.mock(ICanvas.class);
@@ -48,19 +46,13 @@ public class DefaultValidationReportTest {
 	
 	@Test(expected=IllegalArgumentException.class)
 	public void testNullConstructorMapShouldThrowIllegalArgumentException() {
-		report = new DefaultValidationReport(null, createASingleItemList());	
-	}
-	
-	@Test(expected=IllegalArgumentException.class)
-	public void testNullConstructorReportListShouldThrowIllegalArgumentException() {
-		report = new DefaultValidationReport(map, null);	
+		report = new ValidationReport(null);	
 	}
 	
 	@Test
 	public void testReportRecordsCreationTime(){
 		Date BEFORE = Calendar.getInstance().getTime();
-		System.out.println(BEFORE.getTime());
-		report = new DefaultValidationReport(map, createASingleItemList());	
+		report = new ValidationReport(map);	
 		Date AFTER = Calendar.getInstance().getTime();
 	
 		assertFalse(BEFORE.after(report.getValidationTime()));
@@ -69,57 +61,27 @@ public class DefaultValidationReportTest {
 	
 
 	
-	static Date creationDate = Calendar.getInstance().getTime();
-	/*Test specific subclass to enable tw od ifferent reports to have same date for testing equals.
-	 * @author Richard Adams
-	 *
-	 */
-	class DefaultValidationReportWithSettableDate extends DefaultValidationReport {
-		public DefaultValidationReportWithSettableDate(ICanvas map, List<IValidationReportItem> itemList) {
-			super(map, itemList);
-		}
-
-		public Date getValidationTime() {
-			return creationDate;
-		}
-	}
 	@Test
-	public void testReportsAreEqualIfCreationTimeAndMapAreTheSame() throws InterruptedException{
-		report = new DefaultValidationReportWithSettableDate(map, createASingleItemList());	
-		IValidationReport SAME_TIME_REPORT =  new DefaultValidationReportWithSettableDate(map, createASingleItemList());	
-		assertEquals(report, SAME_TIME_REPORT);
-		Thread.sleep(10);
-		IValidationReport LATER_REPORT =  new DefaultValidationReport(map, createASingleItemList());
-		assertFalse(report.equals(LATER_REPORT));
-	}
-	
-	@Test
-	public void testHashCode() throws InterruptedException {
-		report = new DefaultValidationReportWithSettableDate(map, createASingleItemList());	
-		IValidationReport SAME_TIME_REPORT =  new DefaultValidationReportWithSettableDate(map, createASingleItemList());	
-		assertEquals(report.hashCode(), SAME_TIME_REPORT.hashCode());
-		Thread.sleep(20);
-		IValidationReport LATER_REPORT =  new DefaultValidationReport(map, createASingleItemList());
-		assertFalse(report.hashCode()==LATER_REPORT.hashCode());
-	}
-
-	
-
-	@Test
-	public void testGetMap() {
-		report = new DefaultValidationReport(map, createASingleItemList());	
+	public void testGetCanvas() {
+		report = new ValidationReport(map);	
 		assertEquals(map, report.getCanvas());
 	}
 
 	@Test
 	public void testGetValidationReportItems() {
-		report = new DefaultValidationReport(map, createASingleItemList());	
+		report = new ValidationReport(map);
+		for(IValidationReportItem reportItem : createASingleItemList()){
+			report.addReportItem(reportItem);
+		}
 		assertEquals(1, report.getValidationReportItems().size());
 	}
 	
 	@Test(expected=UnsupportedOperationException.class)
 	public void testGetValidationReportItemsIsUnmodifiableForAdding() {
-		report = new DefaultValidationReport(map, createASingleItemList());	
+		report = new ValidationReport(map);	
+		for(IValidationReportItem reportItem : createASingleItemList()){
+			report.addReportItem(reportItem);
+		}
 	    final IValidationReportItem secondItem = mockery.mock(IValidationReportItem.class);
 	    List<IValidationReportItem> items = report.getValidationReportItems();
 	    items.add(secondItem);
@@ -127,7 +89,10 @@ public class DefaultValidationReportTest {
 	
 	@Test(expected=UnsupportedOperationException.class)
 	public void testGetValidationReportItemsIsUnmodifiableForRemoving() {
-		report = new DefaultValidationReport(map, createASingleItemList());	
+		report = new ValidationReport(map);	
+		for(IValidationReportItem reportItem : createASingleItemList()){
+			report.addReportItem(reportItem);
+		}
 	    List<IValidationReportItem> items = report.getValidationReportItems();
 	    items.remove(item1);
 	}
@@ -137,7 +102,10 @@ public class DefaultValidationReportTest {
 	@Test
 	public void testHasWarningsTrueIfThereIsABrokenGuidelineRule() {
 		configureReportToHaveGuidelineRule();
-		report = new DefaultValidationReport(map, createASingleItemList());	
+		report = new ValidationReport(map);	
+		for(IValidationReportItem reportItem : createASingleItemList()){
+			report.addReportItem(reportItem);
+		}
 		assertTrue(report.hasWarnings());
 	}
 
@@ -151,7 +119,10 @@ public class DefaultValidationReportTest {
 	@Test
 	public void testHasWarningsFalseIfThereIsNoBrokenGuidelineRule() {
 		configureReportToHaveAErrorRule();
-		report = new DefaultValidationReport(map, createASingleItemList());	
+		report = new ValidationReport(map);	
+		for(IValidationReportItem reportItem : createASingleItemList()){
+			report.addReportItem(reportItem);
+		}
 		assertFalse(report.hasWarnings());
 	}
 
@@ -165,15 +136,21 @@ public class DefaultValidationReportTest {
 	@Test
 	public void testIsMapValidIsTrueIfOnlyGuidelinesArePresent() {
 		configureReportToHaveGuidelineRule();
-		report = new DefaultValidationReport(map, createASingleItemList());	
-		assertTrue(report.isMapValid());
+		report = new ValidationReport(map);	
+		for(IValidationReportItem reportItem : createASingleItemList()){
+			report.addReportItem(reportItem);
+		}
+		assertTrue(report.isValid());
 	}
 	
 	@Test
 	public void testMapIsNotValidIfOptionalRuleApplied() {
 		configureReportToHaveAnOptionalRuleBroken();
-		report = new DefaultValidationReport(map, createASingleItemList());	
-		assertFalse(report.isMapValid());
+		report = new ValidationReport(map);	
+		for(IValidationReportItem reportItem : createASingleItemList()){
+			report.addReportItem(reportItem);
+		}
+		assertFalse(report.isValid());
 	}
 	
 	private void configureReportToHaveAnOptionalRuleBroken() {
@@ -186,39 +163,19 @@ public class DefaultValidationReportTest {
 	@Test
 	public void testMapIsNotValidIfMAndatoryRuleApplied() {
 		configureReportToHaveAErrorRule();
-		report = new DefaultValidationReport(map, createASingleItemList());	
-		assertFalse(report.isMapValid());
+		report = new ValidationReport(map);	
+		for(IValidationReportItem reportItem : createASingleItemList()){
+			report.addReportItem(reportItem);
+		}
+		assertFalse(report.isValid());
 	}
 
 	@Test
-	public void testIsReportCurrentIfMapLastModifiedBeforeReportCreated() throws Exception{
-		final Date MAP_NOT_MODIFIED = Calendar.getInstance().getTime();
-		Thread.sleep(10);
-		report = new DefaultValidationReport(map, createASingleItemList());	
-		mockery.checking(new Expectations() {
-			{one(map).getModified();will(returnValue(MAP_NOT_MODIFIED));}
-			
-		});
-		assertTrue(report.isReportCurrent());
-		
-	}
-	
-	@Test
-	public void testReportNotCurrentIfMapModifiedAfterReportCreated() throws Exception{
-		report = new DefaultValidationReport(map, createASingleItemList());	
-		Thread.sleep(30);
-		final Date MAP_MODIFIED_AFTER_REPORT_CREATION = Calendar.getInstance().getTime();
-		mockery.checking(new Expectations() {
-			{one(map).getModified();will(returnValue(MAP_MODIFIED_AFTER_REPORT_CREATION));}
-			
-		});
-		assertFalse(report.isReportCurrent());
-		
-	}
-	
-	@Test
 	public void testDateIsImmutable() throws Exception{
-		report = new DefaultValidationReport(map, createASingleItemList());	
+		report = new ValidationReport(map);	
+		for(IValidationReportItem reportItem : createASingleItemList()){
+			report.addReportItem(reportItem);
+		}
         Date date = report.getValidationTime();
         date.setTime(1000000);
         Date d2 = report.getValidationTime();
@@ -228,7 +185,10 @@ public class DefaultValidationReportTest {
 	
 	@Test
 	public void testEquals() {
-		report = new DefaultValidationReport(map, createASingleItemList());
+		report = new ValidationReport(map);	
+		for(IValidationReportItem reportItem : createASingleItemList()){
+			report.addReportItem(reportItem);
+		}
 		assertEquals(report ,report);
 		assertFalse(report.equals(null));
 	}
