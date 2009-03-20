@@ -23,11 +23,11 @@ public final class LinkObjectType extends AbstractObjectType implements ILinkObj
 		this.linkConnectionRules = new LinkConnectionRules(this);
 	}
 
-	public LinkAttributeDefaults getDefaultLinkAttributes() {
+	public LinkAttributeDefaults getDefaultAttributes() {
 		return defaultLinkAttributes;
 	}
 	
-	public EnumSet<LinkEditableAttributes> getEditiableAttributes() {
+	public EnumSet<LinkEditableAttributes> getEditableAttributes() {
 		return editableAttributes ;
 	}
 	public void setEditableAttributes(EnumSet<LinkEditableAttributes>in){

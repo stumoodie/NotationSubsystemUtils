@@ -1,8 +1,6 @@
 package org.pathwayeditor.notationsubsystem.toolkit.definition;
 
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
@@ -18,7 +16,7 @@ public class LinkTerminusDefaults implements ILinkTerminusDefaults {
 	private Size termSize;
 	private LinkEndDecoratorShape linkEndDecoratorShape;
 	private PrimitiveShapeType termDecoratorType;
-	private Set <IPropertyDefinition> propertyDefinitions=new HashSet<IPropertyDefinition>();
+	private final PropertyDefinitionContainer propertyDefinitions = new PropertyDefinitionContainer();
 	private final LinkTerminusDefinition linkTerminusDefinition; 
 	
 	public LinkTerminusDefaults(LinkTerminusDefinition linkTermDefn) {
@@ -94,18 +92,34 @@ public class LinkTerminusDefaults implements ILinkTerminusDefaults {
 	}
 
 	public int getPropertyDefinitionNumber(){
-		return propertyDefinitions.size();
+		return propertyDefinitions.numPropertyDefinitions();
 	}
 	public Iterator<IPropertyDefinition> propertyDefinitionIterator() {
-		return propertyDefinitions.iterator();
+		return propertyDefinitions.propertyDefinitionIterator();
 	}
 	
 	public void addPropertyDefinition(IPropertyDefinition in){
-		propertyDefinitions.add(in);
+		propertyDefinitions.addDefinition(in);
 	}
 
     public LinkTerminusDefinition getLinkTerminusDefinition() {
         return linkTerminusDefinition;
     }
+
+	public boolean containsPropertyDefinition(String name) {
+		return this.propertyDefinitions.containsPropertyDefinition(name);
+	}
+
+	public IPropertyDefinition getPropertyDefinition(String name) {
+		return this.propertyDefinitions.getPropertyDefinition(name);
+	}
+
+	public int numPropertyDefinitions() {
+		return this.propertyDefinitions.numPropertyDefinitions();
+	}
+
+	public boolean containsPropertyDefinition(IPropertyDefinition defn) {
+		return this.propertyDefinitions.containsPropertyDefinition(defn);
+	}
 
 }

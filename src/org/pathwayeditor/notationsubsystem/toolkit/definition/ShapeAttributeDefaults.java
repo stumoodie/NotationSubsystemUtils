@@ -23,11 +23,10 @@ public class ShapeAttributeDefaults implements IShapeAttributeDefaults {
     private int lineWidth; 
     private Size size;
     private String url;
-    private final Set<IPropertyDefinition> properties;
+	private final PropertyDefinitionContainer properties = new PropertyDefinitionContainer();
     
     public ShapeAttributeDefaults(ShapeObjectType objectType) {
         this.shapeObjectType = objectType;
-        this.properties = new HashSet<IPropertyDefinition>();
     }
     
     public String getDescription() {
@@ -70,22 +69,10 @@ public class ShapeAttributeDefaults implements IShapeAttributeDefaults {
         return this.url;
     }
 
-    public boolean containsPropertyDefinition(IPropertyDefinition defn) {
-        boolean retVal = false;
-        if(defn != null) {
-            retVal = this.properties.contains(defn);
-        }
-        return retVal;
-    }
-    
     public void addPropertyDefinition(IPropertyDefinition defn) {
-        this.properties.add(defn);
+        this.properties.addDefinition(defn);
     }
     
-    public Iterator<IPropertyDefinition> propertyDefinitionIterator() {
-        return this.properties.iterator();
-    }
-
     public String getUrl() {
         return url;
     }
@@ -133,5 +120,25 @@ public class ShapeAttributeDefaults implements IShapeAttributeDefaults {
     public void setSize(Size size) {
         this.size = size;
     }
+
+	public boolean containsPropertyDefinition(String name) {
+		return this.properties.containsPropertyDefinition(name);
+	}
+
+	public IPropertyDefinition getPropertyDefinition(String name) {
+		return this.properties.getPropertyDefinition(name);
+	}
+
+	public int numPropertyDefinitions() {
+		return this.properties.numPropertyDefinitions();
+	}
+
+	public boolean containsPropertyDefinition(IPropertyDefinition defn) {
+		return this.properties.containsPropertyDefinition(defn);
+	}
+
+	public Iterator<IPropertyDefinition> propertyDefinitionIterator() {
+		return this.properties.propertyDefinitionIterator();
+	}
 
 }

@@ -154,7 +154,7 @@ public class LinkObjectTypeTest {
 
     @Test
     public final void testGetLinKAttrributeDefaultsIsNotNull() {
-        assertNotNull(lot.getDefaultLinkAttributes());
+        assertNotNull(lot.getDefaultAttributes());
     }
 
 }

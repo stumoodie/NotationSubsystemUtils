@@ -113,4 +113,34 @@ public class LinkAttributeDefaults implements ILinkAttributeDefaults{
         this.detailedDescription = detailedDescription;
     }
 
+
+	private IPropertyDefinition findPropertyDefn(String name){
+		IPropertyDefinition retVal = null;
+		for(IPropertyDefinition objectType : this.propertyDefinitions){
+			if(objectType.getName().equals(name)){
+				retVal = objectType;
+				break;
+			}
+		}
+		return retVal;
+	}
+
+	public boolean containsPropertyDefinition(String name) {
+		return findPropertyDefn(name) != null;
+	}
+
+
+	public IPropertyDefinition getPropertyDefinition(String name) {
+		IPropertyDefinition retVal = findPropertyDefn(name);
+		if(retVal == null){
+			throw new IllegalArgumentException("No property definition for: " + name);
+		}
+		return retVal;
+	}
+
+
+	public int numPropertyDefinitions() {
+		return this.propertyDefinitions.size();
+	}
+
 }

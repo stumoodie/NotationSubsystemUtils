@@ -40,7 +40,7 @@ public class LinkTerminusDefinition implements ILinkTerminusDefinition {
 		return endType;
 	}
 
-	public LinkTerminusDefaults getLinkTerminusDefaults() {
+	public LinkTerminusDefaults getDefaultAttributes() {
 		return linkTerminusDefaults;
 	}
 
