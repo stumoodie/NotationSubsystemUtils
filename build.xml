@@ -81,7 +81,7 @@
 			run test cases. All test class names should end in 'Test' to avoid
 			inclusion of inner classes.
 		-->
-		<junit printsummary="yes" haltonfailure="no" fork="yes">
+		<junit printsummary="yes" haltonfailure="no" fork="yes" forkmode="perBatch" >
 			<classpath>
 				<path refid="test.classpath" />
 			</classpath>

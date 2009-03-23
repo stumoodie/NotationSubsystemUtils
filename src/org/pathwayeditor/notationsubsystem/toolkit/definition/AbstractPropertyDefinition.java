@@ -2,14 +2,14 @@ package org.pathwayeditor.notationsubsystem.toolkit.definition;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 
-public abstract class AbstractPropertyDefinition implements IPropertyDefinition{
+public abstract class AbstractPropertyDefinition<T> implements IPropertyDefinition{
 	private final String name;
-	private final Object value;
+	private final T value;
 	private final boolean visualisable;
 	private final boolean editable;
 	private final LabelAttributeDefaults labelAttributeDefaults;
 	
-	protected AbstractPropertyDefinition(String name, Object value, boolean isVisualisable, boolean isEditable){
+	protected AbstractPropertyDefinition(String name, T value, boolean isVisualisable, boolean isEditable){
 		if(name==null)
 			throw new IllegalArgumentException("Name cannot be null");
 		this.name = name;
@@ -18,7 +18,7 @@ public abstract class AbstractPropertyDefinition implements IPropertyDefinition{
 		this.editable = isEditable;
 		this.labelAttributeDefaults = new LabelAttributeDefaults(this);
 	}
-	public Object getDefaultValue(){
+	public T getDefaultValue(){
 		return value;
 	}
 	public String getName() {

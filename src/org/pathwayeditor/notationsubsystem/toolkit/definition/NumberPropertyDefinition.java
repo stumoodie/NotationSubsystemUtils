@@ -7,15 +7,19 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.INumberAnn
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.INumberPropertyDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
 
-public class NumberPropertyDefinition extends AbstractPropertyDefinition implements INumberPropertyDefinition {
+public class NumberPropertyDefinition extends AbstractPropertyDefinition<BigDecimal> implements INumberPropertyDefinition {
 	
 
-	public NumberPropertyDefinition(String name, Object value, boolean isVisualisable, boolean isEditable) {
+	public NumberPropertyDefinition(String name, BigDecimal value, boolean isVisualisable, boolean isEditable) {
 		super(name, value, isVisualisable, isEditable);
 	}
 
+	public NumberPropertyDefinition(String name, String value, boolean isVisualisable, boolean isEditable) {
+		super(name, new BigDecimal(value), isVisualisable, isEditable);
+	}
+
 	public BigDecimal getDefaultValue() {
-		return (BigDecimal) super.getDefaultValue();
+		return super.getDefaultValue();
 	}
 
 	public IAnnotationProperty copyProperty(IPropertyBuilder propertyBuilder, IAnnotationProperty prop) {

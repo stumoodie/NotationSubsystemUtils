@@ -3,17 +3,18 @@ package org.pathwayeditor.notationsubsystem.toolkit.definition;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
 
 public class LabelAttributeDefaults implements ILabelAttributeDefaults {
-    private final AbstractPropertyDefinition propertyDefinition;
+    private final IPropertyDefinition propertyDefinition;
 	private RGB fillColour = new RGB(255, 255, 255);
 	private RGB lineColour = new RGB(0, 0, 0);
 	private LineStyle lineStyle = LineStyle.SOLID;
 	private int lineWidth = 1;
 	private Size size= new Size(10,10); 
 
-	public LabelAttributeDefaults(AbstractPropertyDefinition propDefn) {
+	public LabelAttributeDefaults(IPropertyDefinition propDefn) {
 	    this.propertyDefinition = propDefn;
 	}
 
@@ -57,7 +58,7 @@ public class LabelAttributeDefaults implements ILabelAttributeDefaults {
 		lineWidth = width;
 	}
 
-    public AbstractPropertyDefinition getPropertyDefinition() {
+    public IPropertyDefinition getPropertyDefinition() {
         return propertyDefinition;
     }
 
