@@ -2,9 +2,9 @@ package org.pathwayeditor.notationsubsystem.toolkit.ndom;
 
 import java.util.Iterator;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.IBendPoint;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 

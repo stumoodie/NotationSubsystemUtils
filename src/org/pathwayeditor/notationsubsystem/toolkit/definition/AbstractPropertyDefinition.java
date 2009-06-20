@@ -7,6 +7,7 @@ public abstract class AbstractPropertyDefinition<T> implements IPropertyDefiniti
 	private final T value;
 	private final boolean visualisable;
 	private final boolean editable;
+	private boolean isAlwaysDisplayed;
 	private final LabelAttributeDefaults labelAttributeDefaults;
 	
 	protected AbstractPropertyDefinition(String name, T value, boolean isVisualisable, boolean isEditable){
@@ -16,6 +17,7 @@ public abstract class AbstractPropertyDefinition<T> implements IPropertyDefiniti
 		this.value = value;
 		this.visualisable = isVisualisable;
 		this.editable = isEditable;
+		this.isAlwaysDisplayed = false;
 		this.labelAttributeDefaults = new LabelAttributeDefaults(this);
 	}
 	public T getDefaultValue(){
@@ -25,6 +27,14 @@ public abstract class AbstractPropertyDefinition<T> implements IPropertyDefiniti
 		return this.name;
 	}
 
+	public void setIsAlwaysDisplayed(boolean alwaysDisplayed){
+		this.isAlwaysDisplayed = alwaysDisplayed;
+	}
+	
+	public boolean isAlwaysDisplayed(){
+		return this.isAlwaysDisplayed;
+	}
+	
 	public boolean isEditable() {
 		return this.editable;
 	}
