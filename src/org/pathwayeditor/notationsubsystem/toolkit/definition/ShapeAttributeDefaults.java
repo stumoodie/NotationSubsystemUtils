@@ -5,7 +5,7 @@ import java.util.Iterator;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
+import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults;
 
@@ -19,7 +19,7 @@ public class ShapeAttributeDefaults implements IShapeAttributeDefaults {
     private RGB lineColour;
     private LineStyle lineStyle;
     private int lineWidth; 
-    private Size size;
+    private Dimension size;
     private String url;
 	private final PropertyDefinitionContainer properties = new PropertyDefinitionContainer();
     
@@ -47,7 +47,7 @@ public class ShapeAttributeDefaults implements IShapeAttributeDefaults {
         return this.lineStyle;
     }
 
-    public int getLineWidth() {
+    public double getLineWidth() {
         return this.lineWidth;
     }
 
@@ -59,7 +59,7 @@ public class ShapeAttributeDefaults implements IShapeAttributeDefaults {
         return this.shapeType;
     }
 
-    public Size getSize() {
+    public Dimension getSize() {
         return this.size;
     }
 
@@ -115,7 +115,7 @@ public class ShapeAttributeDefaults implements IShapeAttributeDefaults {
         this.lineWidth = lineWidth;
     }
 
-    public void setSize(Size size) {
+    public void setSize(Dimension size) {
         this.size = size;
     }
 

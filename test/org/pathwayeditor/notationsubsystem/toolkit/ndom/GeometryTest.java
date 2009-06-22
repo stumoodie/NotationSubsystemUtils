@@ -18,8 +18,8 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
+import org.pathwayeditor.figure.geometry.Point;
+import org.pathwayeditor.figure.geometry.Dimension;
 
 public class GeometryTest {
 
@@ -52,9 +52,9 @@ public class GeometryTest {
 			atLeast(1).of(s).getAttribute();
 			will(returnValue(sAtt));
 			atLeast(1).of(sAtt).getLocation();
-			will(returnValue(new Location(25,25)));
+			will(returnValue(new Point(25,25)));
 			atLeast(1).of(sAtt).getSize();
-			will(returnValue(new Size(20,20)));
+			will(returnValue(new Dimension(20,20)));
 			atLeast(1).of(l).getAttribute();
 			will(returnValue(lAtt));
 			atLeast(1).of(lAtt).numBendPoints();
@@ -66,12 +66,12 @@ public class GeometryTest {
 			atLeast(1).of(t).getAttribute();
 			will(returnValue(tAtt));
 			atLeast(1).of(tAtt).getLocation();
-			will(returnValue(new Location(5,25)));
+			will(returnValue(new Point(5,25)));
 			atLeast(1).of(tAtt).getSize();
-			will(returnValue(new Size(20,20)));
+			will(returnValue(new Dimension(20,20)));
 		}});
-		Location a=GeometryUtils.getSrcLocation(l, s);
-		assertEquals(new Location(-20,0), a);
+		Point a=GeometryUtils.getSrcLocation(l, s);
+		assertEquals(new Point(-20,0), a);
 		this.mockery.assertIsSatisfied();
 	}
 
@@ -93,9 +93,9 @@ public class GeometryTest {
 			atLeast(1).of(s).getAttribute();
 			will(returnValue(sAtt));
 			atLeast(1).of(sAtt).getLocation();
-			will(returnValue(new Location(25,25)));
+			will(returnValue(new Point(25,25)));
 			atLeast(1).of(sAtt).getSize();
-			will(returnValue(new Size(20,20)));
+			will(returnValue(new Dimension(20,20)));
 			atLeast(1).of(l).getAttribute();
 			will(returnValue(lAtt));
 			atLeast(1).of(lAtt).numBendPoints();
@@ -103,7 +103,7 @@ public class GeometryTest {
 			atLeast(1).of(lAtt).bendPointIterator();
 			will(returnIterator(bpl));
 			atLeast(1).of(bp).getLocation();
-			will(returnValue(new Location(30,50)));
+			will(returnValue(new Point(30,50)));
 			atLeast(1).of(l).getTargetShape();
 			will(returnValue(t));
 			atLeast(1).of(l).getSourceShape();
@@ -111,17 +111,17 @@ public class GeometryTest {
 			atLeast(1).of(t).getAttribute();
 			will(returnValue(tAtt));
 			atLeast(1).of(tAtt).getLocation();
-			will(returnValue(new Location(5,25)));
+			will(returnValue(new Point(5,25)));
 			atLeast(1).of(tAtt).getSize();
-			will(returnValue(new Size(20,20)));
+			will(returnValue(new Dimension(20,20)));
 		}});
-		Location a=GeometryUtils.getSrcLocation(l, s);
-		assertEquals(new Location(5,25), a);
+		Point a=GeometryUtils.getSrcLocation(l, s);
+		assertEquals(new Point(5,25), a);
 		this.mockery.assertIsSatisfied();
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.notationsubsystem.toolkit.ndom.GeometryUtils#getAngle(org.pathwayeditor.businessobjectsAPI.Location, org.pathwayeditor.businessobjectsAPI.Location)}.
+	 * Test method for {@link org.pathwayeditor.notationsubsystem.toolkit.ndom.GeometryUtils#getAngle(org.pathwayeditor.businessobjectsAPI.Point, org.pathwayeditor.businessobjectsAPI.Point)}.
 	 */
 	@Ignore
 	@Test

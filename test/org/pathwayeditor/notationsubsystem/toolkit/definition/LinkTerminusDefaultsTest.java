@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
+import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 
 public class LinkTerminusDefaultsTest {
@@ -15,10 +15,10 @@ public class LinkTerminusDefaultsTest {
 	private LinkTerminusDefaults obj;
 //	private LinkTerminusDefaults obj;
 	private LinkEndDecoratorShape src=LinkEndDecoratorShape.ARROW;
-	private Size srcEndSize=new Size(20,20);
+	private Dimension srcEndSize=new Dimension(20,20);
 	private IPropertyDefinition srcP=new PlainTextPropertyDefinition("test","valie",true,true);
 	private short gap= (short) 2;
-	private Size termSize = new Size(0, 0);;
+	private Dimension termSize = new Dimension(0, 0);;
 	private PrimitiveShapeType term = PrimitiveShapeType.RECTANGLE;
 	private RGB termColor = new RGB(255, 255, 255);
 	

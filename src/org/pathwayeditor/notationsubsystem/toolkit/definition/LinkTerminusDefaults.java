@@ -5,15 +5,15 @@ import java.util.Iterator;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
+import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults;
 
 public class LinkTerminusDefaults implements ILinkTerminusDefaults {
-	private Size endSize;
+	private Dimension endSize;
 	private short gap;
 	private RGB termColour;
-	private Size termSize;
+	private Dimension termSize;
 	private LinkEndDecoratorShape linkEndDecoratorShape;
 	private PrimitiveShapeType termDecoratorType;
 	private final PropertyDefinitionContainer propertyDefinitions = new PropertyDefinitionContainer();
@@ -28,15 +28,15 @@ public class LinkTerminusDefaults implements ILinkTerminusDefaults {
 //	 */
 //	public LinkTerminusDefaults(LinkTerminusDefaults other) {
 //		if(other==null) throw new IllegalArgumentException("Copy constructor require non NULL template object");
-//		Size endSizeT = other.getEndSize();
-//		setEndSize(new Size(endSizeT.getWidth(),endSizeT.getHeight()));
+//		Dimension endSizeT = other.getEndSize();
+//		setEndSize(new Dimension(endSizeT.getWidth(),endSizeT.getHeight()));
 //		setGap(other.getGap());
 //		setLinkEndDecoratorShape(other.getEndDecoratorType());
 //		RGB termColourT = other.getTermColour();
 //		setTermColour(new RGB(termColourT.getRed(),termColourT.getGreen(),termColourT.getBlue()));
 //		setTermDecoratorType(other.getTermDecoratorType());
-//		Size termSizeT = other.getTermSize();
-//		setTermSize(new Size(termSizeT.getWidth(),termSizeT.getHeight()));
+//		Dimension termSizeT = other.getTermSize();
+//		setTermSize(new Dimension(termSizeT.getWidth(),termSizeT.getHeight()));
 //		Iterator<IPropertyDefinition> it=other.propertyDefinitionIterator();
 //		while(it.hasNext()){
 //			addPropertyDefinition(it.next());
@@ -51,15 +51,15 @@ public class LinkTerminusDefaults implements ILinkTerminusDefaults {
 		linkEndDecoratorShape=in;
 	}
 
-	public Size getEndSize() {
+	public Dimension getEndSize() {
 		return endSize;
 	}
 	
-	public void setEndSize(Size in){
+	public void setEndSize(Dimension in){
 		endSize=in;
 	}
 
-	public short getGap() {
+	public double getGap() {
 		return gap;
 	}
 	
@@ -83,11 +83,11 @@ public class LinkTerminusDefaults implements ILinkTerminusDefaults {
 		termDecoratorType=in;
 	}
 
-	public Size getTermSize() {
+	public Dimension getTermSize() {
 		return termSize;
 	}
 	
-	public void setTermSize(Size in){
+	public void setTermSize(Dimension in){
 		termSize=in;
 	}
 

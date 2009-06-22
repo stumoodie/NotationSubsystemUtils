@@ -3,9 +3,9 @@ package org.pathwayeditor.notationsubsystem.toolkit.definition;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LabelLocationPolicy;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
+import org.pathwayeditor.figure.geometry.Dimension;
 
 public class LabelAttributeDefaults implements ILabelAttributeDefaults {
     private final IPropertyDefinition propertyDefinition;
@@ -13,7 +13,7 @@ public class LabelAttributeDefaults implements ILabelAttributeDefaults {
 	private RGB lineColour = new RGB(0, 0, 0);
 	private LineStyle lineStyle = LineStyle.SOLID;
 	private int lineWidth = 1;
-	private Size size= new Size(10,10);
+	private Dimension size= new Dimension(10,10);
 	private LabelLocationPolicy labelLocationPolicy; 
 
 	public LabelAttributeDefaults(IPropertyDefinition propDefn) {
@@ -36,11 +36,11 @@ public class LabelAttributeDefaults implements ILabelAttributeDefaults {
 		lineColour = in;
 	}
 
-	public Size getSize() {
+	public Dimension getSize() {
 		return size;
 	}
 
-	public void setSize(Size in) {
+	public void setSize(Dimension in) {
 		this.size = in;
 	}
 
@@ -52,7 +52,7 @@ public class LabelAttributeDefaults implements ILabelAttributeDefaults {
 		lineStyle = in;
 	}
 
-	public int getLineWidth() {
+	public double getLineWidth() {
 		return lineWidth;
 	}
 
