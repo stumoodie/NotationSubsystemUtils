@@ -3,7 +3,6 @@ package org.pathwayeditor.notationsubsystem.toolkit.definition;
 import java.util.Iterator;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
@@ -11,30 +10,18 @@ import org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults;
 
 public class ShapeAttributeDefaults implements IShapeAttributeDefaults {
     private final ShapeObjectType shapeObjectType;
-    private PrimitiveShapeType shapeType;
-    private String name = "";
-    private String description = "";
-    private String detailedDescription = "";
+    private String shapeType;
     private RGB fillColour;
     private RGB lineColour;
     private LineStyle lineStyle;
-    private int lineWidth; 
+    private double lineWidth; 
     private Dimension size;
-    private String url;
 	private final PropertyDefinitionContainer properties = new PropertyDefinitionContainer();
     
     public ShapeAttributeDefaults(ShapeObjectType objectType) {
         this.shapeObjectType = objectType;
     }
     
-    public String getDescription() {
-        return this.description;
-    }
-
-    public String getDetailedDescription() {
-        return this.detailedDescription;
-    }
-
     public RGB getFillColour() {
         return this.fillColour;
     }
@@ -51,11 +38,7 @@ public class ShapeAttributeDefaults implements IShapeAttributeDefaults {
         return this.lineWidth;
     }
 
-    public String getName() {
-        return this.name;
-    }
-
-    public PrimitiveShapeType getShapeType() {
+    public String getShapeDefinition() {
         return this.shapeType;
     }
 
@@ -63,40 +46,16 @@ public class ShapeAttributeDefaults implements IShapeAttributeDefaults {
         return this.size;
     }
 
-    public String getURL() {
-        return this.url;
-    }
-
     public void addPropertyDefinition(IPropertyDefinition defn) {
         this.properties.addDefinition(defn);
     }
     
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
     public ShapeObjectType getShapeObjectType() {
         return shapeObjectType;
     }
 
-    public void setShapeType(PrimitiveShapeType shapeType) {
+    public void setShapeDefinition(String shapeType) {
         this.shapeType = shapeType;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setDetailedDescription(String detailedDescription) {
-        this.detailedDescription = detailedDescription;
     }
 
     public void setFillColour(RGB fillColour) {
@@ -111,7 +70,7 @@ public class ShapeAttributeDefaults implements IShapeAttributeDefaults {
         this.lineStyle = lineStyle;
     }
 
-    public void setLineWidth(int lineWidth) {
+    public void setLineWidth(double lineWidth) {
         this.lineWidth = lineWidth;
     }
 

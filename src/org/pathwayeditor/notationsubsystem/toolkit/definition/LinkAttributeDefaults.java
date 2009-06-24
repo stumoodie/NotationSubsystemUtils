@@ -4,36 +4,22 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.typedefn.ILinkAttributeDefaults;
 
 public class LinkAttributeDefaults implements ILinkAttributeDefaults{
-	private String description;
-	private String detailedDescription;
-	private String url;
 	private final Set <IPropertyDefinition> propertyDefinitions = new HashSet<IPropertyDefinition>();
-	private ConnectionRouter router;
 	private RGB lineColour;
 	private LineStyle lineStyle;
-	private int lineWidth = 1;
-	private String name;
+	private double lineWidth = 1.0;
 	private final LinkObjectType linkObjectType;
 	
 	public LinkAttributeDefaults(LinkObjectType linkObjectType) {
 		this.linkObjectType = linkObjectType;
 	}
 
-
-	public String getDescription() {
-		return description;
-	}
-
-	public String getDetailedDescription() {
-		return detailedDescription;
-	}
 
 	public RGB getLineColour() {
 		return lineColour;
@@ -43,31 +29,8 @@ public class LinkAttributeDefaults implements ILinkAttributeDefaults{
 		return lineStyle;
 	}
 
-	public int getLineWidth() {
+	public double getLineWidth() {
 		return lineWidth;
-	}
-
-	public String getName() {
-		return name;
-	}
-			
-	public void setName(String in){
-		name=in;
-	}
-
-	public ConnectionRouter getRouter() {
-		return router;
-	}
-	
-	public void setRouter(ConnectionRouter in){
-		router =in;
-	}
-	
-	public String getUrl() {
-		return url;
-	}
-	public void setUrl(String in){
-		url=in;
 	}
 
 	public Iterator<IPropertyDefinition> propertyDefinitionIterator() {
@@ -94,23 +57,13 @@ public class LinkAttributeDefaults implements ILinkAttributeDefaults{
 		this.lineStyle = lineStyle;
 	}
 
-	public void setLineWidth(int lineWidth) {
+	public void setLineWidth(double lineWidth) {
 		this.lineWidth = lineWidth;
 	}
 
 
     public LinkObjectType getLinkObjectType() {
         return linkObjectType;
-    }
-
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-
-    public void setDetailedDescription(String detailedDescription) {
-        this.detailedDescription = detailedDescription;
     }
 
 

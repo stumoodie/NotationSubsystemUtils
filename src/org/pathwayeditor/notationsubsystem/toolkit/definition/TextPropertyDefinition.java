@@ -2,8 +2,8 @@ package org.pathwayeditor.notationsubsystem.toolkit.definition;
 
 public abstract class  TextPropertyDefinition extends AbstractPropertyDefinition<String>  {
 	
-	protected TextPropertyDefinition(String name, String value, boolean isVisualisable, boolean isEditable) {
-		super(name, value, isVisualisable, isEditable);
+	protected TextPropertyDefinition(String name, String value) {
+		super(name, value);
 	}
 
 	public String getDefaultValue() {

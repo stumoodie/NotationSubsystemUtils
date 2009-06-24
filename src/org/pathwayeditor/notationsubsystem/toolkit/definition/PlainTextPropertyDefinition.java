@@ -8,9 +8,14 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyB
 public class PlainTextPropertyDefinition extends TextPropertyDefinition implements IPlainTextPropertyDefinition{
 
 	public PlainTextPropertyDefinition(String name, String value, boolean isVisualisable, boolean isEditable) {
-		super(name, value, isVisualisable, isEditable);
+		super(name, value);
+		this.setVisualisable(isVisualisable);
+		this.setEditable(isEditable);
 	}
 
+	public PlainTextPropertyDefinition(String name, String value) {
+		super(name, value);
+	}
 	public IAnnotationProperty copyProperty(IPropertyBuilder propertyBuilder, IAnnotationProperty prop) {
 		return propertyBuilder.copyPlainTextProperty((IPlainTextAnnotationProperty) prop);
 	}

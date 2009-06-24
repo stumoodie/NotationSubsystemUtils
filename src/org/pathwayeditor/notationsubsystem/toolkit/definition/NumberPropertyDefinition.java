@@ -11,11 +11,13 @@ public class NumberPropertyDefinition extends AbstractPropertyDefinition<BigDeci
 	
 
 	public NumberPropertyDefinition(String name, BigDecimal value, boolean isVisualisable, boolean isEditable) {
-		super(name, value, isVisualisable, isEditable);
+		super(name, value);
+		this.setVisualisable(isVisualisable);
+		this.setEditable(isEditable);
 	}
 
-	public NumberPropertyDefinition(String name, String value, boolean isVisualisable, boolean isEditable) {
-		super(name, new BigDecimal(value), isVisualisable, isEditable);
+	public NumberPropertyDefinition(String name, BigDecimal value) {
+		super(name, value);
 	}
 
 	public BigDecimal getDefaultValue() {

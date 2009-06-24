@@ -6,10 +6,21 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.IHtmlPrope
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 
+/**
+ * @deprecated this type of property is not displayed any may we be removed. Do not use.
+ * @author smoodie
+ *
+ */
 public final class FormattedTextPropertyDefinition extends TextPropertyDefinition implements IHtmlPropertyDefinition {
 
 	public FormattedTextPropertyDefinition(String name, String value, boolean isVisualisable, boolean isEditable) {
-		super(name,value,isVisualisable,isEditable);
+		super(name,value);
+		this.setVisualisable(isVisualisable);
+		this.setEditable(isEditable);
+	}
+
+	public FormattedTextPropertyDefinition(String name, String value) {
+		super(name,value);
 	}
 
 	public int compareTo(IPropertyDefinition o) {

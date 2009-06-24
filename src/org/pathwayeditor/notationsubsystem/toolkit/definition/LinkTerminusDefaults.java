@@ -3,19 +3,14 @@ package org.pathwayeditor.notationsubsystem.toolkit.definition;
 import java.util.Iterator;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults;
+import org.pathwayeditor.figure.geometry.Dimension;
 
 public class LinkTerminusDefaults implements ILinkTerminusDefaults {
 	private Dimension endSize;
-	private short gap;
-	private RGB termColour;
-	private Dimension termSize;
+	private double gap;
 	private LinkEndDecoratorShape linkEndDecoratorShape;
-	private PrimitiveShapeType termDecoratorType;
 	private final PropertyDefinitionContainer propertyDefinitions = new PropertyDefinitionContainer();
 	private final LinkTerminusDefinition linkTerminusDefinition; 
 	
@@ -63,32 +58,8 @@ public class LinkTerminusDefaults implements ILinkTerminusDefaults {
 		return gap;
 	}
 	
-	public void setGap(short in){
+	public void setGap(double in){
 		gap=in;
-	}
-
-	public RGB getTermColour() {
-		return termColour;
-	}
-	
-	public void setTermColour(RGB in){
-		termColour=in;
-	}
-
-	public PrimitiveShapeType getTermDecoratorType() {
-		return termDecoratorType;
-	}
-	
-	public void setTermDecoratorType(PrimitiveShapeType in){
-		termDecoratorType=in;
-	}
-
-	public Dimension getTermSize() {
-		return termSize;
-	}
-	
-	public void setTermSize(Dimension in){
-		termSize=in;
 	}
 
 	public int getPropertyDefinitionNumber(){
