@@ -14,7 +14,7 @@ public class LabelAttributeDefaults implements ILabelAttributeDefaults {
 	private LineStyle lineStyle = LineStyle.SOLID;
 	private int lineWidth = 1;
 	private Dimension size= new Dimension(10,10);
-	private LabelLocationPolicy labelLocationPolicy; 
+	private LabelLocationPolicy labelLocationPolicy = LabelLocationPolicy.CENTRE; 
 
 	public LabelAttributeDefaults(IPropertyDefinition propDefn) {
 	    this.propertyDefinition = propDefn;
