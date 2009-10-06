@@ -12,10 +12,6 @@ public class BooleanPropertyDefinition extends AbstractPropertyDefinition<Boolea
 		super(name, value);
 	}
 
-	public Boolean getDefaultValue() {
-		return super.getDefaultValue();
-	}
-
 	public IAnnotationProperty copyProperty(IPropertyBuilder propertyBuilder, IAnnotationProperty prop) {
 		return propertyBuilder.copyBooleanProperty((IBooleanAnnotationProperty) prop);
 	}

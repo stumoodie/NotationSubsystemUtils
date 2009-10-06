@@ -5,7 +5,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainText
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextPropertyDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
 
-public class PlainTextPropertyDefinition extends TextPropertyDefinition implements IPlainTextPropertyDefinition{
+public class PlainTextPropertyDefinition extends AbstractPropertyDefinition<String> implements IPlainTextPropertyDefinition{
 
 	public PlainTextPropertyDefinition(String name, String value, boolean isVisualisable, boolean isEditable) {
 		super(name, value);
@@ -16,6 +16,7 @@ public class PlainTextPropertyDefinition extends TextPropertyDefinition implemen
 	public PlainTextPropertyDefinition(String name, String value) {
 		super(name, value);
 	}
+	
 	public IAnnotationProperty copyProperty(IPropertyBuilder propertyBuilder, IAnnotationProperty prop) {
 		return propertyBuilder.copyPlainTextProperty((IPlainTextAnnotationProperty) prop);
 	}

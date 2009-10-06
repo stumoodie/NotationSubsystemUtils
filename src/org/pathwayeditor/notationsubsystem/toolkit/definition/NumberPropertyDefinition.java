@@ -20,10 +20,6 @@ public class NumberPropertyDefinition extends AbstractPropertyDefinition<BigDeci
 		super(name, value);
 	}
 
-	public BigDecimal getDefaultValue() {
-		return super.getDefaultValue();
-	}
-
 	public IAnnotationProperty copyProperty(IPropertyBuilder propertyBuilder, IAnnotationProperty prop) {
 		return propertyBuilder.copyNumberProperty((INumberAnnotationProperty) prop);
 	}

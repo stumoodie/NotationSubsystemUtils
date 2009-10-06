@@ -4,7 +4,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyD
 
 public abstract class AbstractPropertyDefinition<T> implements IPropertyDefinition{
 	private final String name;
-	private final T value;
+	private T value;
 	private String displayName = "A Property";
 	private boolean visualisable = false;
 	private boolean editable = false;
@@ -39,6 +39,11 @@ public abstract class AbstractPropertyDefinition<T> implements IPropertyDefiniti
 	public T getDefaultValue(){
 		return value;
 	}
+	
+	public void setDefaultValue(T defaultValue){
+		this.value = defaultValue;
+	}
+	
 	public String getName() {
 		return this.name;
 	}
@@ -74,5 +79,4 @@ public abstract class AbstractPropertyDefinition<T> implements IPropertyDefiniti
 	public LabelAttributeDefaults getLabelDefaults() {
 		return labelAttributeDefaults;
 	}
-
 }
