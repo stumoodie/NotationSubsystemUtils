@@ -12,14 +12,17 @@ public class IntegerPropertyDefinition extends AbstractPropertyDefinition<Intege
 		super(name, value);
 	}
 
+	@Override
 	public Integer getDefaultValue() {
 		return super.getDefaultValue();
 	}
 
+	@Override
 	public IAnnotationProperty copyProperty(IPropertyBuilder propertyBuilder, IAnnotationProperty prop) {
 		return propertyBuilder.copyIntegerProperty((IIntegerAnnotationProperty) prop);
 	}
 
+	@Override
 	public IAnnotationProperty createProperty(IPropertyBuilder propertyBuilder) {
 		return propertyBuilder.createIntegerProperty(this);
 	}

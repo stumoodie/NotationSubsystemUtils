@@ -15,7 +15,7 @@ import org.jmock.integration.junit4.JUnit4Mockery;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReport;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReportItem;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleConfig;
@@ -29,14 +29,14 @@ public class RuleValidationReportBuilderTest {
     RuleValidationReportBuilderExt reportBuilderImpl;
     
     Mockery mockery = new JUnit4Mockery();
-	final ICanvas map = mockery.mock(ICanvas.class);
+	final IModel map = mockery.mock(IModel.class);
 	final IValidationRuleStore store = mockery.mock(IValidationRuleStore.class);
 	final IValidationRuleConfig	 CONFIG1 = mockery.mock(IValidationRuleConfig.class);
 	final IValidationRuleDefinition mandatoryRuleDefinition = mockery.mock(IValidationRuleDefinition.class) ;
 	final IValidationRuleDefinition optionalRuleDefinition = mockery.mock(IValidationRuleDefinition.class) ;
 	// allows modulation of state
     class RuleValidationReportBuilderExt extends RuleValidationReportBuilder {
-    	public RuleValidationReportBuilderExt(IValidationRuleStore store, ICanvas map) {
+    	public RuleValidationReportBuilderExt(IValidationRuleStore store, IModel map) {
 			super(store, map);
 		}
     	void setState(int state) {

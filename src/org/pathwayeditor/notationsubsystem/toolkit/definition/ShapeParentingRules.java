@@ -35,10 +35,12 @@ public class ShapeParentingRules implements IShapeParentingRules {
 		return this.childSet.contains(possibleChild);
 	}
 
+	@Override
 	public IShapeObjectType getObjectType() {
 		return this.owningShape;
 	}
 
+	@Override
 	public boolean isValidChild(IObjectType possibleChild) {
 		return isValidChildByCode(possibleChild);
 	}

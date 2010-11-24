@@ -4,12 +4,12 @@ import java.util.Iterator;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults;
+import org.pathwayeditor.figure.geometry.Dimension;
 
 public class ShapeAttributeDefaults implements IShapeAttributeDefaults {
-    private final ShapeObjectType shapeObjectType;
+//    private final ShapeObjectType shapeObjectType;
     private String shapeType;
     private RGB fillColour;
     private RGB lineColour;
@@ -18,31 +18,37 @@ public class ShapeAttributeDefaults implements IShapeAttributeDefaults {
     private Dimension size;
 	private final PropertyDefinitionContainer properties = new PropertyDefinitionContainer();
     
-    public ShapeAttributeDefaults(ShapeObjectType objectType) {
-        this.shapeObjectType = objectType;
+    public ShapeAttributeDefaults() {
+//        this.shapeObjectType = objectType;
     }
     
-    public RGB getFillColour() {
+    @Override
+	public RGB getFillColour() {
         return this.fillColour;
     }
 
-    public RGB getLineColour() {
+    @Override
+	public RGB getLineColour() {
         return this.lineColour;
     }
 
-    public LineStyle getLineStyle() {
+    @Override
+	public LineStyle getLineStyle() {
         return this.lineStyle;
     }
 
-    public double getLineWidth() {
+    @Override
+	public double getLineWidth() {
         return this.lineWidth;
     }
 
-    public String getShapeDefinition() {
+    @Override
+	public String getShapeDefinition() {
         return this.shapeType;
     }
 
-    public Dimension getSize() {
+    @Override
+	public Dimension getSize() {
         return this.size;
     }
 
@@ -50,9 +56,9 @@ public class ShapeAttributeDefaults implements IShapeAttributeDefaults {
         this.properties.addDefinition(defn);
     }
     
-    public ShapeObjectType getShapeObjectType() {
-        return shapeObjectType;
-    }
+//    public ShapeObjectType getShapeObjectType() {
+//        return shapeObjectType;
+//    }
 
     public void setShapeDefinition(String shapeType) {
         this.shapeType = shapeType;
@@ -78,22 +84,27 @@ public class ShapeAttributeDefaults implements IShapeAttributeDefaults {
         this.size = size;
     }
 
+	@Override
 	public boolean containsPropertyDefinition(String name) {
 		return this.properties.containsPropertyDefinition(name);
 	}
 
+	@Override
 	public IPropertyDefinition getPropertyDefinition(String name) {
 		return this.properties.getPropertyDefinition(name);
 	}
 
+	@Override
 	public int numPropertyDefinitions() {
 		return this.properties.numPropertyDefinitions();
 	}
 
+	@Override
 	public boolean containsPropertyDefinition(IPropertyDefinition defn) {
 		return this.properties.containsPropertyDefinition(defn);
 	}
 
+	@Override
 	public Iterator<IPropertyDefinition> propertyDefinitionIterator() {
 		return this.properties.propertyDefinitionIterator();
 	}

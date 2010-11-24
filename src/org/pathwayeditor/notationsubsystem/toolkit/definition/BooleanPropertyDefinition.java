@@ -12,10 +12,12 @@ public class BooleanPropertyDefinition extends AbstractPropertyDefinition<Boolea
 		super(name, value);
 	}
 
+	@Override
 	public IAnnotationProperty copyProperty(IPropertyBuilder propertyBuilder, IAnnotationProperty prop) {
 		return propertyBuilder.copyBooleanProperty((IBooleanAnnotationProperty) prop);
 	}
 
+	@Override
 	public IAnnotationProperty createProperty(IPropertyBuilder propertyBuilder) {
 		return propertyBuilder.createBooleanProperty(this);
 	}

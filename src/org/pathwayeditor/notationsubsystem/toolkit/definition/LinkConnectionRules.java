@@ -29,6 +29,7 @@ public class LinkConnectionRules implements ILinkConnectionRules {
 		tgtSet.add(tgtType);
 	}
 	
+	@Override
 	public boolean isValidSource(IShapeObjectType source) {
 		if(source == null){
 			throw new IllegalArgumentException("source must be not null");
@@ -36,6 +37,7 @@ public class LinkConnectionRules implements ILinkConnectionRules {
 		return this.rules.containsKey(source);
 	}
 
+	@Override
 	public boolean isValidTarget(IShapeObjectType source, IShapeObjectType target) {
 		if(source == null || target == null){
 			throw new IllegalArgumentException("source and target must be not null");
@@ -48,6 +50,7 @@ public class LinkConnectionRules implements ILinkConnectionRules {
 		return retVal;
 	}
 
+	@Override
 	public ILinkObjectType getLinkObjectType() {
 		return this.owningLink;
 	}

@@ -27,6 +27,7 @@ public class RuleStore implements IValidationRuleStore {
 		this.configs.add(newRule);
 	}
 	
+	@Override
 	public boolean containsRule(int ruleNumber) {
 		for(IValidationRuleConfig config: configs){
 			if(config.getValidationRuleDefinition().getRuleNumber()==ruleNumber){
@@ -36,6 +37,7 @@ public class RuleStore implements IValidationRuleStore {
 		return false;
 	}
 	
+	@Override
 	public Set<IValidationRuleDefinition> getAllRuleDefinitions() {
 		Set <IValidationRuleDefinition> definitions = new HashSet<IValidationRuleDefinition>();
 		for(IValidationRuleConfig config: configs){
@@ -47,6 +49,7 @@ public class RuleStore implements IValidationRuleStore {
 	/**
 	 * Return those configs whose type is not Mandatory
 	 */
+	@Override
 	public Set<IValidationRuleConfig> getConfigurableRules() {
 		Set<IValidationRuleConfig> configurableRules = new HashSet<IValidationRuleConfig>();
 		for(IValidationRuleConfig config: configs) {
@@ -57,10 +60,12 @@ public class RuleStore implements IValidationRuleStore {
 		return Collections.unmodifiableSet(configurableRules);
 	}
 	
+	@Override
 	public Set<IValidationRuleConfig> getAllRuleConfigurations() {
 		return Collections.unmodifiableSet(configs);
 	}
 	
+	@Override
 	public IValidationRuleDefinition getRuleById(int ruleNumber) {
 		IValidationRuleDefinition retVal = null;
 		for(IValidationRuleConfig config: configs){
@@ -73,6 +78,7 @@ public class RuleStore implements IValidationRuleStore {
 		return retVal;
 	}
 
+	@Override
 	public IValidationRuleConfig getRuleConfigByID(int ruleNumber) {
 		IValidationRuleConfig retVal = null;
 		for(IValidationRuleConfig config: configs){

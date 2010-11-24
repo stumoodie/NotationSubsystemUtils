@@ -10,6 +10,7 @@ import org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionContainer;
 public class PropertyDefinitionContainer implements	IPropertyDefinitionContainer {
 	private final Map<String, IPropertyDefinition> propertyDefinitions = new HashMap<String, IPropertyDefinition>();
 
+	@Override
 	public boolean containsPropertyDefinition(String name) {
 		boolean retVal = false;
 		if(name != null){
@@ -19,6 +20,7 @@ public class PropertyDefinitionContainer implements	IPropertyDefinitionContainer
 	}
 
 
+	@Override
 	public IPropertyDefinition getPropertyDefinition(String name) {
 		IPropertyDefinition retVal = this.propertyDefinitions.get(name);
 		if(retVal == null){
@@ -28,11 +30,13 @@ public class PropertyDefinitionContainer implements	IPropertyDefinitionContainer
 	}
 
 
+	@Override
 	public int numPropertyDefinitions() {
 		return this.propertyDefinitions.size();
 	}
 
 
+	@Override
 	public Iterator<IPropertyDefinition> propertyDefinitionIterator() {
 		return this.propertyDefinitions.values().iterator();
 	}
@@ -43,6 +47,7 @@ public class PropertyDefinitionContainer implements	IPropertyDefinitionContainer
 	}
 
 
+	@Override
 	public boolean containsPropertyDefinition(IPropertyDefinition defn) {
 		boolean retVal = false;
 		if(defn != null){

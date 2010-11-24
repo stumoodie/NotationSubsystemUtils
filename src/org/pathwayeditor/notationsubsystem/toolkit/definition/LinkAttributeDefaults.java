@@ -14,25 +14,29 @@ public class LinkAttributeDefaults implements ILinkAttributeDefaults{
 	private RGB lineColour;
 	private LineStyle lineStyle;
 	private double lineWidth = 1.0;
-	private final LinkObjectType linkObjectType;
+//	private final LinkObjectType linkObjectType;
 	
-	public LinkAttributeDefaults(LinkObjectType linkObjectType) {
-		this.linkObjectType = linkObjectType;
+	public LinkAttributeDefaults() {
+//		this.linkObjectType = linkObjectType;
 	}
 
 
+	@Override
 	public RGB getLineColour() {
 		return lineColour;
 	}
 
+	@Override
 	public LineStyle getLineStyle() {
 		return lineStyle;
 	}
 
+	@Override
 	public double getLineWidth() {
 		return lineWidth;
 	}
 
+	@Override
 	public Iterator<IPropertyDefinition> propertyDefinitionIterator() {
 		return propertyDefinitions.iterator();
 	}
@@ -41,7 +45,8 @@ public class LinkAttributeDefaults implements ILinkAttributeDefaults{
 		propertyDefinitions.add(in);
 	}
 
-    public boolean containsPropertyDefinition(IPropertyDefinition defn) {
+    @Override
+	public boolean containsPropertyDefinition(IPropertyDefinition defn) {
         boolean retVal = false;
         if(defn != null) {
             retVal = this.propertyDefinitions.contains(defn);
@@ -62,9 +67,9 @@ public class LinkAttributeDefaults implements ILinkAttributeDefaults{
 	}
 
 
-    public LinkObjectType getLinkObjectType() {
-        return linkObjectType;
-    }
+//    public LinkObjectType getLinkObjectType() {
+//        return linkObjectType;
+//    }
 
 
 	private IPropertyDefinition findPropertyDefn(String name){
@@ -78,11 +83,13 @@ public class LinkAttributeDefaults implements ILinkAttributeDefaults{
 		return retVal;
 	}
 
+	@Override
 	public boolean containsPropertyDefinition(String name) {
 		return findPropertyDefn(name) != null;
 	}
 
 
+	@Override
 	public IPropertyDefinition getPropertyDefinition(String name) {
 		IPropertyDefinition retVal = findPropertyDefn(name);
 		if(retVal == null){
@@ -92,6 +99,7 @@ public class LinkAttributeDefaults implements ILinkAttributeDefaults{
 	}
 
 
+	@Override
 	public int numPropertyDefinitions() {
 		return this.propertyDefinitions.size();
 	}

@@ -20,6 +20,7 @@ public class ValidationRuleConfig implements IValidationRuleConfig {
 		this.currentEnforcement = definition.getDefaultEnforcementLevel();
 	}
 
+	@Override
 	public IValidationRuleDefinition getValidationRuleDefinition() {
 		return definition;
 	}
@@ -27,6 +28,7 @@ public class ValidationRuleConfig implements IValidationRuleConfig {
 	/**
 	 * Sorts by ascending rule number
 	 */
+	@Override
 	public int compareTo(IValidationRuleConfig other) {
 		return definition.compareTo(other.getValidationRuleDefinition());
 	}
@@ -63,6 +65,7 @@ public class ValidationRuleConfig implements IValidationRuleConfig {
 		return true;
 	}
 
+	@Override
 	public String toString () {
 		StringBuilder sb = new StringBuilder(this.getClass().getSimpleName());
 		sb.append("(").append("definition=");
@@ -74,10 +77,12 @@ public class ValidationRuleConfig implements IValidationRuleConfig {
 	}
 
 
+	@Override
 	public RuleEnforcement getCurrentRuleEnforcement() {
 		return this.currentEnforcement;
 	}
 
+	@Override
 	public void setRuleEnforcement(RuleEnforcement ruleEnforcement) {
 		if(!this.definition.isValidEnforcement(ruleEnforcement)) throw new IllegalArgumentException("Enforcement level invalid for the run level of this rule: " + this.definition);
 		

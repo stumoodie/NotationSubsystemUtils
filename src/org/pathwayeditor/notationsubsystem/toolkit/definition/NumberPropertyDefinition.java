@@ -12,7 +12,7 @@ public class NumberPropertyDefinition extends AbstractPropertyDefinition<BigDeci
 
 	public NumberPropertyDefinition(String name, BigDecimal value, boolean isVisualisable, boolean isEditable) {
 		super(name, value);
-		this.setVisualisable(isVisualisable);
+//		this.setVisualisable(isVisualisable);
 		this.setEditable(isEditable);
 	}
 
@@ -20,10 +20,12 @@ public class NumberPropertyDefinition extends AbstractPropertyDefinition<BigDeci
 		super(name, value);
 	}
 
+	@Override
 	public IAnnotationProperty copyProperty(IPropertyBuilder propertyBuilder, IAnnotationProperty prop) {
 		return propertyBuilder.copyNumberProperty((INumberAnnotationProperty) prop);
 	}
 
+	@Override
 	public IAnnotationProperty createProperty(IPropertyBuilder propertyBuilder) {
 		return propertyBuilder.createNumberProperty(this);
 	}

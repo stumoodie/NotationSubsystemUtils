@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReportItem;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
+
+import uk.ac.ed.inf.graph.compound.ICompoundGraphElement;
 
 /**
  * Default implementation of a report item
@@ -16,7 +17,7 @@ import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefini
  */
 public class ValidationReportItem implements IValidationReportItem {
 
-	private final IDrawingElement invalidDrawingElement;
+	private final ICompoundGraphElement invalidDrawingElement;
 	private final IValidationRuleDefinition ruleDefinition;
 	private final List<IValidationReportItem> childReports = new ArrayList<IValidationReportItem>();
 	private final Severity severity;
@@ -26,7 +27,7 @@ public class ValidationReportItem implements IValidationReportItem {
 		this(null, ruleDefinition, severity, message);
 	}
 		
-	public ValidationReportItem(IDrawingElement invalidDrawingElement,
+	public ValidationReportItem(ICompoundGraphElement invalidDrawingElement,
 			                    IValidationRuleDefinition ruleDefinition, 
 			                     Severity severity,
 			                     String message) {
@@ -39,6 +40,7 @@ public class ValidationReportItem implements IValidationReportItem {
 		this.message = message;
 	}
 
+	@Override
 	public IValidationRuleDefinition getBrokenRule() {
 		return ruleDefinition;
 	}
@@ -51,29 +53,34 @@ public class ValidationReportItem implements IValidationReportItem {
 		return childReports.add(childReportItem);
 	}
 	
+	@Override
 	public List<IValidationReportItem> getChildReports() {
 		return Collections.unmodifiableList(childReports);
 	}
 	
-	public IDrawingElement getInvalidObject() {
+	@Override
+	public ICompoundGraphElement getInvalidObject() {
 		return invalidDrawingElement;
 	}
 
+	@Override
 	public Severity getSeverity() {
 		return severity;
 	}
 
+	@Override
 	public String getMessage() {
 		return message;
 	}
 	
+	@Override
 	public String toString () {
 		StringBuffer sb = new StringBuffer();
 		sb.append("Rule id: ").append(ruleDefinition.getRuleNumber()).append("\n")
 		  .append("Message: ").append(message)
 		  .append("Severity:").append(severity);
 		if(invalidDrawingElement !=null){
-			sb.append("invalidDrawingNode: ").append(invalidDrawingElement.getAttribute().getCreationSerial());
+			sb.append("invalidDrawingNode: ").append(invalidDrawingElement);
 		}
 		return sb.toString();
 	}

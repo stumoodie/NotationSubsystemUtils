@@ -3,12 +3,13 @@ package org.pathwayeditor.notationsubsystem.toolkit.validation;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
-import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement;
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReport;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReportItem;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleConfig;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition.RuleEnforcement;
+
+import uk.ac.ed.inf.graph.compound.ICompoundGraphElement;
 /**
  * Builds a report.
  * Can be in 3 states:
@@ -30,11 +31,11 @@ import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefini
     static final int COMPLETED         = 3;
     
     private final IValidationRuleStore validationRuleStore;
-    private final ICanvas mapToValidate;
+    private final IModel mapToValidate;
     private ValidationReport currValidationReport;
-    private Map<Integer, Boolean> checkedRules = new HashMap<Integer, Boolean>();
+    private final Map<Integer, Boolean> checkedRules = new HashMap<Integer, Boolean>();
 
-    public RuleValidationReportBuilder(IValidationRuleStore store, ICanvas map) {
+    public RuleValidationReportBuilder(IValidationRuleStore store, IModel map) {
     	if(map == null || store == null){
     		throw new IllegalArgumentException("Arguments must not be null");
     	}
@@ -44,6 +45,7 @@ import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefini
     	state=READY_TO_VALIDATE;
     }
     
+	@Override
 	public void createValidationReport() {
 		if(!isValidating() && !isComplete() && !isReadyToValidate()){
 			throw new IllegalStateException("");
@@ -53,10 +55,12 @@ import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefini
 		
 	}
 	
+	@Override
 	public IValidationRuleStore getRuleStore() {
 		return validationRuleStore;
 	}
 
+	@Override
 	public IValidationReport getValidationReport() {
 		if(getState()!=COMPLETED){
 			throw new IllegalStateException("CAnnot access report until validation completed");
@@ -64,18 +68,22 @@ import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefini
 		return this.currValidationReport;
 	}
 
+	@Override
 	public boolean isComplete() {
 		return getState()==COMPLETED;
 	}
 
+	@Override
 	public boolean isReadyToValidate() {
 		return getState()==READY_TO_VALIDATE;
 	}
 
+	@Override
 	public boolean isValidating() {
 		return getState()==VALIDATING;
 	}
 
+	@Override
 	public void reset() {
 		if(state==VALIDATING){
 			throw new IllegalStateException("Cannot clear during validation");
@@ -85,7 +93,8 @@ import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefini
 		state=READY_TO_VALIDATE;
 	}
 
-	public void setRuleFailed(IDrawingElement inValidObject, int ruleId, String message) {
+	@Override
+	public void setRuleFailed(ICompoundGraphElement inValidObject, int ruleId, String message) {
 		checkRuleDefinition(ruleId);
 		state=VALIDATING;
 		IValidationRuleConfig config = validationRuleStore.getRuleConfigByID(ruleId);
@@ -107,6 +116,7 @@ import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefini
 		}
 	}
 
+	@Override
 	public void setRulePassed(int ruleId) {
 		state=VALIDATING;
 	}

@@ -3,26 +3,23 @@ package org.pathwayeditor.notationsubsystem.toolkit.definition;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LabelLocationPolicy;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
 import org.pathwayeditor.figure.geometry.Dimension;
 
 public class LabelAttributeDefaults implements ILabelAttributeDefaults {
-    private final IPropertyDefinition propertyDefinition;
 	private RGB fillColour = new RGB(255, 255, 255);
 	private RGB lineColour = new RGB(0, 0, 0);
 	private LineStyle lineStyle = LineStyle.SOLID;
 	private double lineWidth = 1;
-	private Dimension size= new Dimension(10,10);
 	private LabelLocationPolicy labelLocationPolicy = LabelLocationPolicy.CENTRE;
 	private boolean noFill = true;
 	private boolean noBorder = true;
 	private Dimension minimumSize;
 
-	public LabelAttributeDefaults(IPropertyDefinition propDefn) {
-	    this.propertyDefinition = propDefn;
+	public LabelAttributeDefaults() {
 	}
 
+	@Override
 	public RGB getFillColour() {
 		return fillColour;
 	}
@@ -31,6 +28,7 @@ public class LabelAttributeDefaults implements ILabelAttributeDefaults {
 		fillColour = in;
 	}
 
+	@Override
 	public RGB getLineColour() {
 		return lineColour;
 	}
@@ -39,14 +37,7 @@ public class LabelAttributeDefaults implements ILabelAttributeDefaults {
 		lineColour = in;
 	}
 
-	public Dimension getSize() {
-		return size;
-	}
-
-	public void setSize(Dimension in) {
-		this.size = in;
-	}
-
+	@Override
 	public LineStyle getLineStyle() {
 		return lineStyle;
 	}
@@ -55,6 +46,7 @@ public class LabelAttributeDefaults implements ILabelAttributeDefaults {
 		lineStyle = in;
 	}
 
+	@Override
 	public double getLineWidth() {
 		return lineWidth;
 	}
@@ -63,14 +55,11 @@ public class LabelAttributeDefaults implements ILabelAttributeDefaults {
 		lineWidth = width;
 	}
 
-    public IPropertyDefinition getPropertyDefinition() {
-        return propertyDefinition;
-    }
-
     public void setLabelLocationPolicy(LabelLocationPolicy labelLocationPolicy){
     	this.labelLocationPolicy = labelLocationPolicy;
     }
     
+	@Override
 	public LabelLocationPolicy getLabelLocationPolicy() {
 		return this.labelLocationPolicy;
 	}
@@ -79,6 +68,7 @@ public class LabelAttributeDefaults implements ILabelAttributeDefaults {
 		this.minimumSize = newMinSize;
 	}
 	
+	@Override
 	public Dimension getMinimumSize() {
 		return this.minimumSize;
 	}
@@ -87,6 +77,7 @@ public class LabelAttributeDefaults implements ILabelAttributeDefaults {
 		this.noBorder = noBorder;
 	}
 	
+	@Override
 	public boolean hasNoBorder() {
 		return this.noBorder;
 	}
@@ -95,6 +86,7 @@ public class LabelAttributeDefaults implements ILabelAttributeDefaults {
 		this.noFill = noFill;
 	}
 	
+	@Override
 	public boolean hasNoFill() {
 		return this.noFill;
 	}

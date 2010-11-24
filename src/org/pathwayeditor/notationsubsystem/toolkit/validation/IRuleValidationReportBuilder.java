@@ -3,6 +3,9 @@ package org.pathwayeditor.notationsubsystem.toolkit.validation;
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReport;
 
+import uk.ac.ed.inf.graph.compound.ICompoundGraphElement;
+
+
 
 /**
  * Used
@@ -37,7 +40,7 @@ public interface IRuleValidationReportBuilder {
 	 * @throws IllegalStateException if the builder is not in a state where isReadyToValidate() or isValidating() == true.
 	 * @throws IllegalArgumentException if the <code>ruleDefinition</code>parameter is not in the IValidationRuleStore().
 	 */
-	void setRuleFailed(IDrawingElement inValidObject, int ruleNum, String message);
+	void setRuleFailed(ICompoundGraphElement inValidObject, int ruleNum, String message);
 	
 	// do we need this? A rule may be tested several times; if it passes once it can still fail later.
 	// This is not used to generate the validation report.

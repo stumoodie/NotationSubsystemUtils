@@ -51,6 +51,7 @@ public abstract class AbstractObjectType implements IObjectType{
 	}
 	
 	
+	@Override
 	public final String getDescription() {
 		return description;
 	}
@@ -61,19 +62,23 @@ public abstract class AbstractObjectType implements IObjectType{
 		description=in;
 	}
 
+	@Override
 	public final String getName() {
 		return name;
 	}
 	
+	@Override
 	public final int getUniqueId() {
 		return uniqueID;
 	}
 
+	@Override
 	public final INotationSyntaxService getSyntaxService() {
 		return notationSyntaxService;
 	}
 
-    public final int compareTo(IObjectType o) {
+    @Override
+	public final int compareTo(IObjectType o) {
         return (getUniqueId() == o.getUniqueId()) ? 0 : (getUniqueId() < o.getUniqueId() ? -1 : 1);
     }
 }

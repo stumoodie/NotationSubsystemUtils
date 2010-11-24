@@ -12,7 +12,7 @@ public class ListPropertyDefinition extends AbstractPropertyDefinition<List<Stri
 
 	public ListPropertyDefinition(String name, List<String> value, boolean isVisualisable, boolean isEditable) {
 		super(name, value);
-		this.setVisualisable(isVisualisable);
+//		this.setVisualisable(isVisualisable);
 		this.setEditable(isEditable);
 	}
 
@@ -20,11 +20,13 @@ public class ListPropertyDefinition extends AbstractPropertyDefinition<List<Stri
 		super(name, value);
 	}
 
+	@Override
 	public IAnnotationProperty copyProperty(IPropertyBuilder propertyBuilder,
 			IAnnotationProperty otherProperty) {
 		return propertyBuilder.copyListProperty((IListAnnotationProperty) otherProperty);
 	}
 
+	@Override
 	public IAnnotationProperty createProperty(IPropertyBuilder propertyBuilder) {
 		return propertyBuilder.createListProperty(this);
 	}

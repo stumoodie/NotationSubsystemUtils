@@ -8,19 +8,21 @@ import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
 public final class ShapeObjectType extends AbstractObjectType implements IShapeObjectType {
 
-	private ShapeAttributeDefaults defaultShapeAttributes;
+	private final ShapeAttributeDefaults defaultShapeAttributes;
 	private final ShapeParentingRules parentingRules= new ShapeParentingRules(this);
 	private EnumSet<EditableShapeAttributes> editableAttributes=EnumSet.noneOf(EditableShapeAttributes.class);
 	
 	public ShapeObjectType(INotationSyntaxService syntaxService, int uniqueId, String name){
 		super(uniqueId, name, syntaxService);
-		this.defaultShapeAttributes = new ShapeAttributeDefaults(this);
+		this.defaultShapeAttributes = new ShapeAttributeDefaults();
 	}
 
+	@Override
 	public ShapeAttributeDefaults getDefaultAttributes() {
 		return defaultShapeAttributes;
 	}
 
+	@Override
 	public EnumSet<EditableShapeAttributes> getEditableAttributes() {
 		return editableAttributes;
 	}
@@ -29,6 +31,7 @@ public final class ShapeObjectType extends AbstractObjectType implements IShapeO
 		editableAttributes=in;
 	}
 
+	@Override
 	public ShapeParentingRules getParentingRules() {
 		return parentingRules;
 	}

@@ -12,14 +12,15 @@ import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReportItem;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
+
+import uk.ac.ed.inf.graph.compound.ICompoundGraphElement;
 
 @RunWith(JMock.class)
 public class ValidationReportItemTest {
 	Mockery mockery = new JUnit4Mockery();
-	final IDrawingNode mockDrawingNode = mockery.mock(IDrawingNode.class);
+	final ICompoundGraphElement mockDrawingNode = mockery.mock(ICompoundGraphElement.class);
 	final IValidationRuleDefinition mockRule = mockery.mock(IValidationRuleDefinition.class);
     private ValidationReportItem reportItem;
 

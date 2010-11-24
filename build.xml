@@ -18,6 +18,7 @@
 	<path id="classpath">
 		<pathelement location="${build.dir.src}" />
 		<pathelement location="lib/BusinessObjects/BusinessObjects.jar" />
+        <pathelement location="lib/CompoundGraph/CompoundGraph.jar" />
 	</path>
 
 	<path id="test.classpath">

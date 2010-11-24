@@ -9,7 +9,7 @@ public class PlainTextPropertyDefinition extends AbstractPropertyDefinition<Stri
 
 	public PlainTextPropertyDefinition(String name, String value, boolean isVisualisable, boolean isEditable) {
 		super(name, value);
-		this.setVisualisable(isVisualisable);
+//		this.setVisualisable(isVisualisable);
 		this.setEditable(isEditable);
 	}
 
@@ -17,10 +17,12 @@ public class PlainTextPropertyDefinition extends AbstractPropertyDefinition<Stri
 		super(name, value);
 	}
 	
+	@Override
 	public IAnnotationProperty copyProperty(IPropertyBuilder propertyBuilder, IAnnotationProperty prop) {
 		return propertyBuilder.copyPlainTextProperty((IPlainTextAnnotationProperty) prop);
 	}
 
+	@Override
 	public IAnnotationProperty createProperty(IPropertyBuilder propertyBuilder) {
 		return propertyBuilder.createPlainTextProperty(this);
 	}

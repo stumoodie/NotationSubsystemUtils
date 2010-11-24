@@ -38,6 +38,7 @@ public class LinkTerminusDefaults implements ILinkTerminusDefaults {
 //		}
 //	}
 
+	@Override
 	public LinkEndDecoratorShape getEndDecoratorType() {
 		return linkEndDecoratorShape;
 	}
@@ -46,6 +47,7 @@ public class LinkTerminusDefaults implements ILinkTerminusDefaults {
 		linkEndDecoratorShape=in;
 	}
 
+	@Override
 	public Dimension getEndSize() {
 		return endSize;
 	}
@@ -54,6 +56,7 @@ public class LinkTerminusDefaults implements ILinkTerminusDefaults {
 		endSize=in;
 	}
 
+	@Override
 	public double getGap() {
 		return gap;
 	}

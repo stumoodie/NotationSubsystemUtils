@@ -16,6 +16,7 @@ public final class RootObjectType extends AbstractObjectType implements IRootObj
         super(uniqueId, DEFAULT_NAME, syntaxService);
     }
 
+	@Override
 	public RootObjectParentingRules getParentingRules() {
 		return parentingRules;
 	}

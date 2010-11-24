@@ -17,7 +17,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReportItem;
 
 @RunWith(JMock.class)
@@ -25,7 +25,7 @@ public class ValidationReportTest {
     private ValidationReport report;
     Mockery mockery = new JUnit4Mockery();
 	
-    final ICanvas map = mockery.mock(ICanvas.class);
+    final IModel map = mockery.mock(IModel.class);
     final IValidationReportItem item1 = mockery.mock(IValidationReportItem.class);
     List<IValidationReportItem>contents ;
     

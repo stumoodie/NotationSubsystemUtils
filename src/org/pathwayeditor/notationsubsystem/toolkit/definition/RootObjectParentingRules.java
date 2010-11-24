@@ -23,6 +23,7 @@ public class RootObjectParentingRules implements IRootObjectParentingRules {
 		this.owningType = owningType;
 	}
 	
+	@Override
 	public IRootObjectType getObjectType() {
 		return this.owningType;
 	}
@@ -37,6 +38,7 @@ public class RootObjectParentingRules implements IRootObjectParentingRules {
 		this.childSet.add(childShape);
 	}
 	
+	@Override
 	public boolean isValidChild(IObjectType possibleChild) {
 		if(possibleChild == null) throw new IllegalArgumentException("possibleChild cannot be null");
 		return this.childSet.contains(possibleChild);

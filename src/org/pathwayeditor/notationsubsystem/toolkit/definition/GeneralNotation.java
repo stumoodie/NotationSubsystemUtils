@@ -16,14 +16,17 @@ public class GeneralNotation implements INotation {
 		this.version = version;
 	}
 
+	@Override
 	public String getQualifiedName() {
 		return this.qualifiedName;
 	}
 
+	@Override
 	public String getDescription() {
 		return this.description;
 	}
 
+	@Override
 	public String toString(){
 		StringBuilder builder = new StringBuilder(this.getClass().getSimpleName());
 		builder.append("(qualifiedName=");
@@ -34,6 +37,7 @@ public class GeneralNotation implements INotation {
 		return builder.toString();
 	}
 	
+	@Override
 	public int compareTo(INotation notation){
 	    int retVal = this.qualifiedName.compareTo(notation.getQualifiedName());
 	    return retVal == 0 ? this.getVersion().compareTo(notation.getVersion()) : retVal;
@@ -42,6 +46,7 @@ public class GeneralNotation implements INotation {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotation#getDisplayName()
 	 */
+	@Override
 	public String getDisplayName() {
 		return this.displayName;
 	}
@@ -49,6 +54,7 @@ public class GeneralNotation implements INotation {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotation#getVersion()
 	 */
+	@Override
 	public Version getVersion() {
 		return this.version;
 	}

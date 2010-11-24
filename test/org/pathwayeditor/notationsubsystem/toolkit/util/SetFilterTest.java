@@ -22,6 +22,7 @@ public class SetFilterTest {
 	public void setUp() throws Exception {
 		this.testInstance = new SetFilter<String>(new IFilterCriteria<String>(){
 
+			@Override
 			public boolean passes(String item) {
 				return item.startsWith("P");
 			}

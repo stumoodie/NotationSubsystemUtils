@@ -6,13 +6,13 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReport;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReportItem;
 
 public class ValidationReport implements IValidationReport {
 	private final List<IValidationReportItem> reportItemList;
-	private final ICanvas canvas;
+	private final IModel canvas;
 	private final Date creationTime;
 	
 	/**
@@ -20,7 +20,7 @@ public class ValidationReport implements IValidationReport {
 	 * @param itemList A non-null <code>List</code> of {@link IValidationReportItem}s. 
 	 * @throws IllegalArgumentException if either parameter is null
 	 */
-	public ValidationReport(ICanvas canvas) {
+	public ValidationReport(IModel canvas) {
 		if(canvas == null){
 			throw new IllegalArgumentException("Constructor arguments must not be null");
 		}
@@ -34,18 +34,22 @@ public class ValidationReport implements IValidationReport {
 		this.reportItemList.add(reportItem);
 	}
 	
-	public ICanvas getCanvas() {
+	@Override
+	public IModel getCanvas() {
 		return canvas;
 	}
 
+	@Override
 	public List<IValidationReportItem> getValidationReportItems() {
 	     return Collections.unmodifiableList(reportItemList);
 	}
     
+	@Override
 	public Date getValidationTime() {
 		return new Date(creationTime.getTime());
 	}
 
+	@Override
 	public boolean hasWarnings() {
 		for(IValidationReportItem item: reportItemList){
 			if(item.getSeverity().equals(IValidationReportItem.Severity.WARNING)){
@@ -55,6 +59,7 @@ public class ValidationReport implements IValidationReport {
 		return false;
 	}
 
+	@Override
 	public boolean isValid() {
 		for(IValidationReportItem item: reportItemList){
 			if(item.getSeverity().equals(IValidationReportItem.Severity.ERROR) ){
@@ -65,6 +70,7 @@ public class ValidationReport implements IValidationReport {
 	}
 
 
+	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder(this.getClass().getSimpleName());
 		sb.append("(");

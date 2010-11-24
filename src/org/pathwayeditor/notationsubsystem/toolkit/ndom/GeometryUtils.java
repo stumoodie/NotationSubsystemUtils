@@ -2,11 +2,15 @@ package org.pathwayeditor.notationsubsystem.toolkit.ndom;
 
 import java.util.Iterator;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.IBendPoint;
-import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
-import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
-import org.pathwayeditor.figure.geometry.Point;
+import org.pathwayeditor.businessobjects.drawingprimitives.IBendPointContainer;
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.figure.geometry.Dimension;
+import org.pathwayeditor.figure.geometry.Point;
+
+import uk.ac.ed.inf.graph.compound.CompoundNodePair;
+import uk.ac.ed.inf.graph.compound.ICompoundEdge;
+import uk.ac.ed.inf.graph.compound.ICompoundNode;
 
 /**
  * Class contains context-neutral geometry calculation utilities 
@@ -30,42 +34,47 @@ public class GeometryUtils {
 		 *            source shape
 		 * @return direction of the last segment of the link.
 		 */
-		public static Point getTgtDirection(ILinkEdge l, IShapeNode s) {
+		public static Point getTgtDirection(ICompoundEdge l, ICompoundNode s) {
 			Point sl = getCenter(s);//s.getAttribute().getLocation();
-			Point tl = getCenter(l.getSourceShape());//.getAttribute().getLocation();
-			Iterator <IBendPoint> bp = l.getAttribute().bendPointIterator();
+			CompoundNodePair nodePair = l.getConnectedNodes();
+			Point tl = getCenter(nodePair.getOutNode());//.getAttribute().getLocation();
+			IBendPointContainer bpContainer = ((ILinkAttribute)l.getAttribute()).getBendPointContainer();
+			Iterator <Point> bp = bpContainer.bendPointIterator();
 			Point al =null;
-			IBendPoint last=null;
-			int numBenpoints=l.getAttribute().numBendPoints();
+			Point last=null;
+			int numBenpoints = bpContainer.numBendPoints();
 			if (bp.hasNext()) {
 				while (bp.hasNext()){
 					last =bp.next();
 				}
 				float weight=numBenpoints / ((float) numBenpoints + 1);
 				// calculate center-to-bend-point direction
-				tl = getPoint(l,last,weight);
+				tl = getPoint(l.getConnectedNodes(), last, weight);
 			}
 			al=new Point(tl.getX() - sl.getX(), tl.getY() - sl.getY());
 			return al;
 		}
 
-	static Point getPoint(ILinkEdge l,IBendPoint last,float weight) {
+	static Point getPoint(CompoundNodePair l, Point last,float weight) {
 		Point tl;
-		Point a1=getCenter(l.getSourceShape());//.getAttribute().getLocation();
-		Point a2=getCenter(l.getTargetShape());//.getAttribute().getLocation();
-		double sourceXOffset = last.getLocation().getX()-l.getSourceShape().getAttribute().getLocation().getX();
-		double targetXOffset=last.getLocation().getX()-l.getTargetShape().getAttribute().getLocation().getX();
-		double sourceYOffset=last.getLocation().getY()-l.getSourceShape().getAttribute().getLocation().getY();
-		double targetYOffset=last.getLocation().getY()-l.getTargetShape().getAttribute().getLocation().getY();
+		Point a1=getCenter(l.getOutNode());//.getAttribute().getLocation();
+		Point a2=getCenter(l.getInNode());//.getAttribute().getLocation();
+		IDrawingNodeAttribute outAttribute = (IDrawingNodeAttribute)l.getOutNode().getAttribute();
+		IDrawingNodeAttribute inAttribute = (IDrawingNodeAttribute)l.getInNode().getAttribute();
+		double sourceXOffset = last.getX() - outAttribute.getBounds().getOrigin().getX();
+		double targetXOffset=last.getX() - inAttribute.getBounds().getOrigin().getX();
+		double sourceYOffset=last.getY() - outAttribute.getBounds().getOrigin().getY();
+		double targetYOffset=last.getY() - inAttribute.getBounds().getOrigin().getY();
 		double x = ((a1.getX() +sourceXOffset) * (1f - weight) + weight * (a2.getX() + targetXOffset));
 		double y = ((a1.getY() + sourceYOffset) * (1f - weight) + weight * (a2.getY() + targetYOffset));
 		tl=new Point(x,y);
 		return tl;
 	}
 	
-	static Point getCenter(IShapeNode s){
-		Point sl = s.getAttribute().getLocation();
-		Dimension sz=s.getAttribute().getSize();
+	static Point getCenter(ICompoundNode s){
+		IDrawingNodeAttribute attribute = (IDrawingNodeAttribute)s.getAttribute();
+		Point sl = attribute.getBounds().getOrigin();
+		Dimension sz = attribute.getBounds().getDimension();
 		Point cl=new Point(sl.getX()+sz.getWidth()/2, sl.getY()+sz.getHeight()/2);
 		return cl;
 	}
@@ -82,20 +91,22 @@ public class GeometryUtils {
 	 *            source shape
 	 * @return direction of the first segment of the link.
 	 */
-	public static Point getSrcLocation(ILinkEdge l, IShapeNode s) {
+	public static Point getSrcLocation(ICompoundEdge l, ICompoundNode s) {
 		Point sl = getCenter(s);//s.getAttribute().getLocation();
-		Point tl = getCenter(l.getTargetShape());//.getAttribute().getLocation();
-		Iterator <IBendPoint> bp = l.getAttribute().bendPointIterator();
+		Point tl = getCenter(l.getConnectedNodes().getInNode());//.getAttribute().getLocation();
+		ILinkAttribute linkAttribute = (ILinkAttribute)l.getAttribute();
+		IBendPointContainer bpContainer = linkAttribute.getBendPointContainer();
+		Iterator <Point> bp = bpContainer.bendPointIterator();
 		Point al =null;
-		IBendPoint last=null;
-		int numBenpoints=l.getAttribute().numBendPoints();
+		Point last=null;
+		int numBenpoints = bpContainer.numBendPoints();
 		if (bp.hasNext()) {
 			while (bp.hasNext()){
 				last =bp.next();
 			}
 			float weight=numBenpoints / ((float) numBenpoints + 1);
 			// calculate center-to-bend-point direction
-			tl = getPoint(l,last,weight);
+			tl = getPoint(l.getConnectedNodes(), last, weight);
 		}
 		al=new Point(tl.getX() - sl.getX(), tl.getY() - sl.getY());
 		return al;

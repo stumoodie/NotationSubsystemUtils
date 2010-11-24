@@ -48,26 +48,32 @@ public class ValidationRuleDefinition implements IValidationRuleDefinition {
 		this.ruleEnforcement = defaultEnforcementLevel;
 	}
 
+	@Override
 	public String getDescription() {
 		return desc;
 	}
+	@Override
 	public String getDetailedDescription() {
 		return detailedDesc;
 		
 	}
 
+	@Override
 	public String getName() {
 		return name == null ? "" : name;
 	}
 
+	@Override
 	public String getRuleCategory() {
 		return ruleCategory;
 	}
 
+	@Override
 	public int getRuleNumber() {
 		return ruleNumber;
 	}
 
+	@Override
 	public RuleLevel getRuleLevel() {
 		return ruleLevel;
 	}
@@ -102,6 +108,7 @@ public class ValidationRuleDefinition implements IValidationRuleDefinition {
 		this.detailedDesc = detailedDesc;
 	}
 
+	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 		sb.append("ID: ").append(ruleNumber).append("CAtegory: ").append(ruleCategory).append("\n").append("Level: ").append(ruleLevel).append("\n").append("Description: ").append(desc);
@@ -111,10 +118,12 @@ public class ValidationRuleDefinition implements IValidationRuleDefinition {
 	/**
 	 * Sorts by ascending rule number
 	 */
+	@Override
 	public int compareTo(IValidationRuleDefinition other) {
 		return ruleNumber == other.getRuleNumber() ? 0 : (ruleNumber < other.getRuleNumber() ? -1 : 1);
 	}
 
+	@Override
 	public RuleEnforcement getDefaultEnforcementLevel() {
 		return ruleEnforcement;
 	}
@@ -127,6 +136,7 @@ public class ValidationRuleDefinition implements IValidationRuleDefinition {
 				);
 	}
 	
+	@Override
 	public boolean isValidEnforcement(RuleEnforcement ruleEnforcement) {
 		return isValidEnforcement(this.ruleLevel, ruleEnforcement);
 	}

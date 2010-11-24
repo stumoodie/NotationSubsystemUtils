@@ -25,6 +25,7 @@ public class LinkTerminusDefinition implements ILinkTerminusDefinition {
 		this.linkTerminusDefaults= new LinkTerminusDefaults(this);
 	}
 
+	@Override
 	public EnumSet<LinkTermEditableAttributes> getEditableAttributes() {
 		return editableAttributes;
 	}
@@ -36,14 +37,17 @@ public class LinkTerminusDefinition implements ILinkTerminusDefinition {
 		this.editableAttributes = in;
 	}
 
+	@Override
 	public LinkTermType getLinkEndCode() {
 		return endType;
 	}
 
+	@Override
 	public LinkTerminusDefaults getDefaultAttributes() {
 		return linkTerminusDefaults;
 	}
 
+	@Override
 	public LinkObjectType getOwningObjectType() {
 		return parentType;
 	}	
