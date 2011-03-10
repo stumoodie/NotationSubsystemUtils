@@ -64,7 +64,7 @@ public class ValidationReportTest {
 	@Test
 	public void testGetCanvas() {
 		report = new ValidationReport(map);	
-		assertEquals(map, report.getCanvas());
+		assertEquals(map, report.getModel());
 	}
 
 	@Test

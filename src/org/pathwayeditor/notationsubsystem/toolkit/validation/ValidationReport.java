@@ -35,7 +35,7 @@ public class ValidationReport implements IValidationReport {
 	}
 	
 	@Override
-	public IModel getCanvas() {
+	public IModel getModel() {
 		return canvas;
 	}
 

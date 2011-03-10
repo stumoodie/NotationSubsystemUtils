@@ -108,7 +108,7 @@ public class RuleValidationReportBuilderTest {
 	public void testGetValidationReportOnlyAllowedAfterCompletion() {
 		reportBuilderImpl.setState(RuleValidationReportBuilder.COMPLETED);
         IValidationReport report = reportBuilderAPI.getValidationReport();
-        assertEquals(map, report.getCanvas());
+        assertEquals(map, report.getModel());
 	}
 
 	@Test

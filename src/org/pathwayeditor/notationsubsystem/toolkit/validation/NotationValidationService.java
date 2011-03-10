@@ -34,7 +34,7 @@ public final class NotationValidationService implements INotationValidationServi
 	}
 
 	@Override
-	public IModel getCanvasBeingValidated() {
+	public IModel getModelBeingValidated() {
 		return ndomValidation.getMapBeingValidated();
 	}
     
@@ -72,7 +72,7 @@ public final class NotationValidationService implements INotationValidationServi
 	}
 
 	@Override
-	public void setCanvasToValidate(IModel mapToValidate) {
+	public void setModelToValidate(IModel mapToValidate) {
 		if(mapToValidate==null) throw new IllegalArgumentException("Map to be validated should not be null");
 		ndomValidation.setMapToValidate(mapToValidate);
 	}
