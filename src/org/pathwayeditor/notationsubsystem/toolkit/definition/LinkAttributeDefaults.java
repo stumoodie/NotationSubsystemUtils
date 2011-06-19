@@ -23,13 +23,13 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.typedefn.ILinkAttributeDefaults;
 
 public class LinkAttributeDefaults implements ILinkAttributeDefaults{
 	private final Set <IPropertyDefinition> propertyDefinitions = new HashSet<IPropertyDefinition>();
-	private RGB lineColour;
+	private Colour lineColour;
 	private LineStyle lineStyle;
 	private double lineWidth = 1.0;
 //	private final LinkObjectType linkObjectType;
@@ -40,7 +40,7 @@ public class LinkAttributeDefaults implements ILinkAttributeDefaults{
 
 
 	@Override
-	public RGB getLineColour() {
+	public Colour getLineColour() {
 		return lineColour;
 	}
 
@@ -72,7 +72,7 @@ public class LinkAttributeDefaults implements ILinkAttributeDefaults{
         return retVal;
     }
     
-	public void setLineColour(RGB lineColour) {
+	public void setLineColour(Colour lineColour) {
 		this.lineColour = lineColour;
 	}
 

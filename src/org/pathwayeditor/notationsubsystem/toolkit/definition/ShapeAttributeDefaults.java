@@ -21,7 +21,7 @@ package org.pathwayeditor.notationsubsystem.toolkit.definition;
 import java.util.Iterator;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults;
 import org.pathwayeditor.figure.geometry.Dimension;
@@ -29,8 +29,8 @@ import org.pathwayeditor.figure.geometry.Dimension;
 public class ShapeAttributeDefaults implements IShapeAttributeDefaults {
 //    private final ShapeObjectType shapeObjectType;
     private String shapeType;
-    private RGB fillColour;
-    private RGB lineColour;
+    private Colour fillColour;
+    private Colour lineColour;
     private LineStyle lineStyle;
     private double lineWidth; 
     private Dimension size;
@@ -41,12 +41,12 @@ public class ShapeAttributeDefaults implements IShapeAttributeDefaults {
     }
     
     @Override
-	public RGB getFillColour() {
+	public Colour getFillColour() {
         return this.fillColour;
     }
 
     @Override
-	public RGB getLineColour() {
+	public Colour getLineColour() {
         return this.lineColour;
     }
 
@@ -82,11 +82,11 @@ public class ShapeAttributeDefaults implements IShapeAttributeDefaults {
         this.shapeType = shapeType;
     }
 
-    public void setFillColour(RGB fillColour) {
+    public void setFillColour(Colour fillColour) {
         this.fillColour = fillColour;
     }
 
-    public void setLineColour(RGB lineColour) {
+    public void setLineColour(Colour lineColour) {
         this.lineColour = lineColour;
     }
 
