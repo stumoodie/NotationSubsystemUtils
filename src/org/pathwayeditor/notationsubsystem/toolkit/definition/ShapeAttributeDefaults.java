@@ -25,19 +25,22 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults;
 import org.pathwayeditor.figure.geometry.Dimension;
+import org.pathwayeditor.figure.rendering.GenericFont;
 
 public class ShapeAttributeDefaults implements IShapeAttributeDefaults {
-//    private final ShapeObjectType shapeObjectType;
-    private String shapeType;
-    private Colour fillColour;
-    private Colour lineColour;
-    private LineStyle lineStyle;
-    private double lineWidth; 
+    private static final double DEFAULT_LINE_WIDTH = 1.0;
+	private static final GenericFont DEFAULT_FONT = new GenericFont();
+	private String shapeType;
+    private Colour fillColour = Colour.WHITE;
+    private Colour lineColour = Colour.BLACK;
+    private LineStyle lineStyle = LineStyle.SOLID;
+    private double lineWidth = DEFAULT_LINE_WIDTH; 
     private Dimension size;
 	private final PropertyDefinitionContainer properties = new PropertyDefinitionContainer();
+	private Colour fontColour = Colour.BLACK;
+	private GenericFont font = DEFAULT_FONT;
     
     public ShapeAttributeDefaults() {
-//        this.shapeObjectType = objectType;
     }
     
     @Override
@@ -74,10 +77,6 @@ public class ShapeAttributeDefaults implements IShapeAttributeDefaults {
         this.properties.addDefinition(defn);
     }
     
-//    public ShapeObjectType getShapeObjectType() {
-//        return shapeObjectType;
-//    }
-
     public void setShapeDefinition(String shapeType) {
         this.shapeType = shapeType;
     }
@@ -125,6 +124,24 @@ public class ShapeAttributeDefaults implements IShapeAttributeDefaults {
 	@Override
 	public Iterator<IPropertyDefinition> propertyDefinitionIterator() {
 		return this.properties.propertyDefinitionIterator();
+	}
+	
+	public void setFontColour(Colour fontColour) {
+		this.fontColour = fontColour;
+	}
+
+	@Override
+	public Colour getFontColour() {
+		return fontColour;
+	}
+
+	void setFont(GenericFont font){
+		this.font = font;
+	}
+	
+	@Override
+	public GenericFont getFont() {
+		return font;
 	}
 
 }

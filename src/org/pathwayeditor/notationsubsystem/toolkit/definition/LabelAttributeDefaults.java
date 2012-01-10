@@ -25,17 +25,19 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
 import org.pathwayeditor.figure.geometry.Dimension;
+import org.pathwayeditor.figure.rendering.GenericFont;
 
 public class LabelAttributeDefaults implements ILabelAttributeDefaults {
+	private static final GenericFont DEFAULT_FONT = new GenericFont();
 	private Colour fillColour = new Colour(255, 255, 255);
 	private Colour lineColour = new Colour(0, 0, 0);
 	private LineStyle lineStyle = LineStyle.SOLID;
 	private double lineWidth = 1;
 	private LabelLocationPolicy labelLocationPolicy = LabelLocationPolicy.CENTRE;
-	private boolean noFill = true;
-	private boolean noBorder = true;
 	private Dimension minimumSize;
 	private Format displayFormat = null;
+	private GenericFont font = DEFAULT_FONT;
+	private Colour fontColour = Colour.BLACK;
 
 	public LabelAttributeDefaults() {
 	}
@@ -94,24 +96,6 @@ public class LabelAttributeDefaults implements ILabelAttributeDefaults {
 		return this.minimumSize;
 	}
 
-	public void setNoBorder(boolean noBorder){
-		this.noBorder = noBorder;
-	}
-	
-	@Override
-	public boolean hasNoBorder() {
-		return this.noBorder;
-	}
-
-	public void setNoFill(boolean noFill){
-		this.noFill = noFill;
-	}
-	
-	@Override
-	public boolean hasNoFill() {
-		return this.noFill;
-	}
-
 	public void setDisplayFormat(Format displayFormat){
 		this.displayFormat = displayFormat;
 	}
@@ -119,6 +103,25 @@ public class LabelAttributeDefaults implements ILabelAttributeDefaults {
 	@Override
 	public Format getDisplayFormat() {
 		return this.displayFormat;
+	}
+
+	void setFontColour(Colour fontColour){
+		this.fontColour = fontColour;
+	}
+	
+	@Override
+	public Colour getFontColour() {
+		return fontColour;
+	}
+
+	void setFontColour(GenericFont font){
+		this.font = font;
+	}
+	
+	
+	@Override
+	public GenericFont getFont() {
+		return font;
 	}
 
 }
