@@ -29,6 +29,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
+import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
 
@@ -106,7 +107,7 @@ public class LinkConnectionRulesTest {
 	 }
 
 	/**
-	 * Test method for {@link org.pathwayeditor.notationsubsystem.toolkit.definition.LinkConnectionRules#isValidSource(java.lang.Enum)}.
+	 * Test method for {@link org.pathwayeditor.notationsubsystem.toolkit.definition.LinkConnectionRules#isValidSource(IObjectType)}.
 	 */
 	@Test
 	public final void testIsValidSource() {
@@ -122,7 +123,7 @@ public class LinkConnectionRulesTest {
 	}
 	
 	/**
-	 * Test method for {@link org.pathwayeditor.notationsubsystem.toolkit.definition.LinkConnectionRules#isValidTarget(java.lang.Enum, java.lang.Enum)}.
+	 * Test method for {@link org.pathwayeditor.notationsubsystem.toolkit.definition.LinkConnectionRules#isValidTarget(IObjectType, IObjectType)}.
 	 */
 	@Test
 	public final void testIsValidTarget() {

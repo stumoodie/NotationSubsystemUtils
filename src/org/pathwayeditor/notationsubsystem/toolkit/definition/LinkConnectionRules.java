@@ -25,6 +25,7 @@ import java.util.Set;
 
 import org.pathwayeditor.businessobjects.typedefn.ILinkConnectionRules;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
+import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
 public class LinkConnectionRules implements ILinkConnectionRules {
@@ -48,7 +49,7 @@ public class LinkConnectionRules implements ILinkConnectionRules {
 	}
 	
 	@Override
-	public boolean isValidSource(IShapeObjectType source) {
+	public boolean isValidSource(INodeObjectType source) {
 		if(source == null){
 			throw new IllegalArgumentException("source must be not null");
 		}
@@ -56,7 +57,7 @@ public class LinkConnectionRules implements ILinkConnectionRules {
 	}
 
 	@Override
-	public boolean isValidTarget(IShapeObjectType source, IShapeObjectType target) {
+	public boolean isValidTarget(INodeObjectType source, INodeObjectType target) {
 		if(source == null || target == null){
 			throw new IllegalArgumentException("source and target must be not null");
 		}

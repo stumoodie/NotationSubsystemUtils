@@ -23,7 +23,6 @@ import java.util.EnumSet;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
-import org.pathwayeditor.businessobjects.typedefn.IObjectTypeParentingRules;
 
 
 public final class LinkObjectType extends AbstractObjectType implements ILinkObjectType {
@@ -32,6 +31,7 @@ public final class LinkObjectType extends AbstractObjectType implements ILinkObj
 	private final LinkTerminusDefinition linkTargetEndDefinition;
 	private final LinkAttributeDefaults defaultLinkAttributes;
 	private EnumSet<LinkEditableAttributes> editableAttributes= EnumSet.noneOf(LinkEditableAttributes.class);
+	private final LinkParentingRules linkParentingRules;
 	
 
 	public LinkObjectType(INotationSyntaxService in, int uniqueID, String name){
@@ -40,6 +40,7 @@ public final class LinkObjectType extends AbstractObjectType implements ILinkObj
 		this.linkSourceEndDefinition = new LinkTerminusDefinition(this, LinkTermType.SOURCE);
 		this.linkTargetEndDefinition = new LinkTerminusDefinition(this, LinkTermType.TARGET);
 		this.linkConnectionRules = new LinkConnectionRules(this);
+		this.linkParentingRules = new LinkParentingRules(this);
 	}
 
 	@Override
@@ -72,8 +73,7 @@ public final class LinkObjectType extends AbstractObjectType implements ILinkObj
 	}
 
 	@Override
-	public IObjectTypeParentingRules getParentingRules() {
-		// TODO Auto-generated method stub
-		return null;
+	public LinkParentingRules getParentingRules() {
+		return this.linkParentingRules;
 	}
 }
