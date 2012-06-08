@@ -26,25 +26,24 @@ import java.util.Set;
 import org.pathwayeditor.businessobjects.typedefn.ILinkConnectionRules;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
-import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
 public class LinkConnectionRules implements ILinkConnectionRules {
-	private final Map<IShapeObjectType, Set<IShapeObjectType>> rules;
+	private final Map<INodeObjectType, Set<INodeObjectType>> rules;
 	private final ILinkObjectType owningLink;
 	
 	LinkConnectionRules(ILinkObjectType owningLinkObjectType){
-		rules = new HashMap<IShapeObjectType, Set<IShapeObjectType>>();
+		rules = new HashMap<INodeObjectType, Set<INodeObjectType>>();
 		this.owningLink = owningLinkObjectType;
 	}
 	
-	public void addConnection(IShapeObjectType srcType, IShapeObjectType tgtType){
+	public void addConnection(INodeObjectType srcType, INodeObjectType tgtType){
 		if(srcType == null || tgtType == null){
 			throw new IllegalArgumentException("Both srcType and tgtType must be not null");
 		}
 		if(!this.rules.containsKey(srcType)){
-			this.rules.put(srcType, new HashSet<IShapeObjectType>());
+			this.rules.put(srcType, new HashSet<INodeObjectType>());
 		}
-		Set<IShapeObjectType> tgtSet = this.rules.get(srcType);
+		Set<INodeObjectType> tgtSet = this.rules.get(srcType);
 		tgtSet.add(tgtType);
 	}
 	
