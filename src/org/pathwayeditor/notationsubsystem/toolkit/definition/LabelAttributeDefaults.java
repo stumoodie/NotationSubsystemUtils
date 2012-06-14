@@ -20,9 +20,9 @@ package org.pathwayeditor.notationsubsystem.toolkit.definition;
 
 import java.text.Format;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LabelLocationPolicy;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
 import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.rendering.GenericFont;

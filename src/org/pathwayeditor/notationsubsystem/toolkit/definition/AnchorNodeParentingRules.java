@@ -21,9 +21,9 @@ package org.pathwayeditor.notationsubsystem.toolkit.definition;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.pathwayeditor.businessobjects.typedefn.IAnchorNodeObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IAnchorNodeParentingRules;
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
-import org.pathwayeditor.businessobjects.typedefn.IAnchorNodeObjectType;
 
 public class AnchorNodeParentingRules implements IAnchorNodeParentingRules {
 	private final Set<IObjectType> childSet;

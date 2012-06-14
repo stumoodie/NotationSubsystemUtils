@@ -18,7 +18,6 @@
 */
 package org.pathwayeditor.notationsubsystem.toolkit.validation;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReport;
 
 import uk.ac.ed.inf.graph.compound.ICompoundGraphElement;
