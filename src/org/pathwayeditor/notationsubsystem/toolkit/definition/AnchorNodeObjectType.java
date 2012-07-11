@@ -25,7 +25,7 @@ import org.pathwayeditor.businessobjects.typedefn.IAnchorNodeObjectType;
 public final class AnchorNodeObjectType extends AbstractObjectType implements IAnchorNodeObjectType {
 
 	private final AnchorNodeAttributeDefaults defaultAnchorNodeAttributes;
-	private final AnchorNodeParentingRules parentingRules= new AnchorNodeParentingRules(this);
+	private final ObjectTypeParentingRules parentingRules= new ObjectTypeParentingRules(this);
 	
 	public AnchorNodeObjectType(INotationSyntaxService syntaxService, int uniqueId, String name){
 		super(uniqueId, name, syntaxService);
@@ -38,7 +38,7 @@ public final class AnchorNodeObjectType extends AbstractObjectType implements IA
 	}
 
 	@Override
-	public AnchorNodeParentingRules getParentingRules() {
+	public ObjectTypeParentingRules getParentingRules() {
 		return parentingRules;
 	}
 }

@@ -24,7 +24,7 @@ import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
 
 public final class RootObjectType extends AbstractObjectType implements IRootObjectType {
 	public static String DEFAULT_NAME = "rootObjectType";
-	private final RootObjectParentingRules parentingRules = new RootObjectParentingRules(this);
+	private final ObjectTypeParentingRules parentingRules = new ObjectTypeParentingRules(this);
 
 	public RootObjectType(int uniqueId,String description, String name, INotationSyntaxService syntaxService){
 		super(uniqueId,name,syntaxService);
@@ -35,7 +35,7 @@ public final class RootObjectType extends AbstractObjectType implements IRootObj
     }
 
 	@Override
-	public RootObjectParentingRules getParentingRules() {
+	public ObjectTypeParentingRules getParentingRules() {
 		return parentingRules;
 	}
 

@@ -21,27 +21,26 @@ package org.pathwayeditor.notationsubsystem.toolkit.definition;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.pathwayeditor.businessobjects.typedefn.IAnchorNodeObjectType;
-import org.pathwayeditor.businessobjects.typedefn.IAnchorNodeParentingRules;
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
+import org.pathwayeditor.businessobjects.typedefn.IObjectTypeParentingRules;
 
-public class AnchorNodeParentingRules implements IAnchorNodeParentingRules {
+public class  ObjectTypeParentingRules implements IObjectTypeParentingRules {
 	private final Set<IObjectType> childSet;
-	private final IAnchorNodeObjectType owningAnchorNode;
+	private final IObjectType owningShape;
 	
 	/**
 	 * 
-	 * @param AnchorNodeObjectType
+	 * @param shapeObjectType
 	 */
-	public AnchorNodeParentingRules(IAnchorNodeObjectType anchorNodeObjectType){
-		if(anchorNodeObjectType == null) throw new IllegalArgumentException("paremeter is null");
+	public ObjectTypeParentingRules(IObjectType shapeObjectType){
+		if(shapeObjectType == null) throw new IllegalArgumentException("paremeter is null");
 		this.childSet = new HashSet<IObjectType>();
-		this.owningAnchorNode = anchorNodeObjectType;
+		this.owningShape = shapeObjectType;
 	}
 	
-	public void addChild(IAnchorNodeObjectType childAnchorNode){
-		if(childAnchorNode == null) throw new IllegalArgumentException("paremeter is null");
-		this.childSet.add(childAnchorNode);
+	public void addChild(IObjectType childShape){
+		if(childShape == null) throw new IllegalArgumentException("paremeter is null");
+		this.childSet.add(childShape);
 	}
 	
 	public void clear(){
@@ -54,8 +53,8 @@ public class AnchorNodeParentingRules implements IAnchorNodeParentingRules {
 	}
 
 	@Override
-	public IAnchorNodeObjectType getObjectType() {
-		return this.owningAnchorNode;
+	public IObjectType getObjectType() {
+		return this.owningShape;
 	}
 
 	@Override

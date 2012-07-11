@@ -30,8 +30,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
+import org.pathwayeditor.businessobjects.typedefn.IObjectTypeParentingRules;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
-import org.pathwayeditor.businessobjects.typedefn.IShapeParentingRules;
 
 @RunWith(JMock.class)
 public class ShapeObjectTypeTest {
@@ -51,7 +51,7 @@ public class ShapeObjectTypeTest {
 	
 	@Test
 	public void testParentingRulesAreNotNull(){
-		IShapeParentingRules notNull=shapeObjectType.getParentingRules();
+		IObjectTypeParentingRules notNull=shapeObjectType.getParentingRules();
 		assertNotNull(notNull);
 	}
 	

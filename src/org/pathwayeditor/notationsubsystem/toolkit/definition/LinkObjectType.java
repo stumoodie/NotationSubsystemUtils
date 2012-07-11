@@ -31,7 +31,7 @@ public final class LinkObjectType extends AbstractObjectType implements ILinkObj
 	private final LinkTerminusDefinition linkTargetEndDefinition;
 	private final LinkAttributeDefaults defaultLinkAttributes;
 	private EnumSet<LinkEditableAttributes> editableAttributes= EnumSet.noneOf(LinkEditableAttributes.class);
-	private final LinkParentingRules linkParentingRules;
+	private final ObjectTypeParentingRules linkParentingRules;
 	
 
 	public LinkObjectType(INotationSyntaxService in, int uniqueID, String name){
@@ -40,7 +40,7 @@ public final class LinkObjectType extends AbstractObjectType implements ILinkObj
 		this.linkSourceEndDefinition = new LinkTerminusDefinition(this, LinkTermType.SOURCE);
 		this.linkTargetEndDefinition = new LinkTerminusDefinition(this, LinkTermType.TARGET);
 		this.linkConnectionRules = new LinkConnectionRules(this);
-		this.linkParentingRules = new LinkParentingRules(this);
+		this.linkParentingRules = new ObjectTypeParentingRules(this);
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public final class LinkObjectType extends AbstractObjectType implements ILinkObj
 	}
 
 	@Override
-	public LinkParentingRules getParentingRules() {
+	public ObjectTypeParentingRules getParentingRules() {
 		return this.linkParentingRules;
 	}
 }

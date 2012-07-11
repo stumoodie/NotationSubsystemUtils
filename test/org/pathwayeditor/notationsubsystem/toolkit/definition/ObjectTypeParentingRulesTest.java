@@ -19,8 +19,6 @@
 package org.pathwayeditor.notationsubsystem.toolkit.definition;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 import org.jmock.Expectations;
 import org.jmock.Mockery;
@@ -30,63 +28,57 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pathwayeditor.businessobjects.typedefn.IObjectType;
-import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
 
 @RunWith(JMock.class)
-public class RootMapParentingRulesTest {
+public class ObjectTypeParentingRulesTest {
 	private Mockery context = new JUnit4Mockery();
-	private RootObjectParentingRules testInstance;
-	private IRootObjectType testObjectType;
-//	private static enum TestTypes { TEST1 };
+	private ObjectTypeParentingRules testInstance;
+	private IShapeObjectType testOwningInstance;
+//	private enum ObjectType { TEST1{ public String toString() { return "1"; } }};
 	
 	@Before
 	public void setUp() throws Exception {
-		this.testObjectType = context.mock(IRootObjectType.class);
-		this.testInstance = new RootObjectParentingRules(this.testObjectType);
+		this.testOwningInstance = this.context.mock(IShapeObjectType.class);
+		this.testInstance = new ObjectTypeParentingRules(this.testOwningInstance);
 	}
 
 	@After
 	public void tearDown() throws Exception {
+		this.testInstance = null;
 	}
 
 	@Test(expected=IllegalArgumentException.class)
-	public final void testRootMapParentingRulesNullParam() {
-		new RootObjectParentingRules(null);
-	}
-
-	@Test
-	public final void testGetObjectType() {
-		IObjectType actual = this.testInstance.getObjectType();
-		assertEquals("Object type correct", this.testObjectType, actual);
+	public final void testShapeParentingRulesNullParam() {
+		new ObjectTypeParentingRules(null);
 	}
 
 	@Test(expected=IllegalArgumentException.class)
 	public final void testAddChildNullParam() {
 		this.testInstance.addChild(null);
 	}
-	
+
 	@Test
-	public final void testIsValidChildByCodeOk() {
-		final IShapeObjectType testShapeType = this.context.mock(IShapeObjectType.class);
+	public final void testAddChild() {
+		final IShapeObjectType shapeType = this.context.mock(IShapeObjectType.class);
 		this.context.checking(new Expectations(){{
-//			allowing(testShapeType).getTypeCode();
-//			will(returnValue(TestTypes.TEST1));
+//			allowing(shapeType).getTypeCode();
+//			will(returnValue(ObjectType.TEST1));
 		}});
-		this.testInstance.addChild(testShapeType);
-		this.context.assertIsSatisfied();
-		assertTrue("child set", this.testInstance.isValidChild(testShapeType));
+		this.testInstance.addChild(shapeType);
+		boolean actualResult = this.testInstance.isValidChildByCode(shapeType);
+		assertEquals("child found", true, actualResult);
+	}
+
+	@Test(expected=IllegalArgumentException.class)
+	public final void testIsValidParentByCodeNull() {
+		this.testInstance.isValidChildByCode(null);
 	}
 
 	@Test
-	public final void testIsValidChildByCodeNone() {
-		final IShapeObjectType testShapeType = this.context.mock(IShapeObjectType.class);
-		this.context.checking(new Expectations(){{
-		}});
-		this.context.assertIsSatisfied();
-		assertFalse("child set", this.testInstance.isValidChild(testShapeType));
+	public final void testGetObjectType() {
+		assertEquals("objectType the same", this.testOwningInstance, this.testInstance.getObjectType());
 	}
 
 }

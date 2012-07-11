@@ -24,16 +24,16 @@ import org.pathwayeditor.businessobjects.typedefn.ILabelObjectType;
 public class LabelObjectType extends AbstractObjectType implements ILabelObjectType {
 	private final LabelAttributeDefaults defaultLabelAttributes;
 	private boolean isAlwaysDisplayed = false;
-	private final LabelParentingRules parentingRules;
+	private final ObjectTypeParentingRules parentingRules;
 	
 	public LabelObjectType(INotationSyntaxService in, int uniqueID, String name){
 		super(uniqueID, name, in);
 		this.defaultLabelAttributes = new LabelAttributeDefaults();
-		this.parentingRules = new LabelParentingRules(this);
+		this.parentingRules = new ObjectTypeParentingRules(this);
 	}
 	
 	@Override
-	public LabelParentingRules getParentingRules(){
+	public ObjectTypeParentingRules getParentingRules(){
 		return this.parentingRules;
 	}
 
