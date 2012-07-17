@@ -135,7 +135,7 @@ public class ShapeAttributeDefaults implements IShapeAttributeDefaults {
 		return fontColour;
 	}
 
-	void setFont(GenericFont font){
+	public void setFont(GenericFont font){
 		this.font = font;
 	}
 	

@@ -108,7 +108,7 @@ public class AnchorNodeAttributeDefaults implements IAnchorNodeAttributeDefaults
 		return fontColour;
 	}
 
-	void setFont(GenericFont font){
+	public void setFont(GenericFont font){
 		this.font = font;
 	}
 	

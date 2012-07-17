@@ -22,7 +22,7 @@ import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxServic
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 
 public abstract class AbstractObjectType implements IObjectType{
-    private static final String DEFAULT_DESCN = "No descn";  
+    public static final String DEFAULT_DESCN = "";  
 	private int uniqueID;
 	private String description = DEFAULT_DESCN;
 	private final String name;

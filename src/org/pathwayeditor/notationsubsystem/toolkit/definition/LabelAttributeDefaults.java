@@ -105,7 +105,7 @@ public class LabelAttributeDefaults implements ILabelAttributeDefaults {
 		return this.displayFormat;
 	}
 
-	void setFontColour(Colour fontColour){
+	public void setFontColour(Colour fontColour){
 		this.fontColour = fontColour;
 	}
 	
@@ -114,10 +114,9 @@ public class LabelAttributeDefaults implements ILabelAttributeDefaults {
 		return fontColour;
 	}
 
-	void setFontColour(GenericFont font){
+	public void setFont(GenericFont font){
 		this.font = font;
 	}
-	
 	
 	@Override
 	public GenericFont getFont() {
